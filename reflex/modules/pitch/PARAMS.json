@@ -1,0 +1,23 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject of the pitch"
+    },
+    "audience": {
+      "required": false,
+      "description": "Who you're pitching to: investors, board, client, team, or partner",
+      "default": "investors"
+    },
+    "ask": {
+      "required": false,
+      "description": "What you want the audience to do (e.g. 'approve budget', 'sign contract', 'join us')",
+      "default": "take action"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "formatter",
+  "description": "Structure findings as a persuasive Situation-Complication-Resolution narrative"
+}

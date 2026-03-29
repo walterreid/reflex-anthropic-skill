@@ -1,0 +1,15 @@
+{
+  "params": {
+    "topic": {
+      "required": true,
+      "description": "The subject to research"
+    },
+    "depth": {
+      "required": false,
+      "description": "Research depth: overview or detailed",
+      "default": "overview"
+    }
+  },
+  "group": "source",
+  "description": "Research a topic using web search"
+}

@@ -1,0 +1,19 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "First target to compare (company, product, URL, topic)"
+    },
+    "target2": {
+      "required": true,
+      "description": "Second target to compare"
+    },
+    "focus": {
+      "required": false,
+      "description": "Comparison lens: general, competitive, or technical",
+      "default": "general"
+    }
+  },
+  "group": "source",
+  "description": "Side-by-side web research of two targets, writes JSON comparison"
+}

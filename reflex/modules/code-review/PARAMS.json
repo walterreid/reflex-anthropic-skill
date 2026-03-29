@@ -1,0 +1,15 @@
+{
+  "params": {
+    "language": {
+      "required": true,
+      "description": "Programming language of the code"
+    },
+    "style": {
+      "required": false,
+      "description": "Review approach: thorough, quick, or security",
+      "default": "thorough"
+    }
+  },
+  "group": "analyzer",
+  "description": "Review code for bugs, security, and quality"
+}

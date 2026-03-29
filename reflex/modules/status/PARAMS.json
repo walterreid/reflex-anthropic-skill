@@ -1,0 +1,9 @@
+{
+  "group": "meta",
+  "description": "Show what's been produced in the current session workspace",
+  "params": {
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

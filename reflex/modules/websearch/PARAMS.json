@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "URL, company name, or topic to research"
+    },
+    "focus": {
+      "required": false,
+      "description": "Research lens: general, competitive, swot, or technical",
+      "default": "general"
+    }
+  },
+  "group": "source",
+  "description": "Research a target using web search, writes structured JSON findings"
+}

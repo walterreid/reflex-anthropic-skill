@@ -1,0 +1,29 @@
+{
+  "group": "meta",
+  "description": "One-command complete analysis: research, rubric, evaluate, and whitepaper in a single invocation",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Primary target to analyze"
+    },
+    "target2": {
+      "required": false,
+      "description": "Second target for comparative analysis",
+      "default": ""
+    },
+    "domain": {
+      "required": true,
+      "description": "Domain or question for the rubric and evaluation"
+    },
+    "focus": {
+      "required": false,
+      "description": "Research focus lens",
+      "default": "general"
+    },
+    "depth": {
+      "required": false,
+      "description": "Analysis depth: standard or comprehensive",
+      "default": "comprehensive"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "group": "meta",
+  "description": "Analyze a chain that produced weak results and suggest improvements",
+  "params": {
+    "chain": {
+      "required": true,
+      "description": "The chain that was run (e.g. 'websearch+swot+pitch')"
+    },
+    "problem": {
+      "required": false,
+      "description": "What was weak: shallow, wrong-tone, missed-context, too-long, or general",
+      "default": "general"
+    },
+    "registry": {
+      "inject": "module_registry"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

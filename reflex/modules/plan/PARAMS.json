@@ -1,0 +1,14 @@
+{
+  "group": "meta",
+  "description": "Propose a module chain or design a new module from a natural language intent",
+  "params": {
+    "intent": {
+      "required": true,
+      "description": "What the user wants to accomplish, in natural language",
+      "greedy": true
+    },
+    "registry": {
+      "inject": "module_registry"
+    }
+  }
+}

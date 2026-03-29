@@ -1,0 +1,19 @@
+{
+  "group": "formatter",
+  "description": "Summarize all workspace artifacts into a tight executive recap",
+  "params": {
+    "target": {
+      "required": false,
+      "description": "Filter to artifacts related to this target, or 'all' for everything",
+      "default": "all"
+    },
+    "length": {
+      "required": false,
+      "description": "How tight: oneliner, short (3-4 sentences), or full (paragraph per artifact)",
+      "default": "short"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

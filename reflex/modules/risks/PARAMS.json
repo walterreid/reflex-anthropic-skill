@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject to assess risks for"
+    },
+    "severity": {
+      "required": false,
+      "description": "Filter: all, critical, or actionable",
+      "default": "all"
+    }
+  },
+  "group": "analyzer",
+  "description": "Identify risks and mitigations"
+}

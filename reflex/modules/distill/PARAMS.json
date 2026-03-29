@@ -1,0 +1,18 @@
+{
+  "group": "transformer",
+  "description": "Distill research findings into weighted categories for downstream analysis",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Target whose research to distill"
+    },
+    "lens": {
+      "required": false,
+      "description": "What to optimize for: breadth (preserve all categories) or depth (focus on top 3-4)",
+      "default": "depth"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

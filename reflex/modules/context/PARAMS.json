@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "What to focus on in the conversation (topic, product name, code, decision)"
+    },
+    "scope": {
+      "required": false,
+      "description": "How much conversation to gather: last, recent, or full",
+      "default": "full"
+    }
+  },
+  "group": "source",
+  "description": "Gather and structure content from the current conversation"
+}

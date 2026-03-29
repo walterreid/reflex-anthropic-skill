@@ -1,0 +1,18 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject being analyzed"
+    },
+    "timeframe": {
+      "required": false,
+      "description": "Action timeframe: immediate, quarter, strategic, or all",
+      "default": "all"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "transformer",
+  "description": "Extract actionable next steps from findings"
+}

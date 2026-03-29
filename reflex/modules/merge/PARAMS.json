@@ -1,0 +1,15 @@
+{
+  "group": "source",
+  "description": "Merge multiple research or extract files into a single consolidated evidence base",
+  "params": {
+    "targets": {
+      "required": false,
+      "description": "Comma-separated target names to merge, or 'all' for everything in workspace",
+      "default": "all",
+      "greedy": true
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

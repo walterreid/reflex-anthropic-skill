@@ -1,0 +1,22 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Primary target to evaluate"
+    },
+    "target2": {
+      "required": false,
+      "description": "Optional second target for head-to-head evaluation",
+      "default": ""
+    },
+    "domain": {
+      "required": true,
+      "description": "Evaluation domain — must match a rubric (e.g. skill-frameworks, SaaS-platforms)"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Score targets against a rubric, produces weighted scorecard with verdict"
+}

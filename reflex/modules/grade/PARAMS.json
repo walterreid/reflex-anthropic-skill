@@ -1,0 +1,15 @@
+{
+  "group": "analyzer",
+  "description": "Score multiple candidates against a consistent rubric, producing a ranked scorecard",
+  "params": {
+    "domain": {
+      "required": true,
+      "description": "The role or domain to evaluate candidates for (e.g., 'senior frontend engineer', 'product manager')"
+    },
+    "candidates": {
+      "required": true,
+      "greedy": true,
+      "description": "Comma-separated list of candidate names or identifiers to grade"
+    }
+  }
+}

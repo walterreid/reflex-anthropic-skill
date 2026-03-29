@@ -1,0 +1,18 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject or domain of the work being debriefed"
+    },
+    "scope": {
+      "required": false,
+      "description": "What to audit: chain (examine pipeline context flow) or output (examine final deliverable quality)",
+      "default": "chain"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "transformer",
+  "description": "Audit information fidelity across a chain — what evidence survived, what was lost, what was invented"
+}

@@ -1,0 +1,15 @@
+{
+  "params": {
+    "topic": {
+      "required": true,
+      "description": "Subject of the report"
+    },
+    "format": {
+      "required": false,
+      "description": "Report format: brief, full, or memo",
+      "default": "brief"
+    }
+  },
+  "group": "formatter",
+  "description": "Format findings as a structured report or memo"
+}

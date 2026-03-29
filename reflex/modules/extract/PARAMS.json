@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Filename, path, or description of the uploaded file to extract from"
+    },
+    "focus": {
+      "required": false,
+      "description": "Extraction lens: general, swot, competitive, technical, or financial",
+      "default": "general"
+    }
+  },
+  "group": "source",
+  "description": "Extract structured data from uploaded files"
+}

@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject being analyzed"
+    },
+    "intensity": {
+      "required": false,
+      "description": "Challenge intensity: gentle, rigorous, or adversarial",
+      "default": "rigorous"
+    }
+  },
+  "group": "transformer",
+  "description": "Stress-test an analysis by steelmanning the opposite position"
+}

@@ -1,0 +1,18 @@
+{
+  "params": {
+    "domain": {
+      "required": true,
+      "description": "The evaluation domain (e.g. skill-frameworks, SaaS-platforms, frontend-libraries)"
+    },
+    "depth": {
+      "required": false,
+      "description": "Rubric detail level: quick (4 dimensions) or detailed (6-7 dimensions)",
+      "default": "detailed"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "transformer",
+  "description": "Generate a weighted evaluation rubric for a domain, writes JSON rubric to disk"
+}

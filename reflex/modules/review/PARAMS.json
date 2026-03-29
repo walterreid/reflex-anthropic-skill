@@ -1,0 +1,21 @@
+{
+  "params": {
+    "target": {
+      "required": false,
+      "description": "Subject being reviewed (optional \u2014 content may already be in chain context or conversation)",
+      "default": "current"
+    },
+    "type": {
+      "required": false,
+      "description": "Content type: code, document, design, process, or strategy",
+      "default": "code"
+    },
+    "style": {
+      "required": false,
+      "description": "Review approach: thorough, quick, security, architecture, or readability",
+      "default": "thorough"
+    }
+  },
+  "group": "analyzer",
+  "description": "Generalized review of any content type"
+}

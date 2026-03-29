@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "research",
+      "forward_params": {
+        "topic": "{topic}",
+        "depth": "detailed"
+      },
+      "output_key": "findings"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Environment and secrets (keep skill repo free of local credentials)
+.env
+.env.*
+!.env.example
+
+# Editors / IDEs (uncomment if you prefer not to commit workspace settings)
+# .idea/
+# .vscode/
+
+# Local scratch / logs
+*.log
+.cache/

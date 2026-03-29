@@ -1,0 +1,18 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "URL, company name, or topic to analyze"
+    },
+    "format": {
+      "required": false,
+      "description": "Output format: grid, narrative, or brief",
+      "default": "grid"
+    }, 
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "SWOT analysis from findings or web research"
+}

@@ -1,0 +1,22 @@
+{
+  "group": "transformer",
+  "description": "Reframe existing analysis for a different audience without changing the evidence",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "What content to reframe (reads matching artifacts from workspace)"
+    },
+    "audience": {
+      "required": true,
+      "description": "Who this is for: executive, engineer, investor, non-technical, regulator, academic"
+    },
+    "purpose": {
+      "required": false,
+      "description": "What the audience should do after reading: decide, fund, build, approve, understand",
+      "default": "decide"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

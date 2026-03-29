@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject being analyzed"
+    },
+    "audience": {
+      "required": false,
+      "description": "Target audience: executive, technical, non-technical, board, or journalist",
+      "default": "executive"
+    }
+  },
+  "group": "transformer",
+  "description": "Explain analysis in plain language for a target audience"
+}

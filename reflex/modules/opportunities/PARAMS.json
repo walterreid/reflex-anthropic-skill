@@ -1,0 +1,15 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject to find opportunities for"
+    },
+    "lens": {
+      "required": false,
+      "description": "Opportunity lens: market, product, strategic, or all",
+      "default": "all"
+    }
+  },
+  "group": "analyzer",
+  "description": "Find gaps, white space, and opportunities"
+}

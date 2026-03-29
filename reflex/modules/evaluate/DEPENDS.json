@@ -1,0 +1,12 @@
+{
+    "before": [
+      {
+        "module": "rubric",
+        "forward_params": {
+          "domain": "{domain}",
+          "depth": "detailed"
+        },
+        "output_key": "rubric"
+      }
+    ]
+  }

@@ -1,0 +1,11 @@
+{
+  "params": {
+    "topic": {
+      "required": false,
+      "description": "What to talk about after the flip",
+      "default": "the nature of chance"
+    }
+  },
+  "group": "utility",
+  "description": "Time-based coin flip with variant routing"
+}

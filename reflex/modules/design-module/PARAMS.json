@@ -1,0 +1,17 @@
+{
+  "group": "meta",
+  "description": "Interactive module designer — walks a user through creating a new Callsign module with the right level, group, params, dependencies, and inject sources",
+  "params": {
+    "intent": {
+      "required": true,
+      "description": "What the new module should do, in natural language",
+      "greedy": true
+    },
+    "registry": {
+      "inject": "module_registry"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

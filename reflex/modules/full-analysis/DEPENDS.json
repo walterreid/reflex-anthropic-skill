@@ -1,0 +1,37 @@
+{
+  "before": [
+    {
+      "module": "websearch",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "{focus}"
+      },
+      "output_key": "research"
+    },
+    {
+      "module": "distill",
+      "forward_params": {
+        "target": "{target}",
+        "lens": "depth"
+      },
+      "output_key": "distilled"
+    },
+    {
+      "module": "rubric",
+      "forward_params": {
+        "domain": "{domain}",
+        "depth": "{depth}"
+      },
+      "output_key": "rubric"
+    },
+    {
+      "module": "evaluate",
+      "forward_params": {
+        "target": "{target}",
+        "target2": "{target2}",
+        "domain": "{domain}"
+      },
+      "output_key": "evaluation"
+    }
+  ]
+}

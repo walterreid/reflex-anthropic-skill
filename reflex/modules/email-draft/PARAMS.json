@@ -1,0 +1,20 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Subject being communicated about"
+    },
+    "recipient": {
+      "required": false,
+      "description": "Recipient role: cto, ceo, team, client, manager, partner",
+      "default": "manager"
+    },
+    "tone": {
+      "required": false,
+      "description": "Email tone: formal, direct, or warm",
+      "default": "direct"
+    }
+  },
+  "group": "formatter",
+  "description": "Compress analysis into a send-ready email"
+}

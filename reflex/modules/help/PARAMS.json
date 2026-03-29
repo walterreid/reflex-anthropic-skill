@@ -1,0 +1,14 @@
+{
+  "group": "meta",
+  "description": "Explain available modules, params, and composition grammar",
+  "params": {
+    "topic": {
+      "required": false,
+      "description": "Specific module name or concept to explain (e.g. 'challenge', 'chains', 'sources')",
+      "default": "overview"
+    },
+    "registry": {
+      "inject": "module_registry"
+    }
+  }
+}

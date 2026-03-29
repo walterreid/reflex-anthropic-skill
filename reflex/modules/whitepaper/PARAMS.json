@@ -1,0 +1,18 @@
+{
+  "params": {
+    "domain": {
+      "required": true,
+      "description": "Subject domain of the whitepaper (e.g. skill-frameworks, payment-networks)"
+    },
+    "depth": {
+      "required": false,
+      "description": "Level of detail: standard (8-12 paragraphs) or comprehensive (15-20 paragraphs)",
+      "default": "standard"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "formatter",
+  "description": "Format findings as a long-form whitepaper that preserves the full evidence chain"
+}

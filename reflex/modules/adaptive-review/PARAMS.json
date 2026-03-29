@@ -1,0 +1,15 @@
+{
+  "params": {
+    "language": {
+      "required": true,
+      "description": "Programming language of the code"
+    },
+    "code_context": {
+      "required": false,
+      "description": "Hint about the code: small, large, web, api, database",
+      "default": "unknown"
+    }
+  },
+  "group": "analyzer",
+  "description": "Auto-routes to quick, deep, or security review based on code context"
+}
