@@ -1,12 +1,12 @@
 # Design Module
 
-Design a new Callsign module through interactive conversation. This module understands the framework's architecture deeply enough to recommend the right level, group, params, dependencies, inject sources, and composition patterns — then writes the files.
+Design a new Reflex module through interactive conversation. This module understands the framework's architecture deeply enough to recommend the right level, group, params, dependencies, inject sources, and composition patterns — then writes the files.
 
 - **Intent**: {intent}
 
 ## System Architecture (What You're Building Into)
 
-Callsign/Reflex is a convention-based meta-skill dispatcher. Three layers, three files, three jobs:
+Reflex is a convention-based meta-skill dispatcher. Three layers, three files, three jobs:
 
 - **dispatch.py** — Routes modules. Reads the filesystem, extracts params, builds chains, runs resolvers. It never changes. Convention is the interface.
 - **sources.py** — Provides injectable runtime context. Two sources exist: `module_registry` (list of all modules with groups, params, descriptions) and `workspace_state` (summary of JSON/markdown files in `/home/claude/`). Modules request injection via `"inject": "source_name"` in PARAMS.json.
@@ -63,9 +63,9 @@ This means adding a module has zero cost until it's actually invoked. There can 
 
 ### Composition Patterns
 
-**The `+` operator:** Users compose modules ad-hoc: `callsign websearch+swot+pitch target:X`. Params are collected from all modules, deduplicated by first occurrence. Data flows forward through conversational context. Use this for flexible, user-directed pipelines.
+**The `+` operator:** Users compose modules ad-hoc: `reflex websearch+swot+pitch target:X`. Params are collected from all modules, deduplicated by first occurrence. Data flows forward through conversational context. Use this for flexible, user-directed pipelines.
 
-**DEPENDS.json:** Modules declare inherent dependencies. `callsign write-report topic:X` automatically runs `research` first. Use this when the module can't function without the upstream step.
+**DEPENDS.json:** Modules declare inherent dependencies. `reflex write-report topic:X` automatically runs `research` first. Use this when the module can't function without the upstream step.
 
 **Typical flow:** source → analyzer → transformer → formatter. Not every chain needs all four. Some are two steps, some are five. Match the task.
 
@@ -190,7 +190,7 @@ The resolver prints `variant-name|reason`. Dispatch loads `variants/{variant-nam
 - Does it interpret data through an analytical framework? → analyzer
 - Does it reshape existing analysis without adding evidence? → transformer
 - Does it produce a polished deliverable for a human audience? → formatter
-- Does it operate on the Callsign system itself? → meta
+- Does it operate on the Reflex system itself? → meta
 
 **Determine inject needs:**
 - Does it need to know what the system can do? → inject `module_registry`
@@ -223,7 +223,7 @@ List every file created.
 
 **Example chains:**
 ```
-callsign {chain examples using the new module}
+reflex {chain examples using the new module}
 ```
 
 **Design rationale:** 2-3 sentences on why this level, this group, and these composition patterns were chosen over alternatives.

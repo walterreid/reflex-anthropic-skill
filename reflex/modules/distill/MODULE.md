@@ -14,7 +14,7 @@ Reduce raw research findings to their essential structure — what categories ca
 1. Locate research data for `{target}`:
    - Look for `/home/claude/research_{target}.json`, `/home/claude/compare_*{target}*.json`, or `/home/claude/extract_{target}.json`.
    - If multiple files exist, read all of them — they represent different evidence sources.
-   - If no files exist, state that there's nothing to distill and suggest running `callsign websearch target:{target}` first.
+   - If no files exist, state that there's nothing to distill and suggest running `reflex websearch target:{target}` first.
 
 2. Read every finding. For each, note its `category` (or infer one if not labeled).
 

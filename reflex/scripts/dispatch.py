@@ -8,6 +8,10 @@ Resolves modules through filesystem convention across four levels:
   Level 2: MODULE.md + PARAMS.json + DEPENDS.json
   Level 3: MODULE.md + PARAMS.json + RESOLVE.py + variants/
 
+Levels 2 and 3 compose: a module with both DEPENDS.json and RESOLVE.py
+will run dependencies first (subject to unless_exists conditions), then
+resolve its variant.
+
 Output protocols:
   LOAD_MODULE:/path
   LOAD_MODULE_WITH_PARAMS:/path|PARAMS:{...}
@@ -131,20 +135,18 @@ def build_chain(module_name: str, module_path: Path, params: dict, visited=None)
             return [{"error": f"Failed to read DEPENDS.json: {depends['error']}"}]
 
         for dep in depends.get("before", []):
-
-            # Check conditional skip
-            skip_condition = dep.get("unless_exists")
-            if skip_condition:
-                try:
-                    pattern = skip_condition.format(**params)
-                    matches = list(Path("/home/claude").glob(pattern))
-                    if matches:
-                        continue  # dependency output already exists, skip
-                except (KeyError, ValueError):
-                    pass  # if pattern can't resolve, run the dependency anyway
-
             dep_name = dep.get("module")
             dep_path = MODULES_DIR / dep_name
+
+            # Conditional dependency — skip if output already exists
+            condition = dep.get("unless_exists")
+            if condition:
+                try:
+                    pattern = condition.format(**params)
+                except KeyError:
+                    pattern = condition
+                if list(Path("/home/claude").glob(pattern)):
+                    continue
 
             if not dep_path.exists() or not (dep_path / "MODULE.md").exists():
                 return [{"error": f"Dependency '{dep_name}' not found"}]
@@ -160,6 +162,21 @@ def build_chain(module_name: str, module_path: Path, params: dict, visited=None)
             sub_chain = build_chain(dep_name, dep_path, dep_params, visited.copy())
             if sub_chain and "error" in sub_chain[-1]:
                 return sub_chain
+
+            # If dependency is Level 3, resolve its variant
+            if (dep_path / "RESOLVE.py").exists():
+                dep_injected = inject_params(dep_params, load_json(dep_path / "PARAMS.json")) if (dep_path / "PARAMS.json").exists() else dep_params
+                dep_params_merged = {**dep_params, **dep_injected}
+                variant_name, reason = run_resolver(dep_path, dep_params_merged)
+                if variant_name is None:
+                    return [{"error": f"Dependency '{dep_name}' resolver failed: {reason}"}]
+                variant_path = dep_path / "variants" / variant_name / "MODULE.md"
+                if not variant_path.exists():
+                    return [{"error": f"Dependency '{dep_name}' variant '{variant_name}' not found"}]
+                if sub_chain:
+                    sub_chain[-1]["path"] = str(variant_path)
+                    sub_chain[-1]["resolved_by"] = "RESOLVE.py"
+                    sub_chain[-1]["reason"] = reason
 
             if sub_chain:
                 sub_chain[-1]["output_key"] = dep.get("output_key", dep_name + "_output")
@@ -300,20 +317,20 @@ def dispatch(message: str) -> str:
         words = message.strip().lower().split()
 
     # Support multiple trigger words — skip if found at any position
-    tango_idx = -1
-    for trigger in ("callsign", "tango"):
+    reflex_idx = -1
+    for trigger in ("callsign", "tango", "reflex"):
         if trigger in words:
-            tango_idx = words.index(trigger)
+            reflex_idx = words.index(trigger)
             break
 
     if not words:
         return "ERROR:No input provided"
 
-    if tango_idx == -1:
+    if reflex_idx == -1:
         module_name = words[0]
         extra_words = words[1:]
     else:
-        remaining = words[tango_idx + 1:]
+        remaining = words[reflex_idx + 1:]
         if not remaining:
             return "RESPOND:Foxtrot, Charlie."
         module_name = remaining[0]
@@ -369,12 +386,21 @@ def dispatch(message: str) -> str:
             return f"LOAD_MODULE_WITH_PARAMS:{module_md}|PARAMS:{json.dumps(extracted)}"
         return f"CHAIN:{json.dumps(chain)}"
 
-    # Level 3: run resolver
+    # Level 3: run dependencies first (if any), then resolve variant
+    if (module_path / "DEPENDS.json").exists():
+        chain = build_chain(module_name, module_path, extracted)
+        for step in chain:
+            if "error" in step:
+                return f"ERROR:{step['error']}"
+        # Remove the final step (the module itself) — the resolver handles that
+        dep_steps = chain[:-1]
+    else:
+        dep_steps = []
+
     variant_name, reason = run_resolver(module_path, extracted)
     if variant_name is None:
         return f"ERROR:{reason}"
 
-    # Resolve variant to filesystem
     variant_path = module_path / "variants" / variant_name / "MODULE.md"
     if not variant_path.exists():
         available_variants = [
@@ -383,11 +409,22 @@ def dispatch(message: str) -> str:
         ] if (module_path / "variants").exists() else []
         return f"ERROR:Variant '{variant_name}' not found. Available: {', '.join(available_variants)}"
 
-    # Check if variant has its own PARAMS.json (inherit parent params if not)
     variant_params_file = module_path / "variants" / variant_name / "PARAMS.json"
     if variant_params_file.exists():
         variant_schema = load_json(variant_params_file)
         extracted = apply_defaults(extracted, variant_schema)
+
+    if dep_steps:
+        dep_steps.append({
+            "module": module_name,
+            "path": str(variant_path),
+            "params": extracted,
+            "output_key": module_name + "_output",
+            "step": len(dep_steps) + 1,
+            "resolved_by": "RESOLVE.py",
+            "reason": reason
+        })
+        return f"CHAIN:{json.dumps(dep_steps)}"
 
     return f"RESOLVED:{variant_path}|PARAMS:{json.dumps(extracted)}|RESOLVED_BY:RESOLVE.py|REASON:{reason}"
 

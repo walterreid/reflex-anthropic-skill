@@ -24,7 +24,7 @@ Combine multiple research, comparison, or extract files into a single consolidat
 
 4. Re-categorize if needed: findings from different research files may use different category names for the same concept. Normalize category names where the overlap is clear, but note the mapping.
 
-5. Write the merged output to `/home/claude/merged_{targets_slug}.json` where `{targets_slug}` is a short dash-separated version of the target names (e.g., `merged_anthropic-callsign.json`):
+5. Write the merged output to `/home/claude/merged_{targets_slug}.json` where `{targets_slug}` is a short dash-separated version of the target names (e.g., `merged_anthropic-reflex.json`):
 
 ```json
 {

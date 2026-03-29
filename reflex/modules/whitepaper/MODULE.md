@@ -15,7 +15,7 @@ Format findings as a long-form whitepaper that preserves the full evidence chain
 1. Gather all upstream findings from `{findings}`. Also review the workspace data above to identify all structured JSON files related to `{domain}` — research files, distill files, comparison files, rubric files, evaluation files. Read all of them. The whitepaper should synthesize everything available, not just the most recent step's output.
 2. Structure the whitepaper with these sections:
 
-   **Title**: A specific, descriptive title — not "Whitepaper on {domain}" but something that captures the argument (e.g. "Convention Over Configuration: How Callsign's Composition Grammar Addresses the Skill Chaining Gap").
+   **Title**: A specific, descriptive title — not "Whitepaper on {domain}" but something that captures the argument (e.g. "Convention Over Configuration: How Reflex's Composition Grammar Addresses the Skill Chaining Gap").
 
    **Abstract**: 3-4 sentences. The question, the approach, the key finding. A reader should know whether to continue after this paragraph.
 

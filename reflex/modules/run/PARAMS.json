@@ -1,0 +1,18 @@
+{
+  "group": "meta",
+  "description": "Execute a plan step-by-step with pauses between each module, or continue an existing run",
+  "params": {
+    "intent": {
+      "required": false,
+      "description": "Natural language intent for a new run, or subcommand: skip, reset",
+      "greedy": true,
+      "default": ""
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    },
+    "registry": {
+      "inject": "module_registry"
+    }
+  }
+}

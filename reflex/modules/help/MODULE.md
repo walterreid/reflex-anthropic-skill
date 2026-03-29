@@ -1,6 +1,6 @@
 # Help Module
 
-Explain the callsign system, its modules, and how to compose them.
+Explain the reflex system, its modules, and how to compose them.
 
 - **Topic**: {topic}
 
@@ -14,11 +14,11 @@ Based on `{topic}`, respond appropriately:
 
 ### If topic is "overview"
 Give a concise introduction to the system:
-- What `/callsign` is (a module-based dispatch system)
+- What `/reflex` is (a module-based dispatch system)
 - The four module groups: sources gather data, analyzers interpret it, transformers reshape it, formatters deliver it
-- How to chain with `+`: `/callsign websearch+challenge+pitch target:anthropic audience:investors`
-- How params work: positional (`/callsign swot anthropic`) or named (`target:anthropic`)
-- Mention `/callsign plan "your goal"` for help composing chains
+- How to chain with `+`: `/reflex websearch+challenge+pitch target:anthropic audience:investors`
+- How params work: positional (`/reflex swot anthropic`) or named (`target:anthropic`)
+- Mention `/reflex plan "your goal"` for help composing chains
 
 ### If topic is a module name (matches something in the registry)
 Explain that specific module: what it does, its params, what group it belongs to, and 2-3 example chains it works well in.

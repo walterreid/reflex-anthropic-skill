@@ -16,7 +16,7 @@ Score one or two targets against an evaluation rubric.
 1. Load the rubric:
    - If upstream context contains rubric dimensions (from a chained `rubric` module), use those.
    - Otherwise, check the workspace data above for rubric files matching `{domain}`, and read the file.
-   - If no rubric is found, respond with: "No rubric found for domain `{domain}`. Run `callsign rubric domain:{domain}` first, or chain it: `callsign rubric+evaluate domain:{domain} target:X`"
+   - If no rubric is found, respond with: "No rubric found for domain `{domain}`. Run `reflex rubric domain:{domain}` first, or chain it: `reflex rubric+evaluate domain:{domain} target:X`"
 2. Load evidence about the targets:
    - If upstream context contains research or comparison findings, use those.
    - Otherwise, check the workspace data above for research, comparison, or distill files matching `{target}` or `{target2}`, and read the relevant files.

@@ -31,6 +31,6 @@ Analyze a chain that produced weak results and suggest a better one.
 **Diagnosis:** 2-3 sentences on what was missing or misordered.
 **Suggested fix:**
 ```
-/callsign improved+chain+here target:X
+/reflex improved+chain+here target:X
 ```
 One sentence on what the fix changes.

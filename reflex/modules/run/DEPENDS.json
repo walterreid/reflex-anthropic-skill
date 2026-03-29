@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "plan",
+      "forward_params": {
+        "intent": "{intent}"
+      },
+      "output_key": "plan_output",
+      "unless_exists": "run_plan.json"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "group": "meta",
-  "description": "Interactive module designer — walks a user through creating a new Callsign module with the right level, group, params, dependencies, and inject sources",
+  "description": "Interactive module designer — walks a user through creating a new Reflex module with the right level, group, params, dependencies, and inject sources",
   "params": {
     "intent": {
       "required": true,

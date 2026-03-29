@@ -49,7 +49,7 @@ Brief description of what it does.
 
 **Example chains:**
 ```
-tango [chain using new module with existing ones]
+reflex [chain using new module with existing ones]
 ```
 
 **Files written to:** `/home/claude/modules/{name}/` — ready to move into your modules directory.

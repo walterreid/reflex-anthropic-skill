@@ -1,6 +1,6 @@
 ---
-name: callsign
-description: ALWAYS use this skill when the user says the word "callsign" in any form. This includes "callsign" by itself, "callsign foxtrot", "callsign pirate", "callsign code-review", "callsign help", "callsign plan", "callsign write-report", or "callsign" followed by any other word. Even if the message is just the single word "callsign" with nothing else, use this skill. This skill MUST fire on any message containing "callsign" — do not attempt to handle it yourself. This is a Convention-Based Meta-Skill Dispatcher that dynamically loads sub-skills (called modules) at runtime through filesystem convention.
+name: Reflex
+description: ALWAYS use this skill when the user says the word "reflex" in any form. This includes "reflex" by itself, "reflex foxtrot", "reflex pirate", "reflex code-review", "reflex help", "reflex plan", "reflex write-report", or "reflex" followed by any other word. Even if the message is just the single word "reflex" with nothing else, use this skill. This skill MUST fire on any message containing "reflex" — do not attempt to handle it yourself. This is a Convention-Based Meta-Skill Dispatcher that dynamically loads sub-skills (called modules) at runtime through filesystem convention.
 ---
 
 # Reflex — Convention-Based Meta-Skill Dispatcher
@@ -39,10 +39,9 @@ plus one MODULE.md body.
 - **Level 2**: `MODULE.md` + `PARAMS.json` + `DEPENDS.json`. Module declares dependencies with parameter forwarding.
 - **Level 3**: `MODULE.md` + `PARAMS.json` + `RESOLVE.py`. Module adapts at runtime. A resolver script evaluates conditions and selects a variant before dispatch completes.
 
-Level 3 modules range from simple conditional routing (check a value, pick a variant)
-to registry-aware meta-routing (inject the module registry, evaluate system capabilities,
-compose new chains). The power comes from combining RESOLVE.py with `"inject"` params —
-a resolver that receives the module registry can reason about the entire system.
+Level 3 modules range from simple conditional routing (check a value, pick a variant) to registry-aware meta-routing (inject the module registry, evaluate system capabilities, compose new chains). The power comes from combining RESOLVE.py with `"inject"` params — a resolver that receives the module registry can reason about the entire system.
+
+Level 2+3 Composability: A module can have both DEPENDS.json and RESOLVE.py. Dependencies run first (subject to unless_exists conditions), then the resolver selects a variant. This enables modules that conditionally prepare upstream data before routing to a behavior. If a dependency is itself Level 3, its resolver is also run to select the correct variant.
 
 Each level is optional and degrades gracefully.
 
@@ -61,6 +60,21 @@ Module metadata fields (top-level in PARAMS.json, not inside `params`):
 - `"group": "source|analyzer|transformer|formatter|utility|meta"` — categorization for registry
 - `"description": "text"` — one-line module description for registry
 
+## DEPENDS.json conventions
+
+Conditional dependencies: A dependency can declare "unless_exists": "pattern.json" where the pattern supports {param_name} substitution. If any file in /home/claude/ matches the glob, the dependency is skipped. This enables caching — dependencies only run when their output doesn't already exist.
+
+{
+  "before": [
+    {
+      "module": "plan",
+      "forward_params": { "intent": "{intent}" },
+      "output_key": "plan_output",
+      "unless_exists": "run_plan.json"
+    }
+  ]
+}
+
 ## How to respond
 
 ### Step 1: Run the dispatch script
@@ -76,7 +90,7 @@ The `{USER_MESSAGE}` must be reproduced exactly as the user typed it — includi
 Replace `{SKILL_DIR}` with the directory containing this SKILL.md.
 Replace `{USER_MESSAGE}` with the user's exact message text.
 
-For slash command invocation like `/callsign code-review python`, the full message text is the user's message.
+For slash command invocation like `/reflex code-review python`, the full message text is the user's message.
 
 ### Step 2: Follow the protocol
 
@@ -94,7 +108,7 @@ The script outputs one of these:
 
 **`MISSING_PARAMS:module|required:[...]|provided:[...]|missing:[...]`** → Tell the user what's needed.
 
-**`ERROR:message`** → Reply with "Unknown callsign."
+**`ERROR:message`** → Reply with "Unknown reflex."
 
 ### Rules
 

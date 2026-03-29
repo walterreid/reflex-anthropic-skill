@@ -6,7 +6,7 @@ In this repo, the skill is rooted at **`reflex/`** (that folder contains `SKILL.
 
 ## What it does
 
-- **Trigger:** The skill is written to activate when the user’s message contains the word **`callsign`** (see the `description` in `reflex/SKILL.md` frontmatter). Examples: `callsign code-review`, `callsign plan`, `callsign help`.
+- **Trigger:** The skill is written to activate when the user’s message contains the word **`reflex`** (see the `description` in `reflex/SKILL.md` frontmatter). Examples: `reflex code-review`, `reflex plan`, `reflex help`.
 - **Routing:** `reflex/scripts/dispatch.py` scans `reflex/modules/`, parses the user message against each module’s optional `PARAMS.json`, resolves dependency chains (`DEPENDS.json`) or variant pickers (`RESOLVE.py`), and prints a **single protocol line** telling the assistant what to load next.
 - **Modules:** Each capability lives under `reflex/modules/<name>/` with at least `MODULE.md`. Optional files add parameters, dependencies, or runtime variant selection.
 
@@ -33,7 +33,7 @@ reflex/
 
 1. Use the directory **`reflex/`** as the skill package (it must contain `SKILL.md` at the top level of that folder).
 2. Add or upload that folder through your Claude **Skills** / **Agent skills** workflow in the product you use (desktop app, API, or team settings—depending on what your account supports).
-3. After installation, invoke it in chat with **`callsign`** plus a module name and any arguments described in that module’s `PARAMS.json`.
+3. After installation, invoke it in chat with **`reflex`** plus a module name and any arguments described in that module’s `PARAMS.json`.
 
 If your tooling expects a zip, zip the **contents** of `reflex/` or the `reflex` folder itself according to that tool’s docs, preserving `SKILL.md` at the skill root.
 
@@ -43,7 +43,7 @@ From the repo root (adjust paths if you run from elsewhere):
 
 ```bash
 python3 reflex/scripts/dispatch.py - <<'DISPATCH_INPUT'
-callsign help
+reflex help
 DISPATCH_INPUT
 ```
 

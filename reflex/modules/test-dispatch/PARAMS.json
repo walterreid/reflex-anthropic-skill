@@ -1,0 +1,11 @@
+{
+  "group": "meta",
+  "description": "Smoke test dispatch routing across all levels, features, and edge cases",
+  "params": {
+    "scope": {
+      "required": false,
+      "description": "What to test: all, routing, params, chains, resolvers, conditionals",
+      "default": "all"
+    }
+  }
+}
