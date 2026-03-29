@@ -11,5 +11,6 @@
     }
   },
   "group": "formatter",
-  "description": "Format findings as a structured report or memo"
+  "description": "Format findings as a structured report or memo",
+  "usage": "write a report, create a memo, format as report, structured writeup, document as report"
 }

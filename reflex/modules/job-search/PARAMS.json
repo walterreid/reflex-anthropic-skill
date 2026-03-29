@@ -1,0 +1,21 @@
+{
+  "group": "source",
+  "description": "Search for open positions at a company, producing structured job listings for downstream matching",
+  "usage": "find jobs at, open roles at, who is hiring, careers at, positions at, job openings",
+  "params": {
+    "company": {
+      "required": true,
+      "description": "Company name to search for open roles"
+    },
+    "role_filter": {
+      "required": false,
+      "default": "all",
+      "description": "Filter roles by keyword or domain (e.g., 'product management', 'safety', 'engineering')"
+    },
+    "location": {
+      "required": false,
+      "default": "all",
+      "description": "Filter roles by location (e.g., 'NYC', 'remote')"
+    }
+  }
+}

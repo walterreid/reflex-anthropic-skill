@@ -7,5 +7,6 @@
     }
   },
   "group": "utility",
-  "description": "Time-based coin flip with variant routing"
+  "description": "Time-based coin flip with variant routing",
+  "usage": "flip a coin, heads or tails, random pick, coin toss"
 }

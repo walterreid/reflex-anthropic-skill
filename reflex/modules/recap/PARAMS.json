@@ -1,6 +1,7 @@
 {
   "group": "formatter",
   "description": "Summarize all workspace artifacts into a tight executive recap",
+  "usage": "summary of everything so far, rundown, wrap up, what have we done, overview of session",
   "params": {
     "target": {
       "required": false,

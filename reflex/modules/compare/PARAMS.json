@@ -15,5 +15,6 @@
     }
   },
   "group": "source",
-  "description": "Side-by-side web research of two targets, writes JSON comparison"
+  "description": "Side-by-side web research of two targets, writes JSON comparison",
+  "usage": "compare X vs Y, head to head, side by side, which is better, pros and cons of A versus B"
 }

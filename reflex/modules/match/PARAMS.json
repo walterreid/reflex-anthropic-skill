@@ -1,0 +1,20 @@
+{
+  "group": "analyzer",
+  "description": "Score a candidate against multiple opportunities and produce a ranked fit matrix with strengths and gaps",
+  "usage": "am I a good fit for, does my resume match, qualify for roles, appropriate for jobs, career fit, suitable for positions, careers align with my background, right for these roles",
+  "params": {
+    "candidate": {
+      "required": true,
+      "description": "The candidate to evaluate — references a workspace file (e.g., 'resume' maps to extract_resume.json)"
+    },
+    "opportunities": {
+      "required": true,
+      "description": "The set of opportunities to match against — references a workspace file (e.g., 'anthropic' maps to jobs_anthropic.json)"
+    },
+    "lens": {
+      "required": false,
+      "default": "default",
+      "description": "Weighting strategy: 'career-change', 'lateral', 'stretch', or 'default'"
+    }
+  }
+}

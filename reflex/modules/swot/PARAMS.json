@@ -14,5 +14,6 @@
     }
   },
   "group": "analyzer",
-  "description": "SWOT analysis from findings or web research"
+  "description": "SWOT analysis from findings or web research",
+  "usage": "strengths weaknesses opportunities threats, SWOT analysis, strategic assessment of, competitive position"
 }

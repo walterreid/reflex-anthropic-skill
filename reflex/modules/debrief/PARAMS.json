@@ -14,5 +14,6 @@
     }
   },
   "group": "transformer",
-  "description": "Audit information fidelity across a chain — what evidence survived, what was lost, what was invented"
+  "description": "Audit information fidelity across a chain — what evidence survived, what was lost, what was invented",
+  "usage": "audit the chain, what got lost, information fidelity, did we drop anything, evidence check"
 }

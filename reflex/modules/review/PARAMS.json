@@ -17,5 +17,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Generalized review of any content type"
+  "description": "Generalized review of any content type",
+  "usage": "review this, give feedback on, critique my draft, assess this document"
 }

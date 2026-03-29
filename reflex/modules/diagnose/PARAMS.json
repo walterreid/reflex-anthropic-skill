@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Analyze a chain that produced weak results and suggest improvements",
+  "usage": "why did this chain fail, bad results, debug my workflow, what went wrong in the analysis",
   "params": {
     "chain": {
       "required": true,

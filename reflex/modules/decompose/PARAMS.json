@@ -1,0 +1,20 @@
+{
+  "group": "source",
+  "description": "Break a complex question into researchable sub-questions, each tagged with the best module to answer it",
+  "usage": "break this down, split into sub-questions, what should I research first, decompose this problem",
+  "params": {
+    "question": {
+      "required": true,
+      "description": "The complex question to decompose",
+      "greedy": true
+    },
+    "depth": {
+      "required": false,
+      "description": "How many sub-questions to generate: quick (2-4), standard (4-6), detailed (5-10)",
+      "default": "standard"
+    },
+    "registry": {
+      "inject": "module_registry"
+    }
+  }
+}

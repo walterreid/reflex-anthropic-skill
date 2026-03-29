@@ -11,5 +11,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Identify risks and mitigations"
+  "description": "Identify risks and mitigations",
+  "usage": "what could go wrong, risk assessment, potential problems, downsides, dangers if we, failure modes, what are the risks, things that could fail"
 }

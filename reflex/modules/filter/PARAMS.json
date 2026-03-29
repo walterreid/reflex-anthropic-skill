@@ -1,0 +1,23 @@
+{
+  "group": "transformer",
+  "description": "Prune findings to only what's relevant for a specific criteria, dropping the rest with full transparency",
+  "usage": "only the relevant parts, remove noise, narrow down, just what matters for",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Which upstream data to filter (matches research/compare/extract filenames)"
+    },
+    "criteria": {
+      "required": true,
+      "description": "The relevance lens: a domain, stakeholder, constraint, or question to filter by"
+    },
+    "threshold": {
+      "required": false,
+      "description": "How aggressively to prune: strict (keep 4-5 only), moderate (keep 3-5), loose (keep 2-5)",
+      "default": "moderate"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

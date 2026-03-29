@@ -1,0 +1,22 @@
+{
+  "group": "formatter",
+  "description": "Generate a complete interactive recipe for any dish using the recipe widget",
+  "usage": "how to cook, recipe for, make me a dish, carbonara, pasta, bake a cake, dinner recipe, meal prep, help me cook, what should I make for",
+  "params": {
+    "dish": {
+      "required": true,
+      "greedy": true,
+      "description": "The dish to generate a recipe for (e.g., 'lasagna', 'chicken tikka masala')"
+    },
+    "style": {
+      "required": false,
+      "default": "classic",
+      "description": "Cuisine style or approach (e.g., 'Italian grandma', 'quick weeknight', 'restaurant-quality')"
+    },
+    "servings": {
+      "required": false,
+      "default": "4",
+      "description": "Number of servings to scale the recipe to"
+    }
+  }
+}

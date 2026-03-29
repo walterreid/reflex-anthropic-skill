@@ -14,5 +14,6 @@
     }
   },
   "group": "transformer",
-  "description": "Extract actionable next steps from findings"
+  "description": "Extract actionable next steps from findings",
+  "usage": "what should I do next, action items, next steps, to-do from this"
 }

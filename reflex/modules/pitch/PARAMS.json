@@ -19,5 +19,6 @@
     }
   },
   "group": "formatter",
-  "description": "Structure findings as a persuasive Situation-Complication-Resolution narrative"
+  "description": "Structure findings as a persuasive Situation-Complication-Resolution narrative",
+  "usage": "make the case for, sell this idea, persuasive narrative, convince stakeholders, pitch this"
 }

@@ -1,6 +1,7 @@
 {
   "group": "transformer",
   "description": "Reframe existing analysis for a different audience without changing the evidence",
+  "usage": "rewrite for a different audience, explain to non-technical, tailor this for, adapt for executives",
   "params": {
     "target": {
       "required": true,

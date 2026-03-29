@@ -18,5 +18,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Score targets against a rubric, produces weighted scorecard with verdict"
+  "description": "Score targets against a rubric, produces weighted scorecard with verdict",
+  "usage": "rate this, score against criteria, how good is this, assess quality, evaluate against competitor, benchmark against"
 }

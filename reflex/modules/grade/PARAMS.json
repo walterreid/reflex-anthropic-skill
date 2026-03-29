@@ -1,6 +1,7 @@
 {
   "group": "analyzer",
   "description": "Score multiple candidates against a consistent rubric, producing a ranked scorecard",
+  "usage": "rank these options, compare vendors, which is best of these, rate multiple candidates, score several",
   "params": {
     "domain": {
       "required": true,

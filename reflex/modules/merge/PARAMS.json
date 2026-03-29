@@ -1,6 +1,7 @@
 {
   "group": "source",
   "description": "Merge multiple research or extract files into a single consolidated evidence base",
+  "usage": "combine these files, merge results, consolidate findings, bring together",
   "params": {
     "targets": {
       "required": false,

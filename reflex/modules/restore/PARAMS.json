@@ -1,0 +1,17 @@
+{
+  "group": "utility",
+  "description": "Unpack an uploaded snapshot file back into the workspace to resume a previous session",
+  "usage": "restore my session, load snapshot, resume where I left off, unpack workspace",
+  "params": {
+    "source": {
+      "required": false,
+      "description": "Filename of the snapshot to restore (if multiple are uploaded)",
+      "default": "auto"
+    },
+    "mode": {
+      "required": false,
+      "description": "How to handle conflicts: fill (skip existing), overwrite (replace matching), replace (clear workspace first)",
+      "default": "fill"
+    }
+  }
+}

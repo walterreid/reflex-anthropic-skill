@@ -1,6 +1,7 @@
 {
   "group": "transformer",
   "description": "Distill research findings into weighted categories for downstream analysis",
+  "usage": "boil down, key takeaways, what matters most, essence of, core findings, bottom line",
   "params": {
     "target": {
       "required": true,

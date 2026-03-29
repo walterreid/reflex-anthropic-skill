@@ -11,5 +11,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Review code for bugs, security, and quality"
+  "description": "Review code for bugs, security, and quality",
+  "usage": "find bugs in my code, security audit, code quality check, review this function"
 }

@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Explain available modules, params, and composition grammar",
+  "usage": "what reflex modules exist, how does reflex work, reflex help, show me available commands",
   "params": {
     "topic": {
       "required": false,

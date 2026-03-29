@@ -1,0 +1,16 @@
+{
+  "group": "utility",
+  "description": "Package the current workspace into a downloadable snapshot, with optional diff against a previous snapshot",
+  "usage": "save my session, package workspace, download snapshot, export progress",
+  "params": {
+    "label": {
+      "required": false,
+      "description": "A short label for this snapshot (used in filename)",
+      "default": "workspace",
+      "greedy": true
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

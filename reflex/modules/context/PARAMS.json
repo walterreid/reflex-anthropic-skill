@@ -11,5 +11,6 @@
     }
   },
   "group": "source",
-  "description": "Gather and structure content from the current conversation"
+  "description": "Gather and structure content from the current conversation",
+  "usage": "what have we discussed, conversation so far, pull from our chat, what did I say earlier"
 }

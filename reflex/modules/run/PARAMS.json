@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Execute a plan step-by-step with pauses between each module, or continue an existing run",
+  "usage": "run the plan, execute the chain, start the workflow, go step by step",
   "params": {
     "intent": {
       "required": false,

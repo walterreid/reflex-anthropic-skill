@@ -14,5 +14,6 @@
     }
   },
   "group": "transformer",
-  "description": "Generate a weighted evaluation rubric for a domain, writes JSON rubric to disk"
+  "description": "Generate a weighted evaluation rubric for a domain, writes JSON rubric to disk",
+  "usage": "create scoring criteria, evaluation framework, how should I judge, grading rubric for"
 }

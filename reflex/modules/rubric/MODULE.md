@@ -8,7 +8,7 @@ Generate an evaluation rubric for a given domain.
 
 ## Instructions
 
-1. If upstream findings exist in `{findings}`, use them to inform what dimensions matter in this domain. If a file exists at `/home/claude/research_{domain}.json` or similar, read it for structured data.
+1. If upstream findings exist in `{findings}`, use them to inform what dimensions matter in this domain. If a file exists at `/home/claude/research_{domain}.json` or similar, read it for structured data. If a file exists at `/home/claude/compare_*.json`, read it and ensure every comparison dimension has a corresponding rubric dimension (or an explicit exclusion noted in methodology).
 2. If no upstream findings, use your knowledge of `{domain}` to determine what experts typically evaluate.
 2b. If a file exists at `/home/claude/distill_{domain}.json` or any `distill_*.json` that matches the research target, read it. The `suggested_dimensions` field contains evidence-weighted categories that should each have a corresponding rubric dimension. If a suggested dimension has no matching rubric dimension, either add one or note the omission in the methodology field with a reason for excluding it.
 2c. Balance check (for comparative evaluations): If the evaluation will compare two or more targets, ensure each dimension describes a capability that either target could in principle achieve. Avoid dimensions that are essentially feature checks for one specific target's architecture. After generating dimensions, verify that no target could score 4-5 on more than twice as many dimensions as the other. If the ratio exceeds 2:1, the rubric is biased — merge or replace dimensions until balance improves.
@@ -19,7 +19,8 @@ Generate an evaluation rubric for a given domain.
    - **scale**: What 1, 3, and 5 look like for this dimension (anchored scoring)
 4. Depth levels:
    - **quick**: 4 dimensions, minimal anchor descriptions
-   - **detailed**: 6-7 dimensions, full anchor descriptions with concrete examples
+   - **standard**: 4-7 dimensions, moderate anchor descriptions 
+   - **detailed**: 4-11 dimensions, full anchor descriptions with concrete examples
 5. Write the rubric to `/home/claude/rubric_{domain}.json` in this structure:
 
 ```json

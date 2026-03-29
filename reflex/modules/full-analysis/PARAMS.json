@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "One-command complete analysis: research, rubric, evaluate, and whitepaper in a single invocation",
+  "usage": "full analysis, complete deep dive, end to end analysis, everything on this topic",
   "params": {
     "target": {
       "required": true,

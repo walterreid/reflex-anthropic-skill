@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Show what's been produced in the current session workspace",
+  "usage": "what files do I have, session status, what has been produced, workspace contents",
   "params": {
     "workspace": {
       "inject": "workspace_state"

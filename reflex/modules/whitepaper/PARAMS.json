@@ -14,5 +14,6 @@
     }
   },
   "group": "formatter",
-  "description": "Format findings as a long-form whitepaper that preserves the full evidence chain"
+  "description": "Format findings as a long-form whitepaper that preserves the full evidence chain",
+  "usage": "write a whitepaper, long-form report, detailed document with evidence, comprehensive writeup, full paper"
 }

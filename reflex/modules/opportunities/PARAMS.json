@@ -11,5 +11,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Find gaps, white space, and opportunities"
+  "description": "Find gaps, white space, and opportunities",
+  "usage": "what am I missing, where is the opportunity, market gaps, untapped potential, white space"
 }

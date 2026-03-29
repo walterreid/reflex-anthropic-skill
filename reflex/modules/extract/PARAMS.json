@@ -11,5 +11,6 @@
     }
   },
   "group": "source",
-  "description": "Extract structured data from uploaded files"
+  "description": "Extract structured data from uploaded files",
+  "usage": "pull data from this file, parse this spreadsheet, get info from document, read my upload"
 }

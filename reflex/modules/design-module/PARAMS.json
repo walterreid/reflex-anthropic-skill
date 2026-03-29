@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Interactive module designer — walks a user through creating a new Reflex module with the right level, group, params, dependencies, and inject sources",
+  "usage": "create a new reflex module, build a custom module, design a reflex module",
   "params": {
     "intent": {
       "required": true,

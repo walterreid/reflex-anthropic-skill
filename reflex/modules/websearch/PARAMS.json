@@ -11,5 +11,6 @@
     }
   },
   "group": "source",
-  "description": "Research a target using web search, writes structured JSON findings"
+  "description": "Research a target using web search, writes structured JSON findings",
+  "usage": "search the web for, look up online, find information about, web research on"
 }

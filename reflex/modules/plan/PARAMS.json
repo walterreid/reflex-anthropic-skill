@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Propose a module chain or design a new module from a natural language intent",
+  "usage": "plan how to, figure out which modules, what chain should I run",
   "params": {
     "intent": {
       "required": true,

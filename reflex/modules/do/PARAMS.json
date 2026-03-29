@@ -1,0 +1,13 @@
+{
+    "group": "utility",
+    "description": "General-purpose fallback — fulfills any intent directly when no specialized module fits",
+    "usage": "just do it, handle this, take care of it",
+    "params": {
+      "intent": {
+        "required": true,
+        "greedy": true,
+        "description": "The freeform intent to fulfill"
+      }
+    }
+  }
+  

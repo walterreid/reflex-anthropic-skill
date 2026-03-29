@@ -1,0 +1,24 @@
+{
+  "group": "analyzer",
+  "description": "Project 2-4 plausible future scenarios from findings, with probabilities, implications, and early signals",
+  "usage": "what might happen, future scenarios, if we do this then, forecast outcomes, predict what happens",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "What to project scenarios for (matches upstream research/compare filenames)"
+    },
+    "horizon": {
+      "required": false,
+      "description": "Time horizon for projections: near (6-12 months), medium (1-3 years), far (3-10 years)",
+      "default": "medium"
+    },
+    "count": {
+      "required": false,
+      "description": "Number of scenarios to generate (2-4)",
+      "default": "3"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

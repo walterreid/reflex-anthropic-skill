@@ -11,5 +11,6 @@
     }
   },
   "group": "transformer",
-  "description": "Explain analysis in plain language for a target audience"
+  "description": "Explain analysis in plain language for a target audience",
+  "usage": "explain like I'm five, make this simple, plain english, dumb it down, for a 5th grader, layman terms, non-technical version"
 }

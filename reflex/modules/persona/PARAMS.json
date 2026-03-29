@@ -1,0 +1,23 @@
+{
+  "group": "analyzer",
+  "description": "Simulate a specific stakeholder's reaction to findings — their priorities, objections, and what would persuade them",
+  "usage": "how would a CFO react, what would investors think, stakeholder perspective, simulate someone's response, how would X respond to this",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Which upstream findings to react to (matches research/compare/evaluate filenames)"
+    },
+    "role": {
+      "required": true,
+      "description": "The stakeholder perspective: CFO, end-user, regulator, skeptical-CTO, junior-developer, investor, competitor, etc."
+    },
+    "tone": {
+      "required": false,
+      "description": "Output style: analytical (third-person assessment), voice (first-person as the persona), brief (bullet-point reactions only)",
+      "default": "analytical"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

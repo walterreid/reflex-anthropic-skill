@@ -11,5 +11,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Auto-routes to quick, deep, or security review based on code context"
+  "description": "Auto-routes to quick, deep, or security review based on code context",
+  "usage": "review my code, check this code, look at my pull request"
 }

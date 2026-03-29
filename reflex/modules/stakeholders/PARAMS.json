@@ -11,5 +11,6 @@
     }
   },
   "group": "analyzer",
-  "description": "Map key people and organizations"
+  "description": "Map key people and organizations",
+  "usage": "who are the key players, important people in, major organizations, who matters in this space, power map"
 }

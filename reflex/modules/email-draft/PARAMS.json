@@ -16,5 +16,6 @@
     }
   },
   "group": "formatter",
-  "description": "Compress analysis into a send-ready email"
+  "description": "Compress analysis into a send-ready email",
+  "usage": "write an email, draft a message, cold email, email to someone about, compose mail"
 }

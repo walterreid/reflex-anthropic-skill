@@ -1,6 +1,7 @@
 {
   "group": "meta",
   "description": "Smoke test dispatch routing across all levels, features, and edge cases",
+  "usage": "test reflex routing, smoke test dispatch, verify routing works",
   "params": {
     "scope": {
       "required": false,
