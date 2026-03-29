@@ -35,3 +35,6 @@ build/
 # Local scratch / logs
 *.log
 .cache/
+
+# Local skill packaging (do not commit)
+reflex.zip
