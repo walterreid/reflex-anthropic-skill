@@ -99,6 +99,7 @@ Modules that produce reusable data write JSON to `/home/claude/{type}_{target}.j
 {
   "group": "analyzer",
   "description": "One-line description used in the module registry",
+  "usage": "short natural phrases a user would type when they need this module, comma separated",
   "params": {
     "target": {
       "required": true,
@@ -128,6 +129,7 @@ Modules that produce reusable data write JSON to `/home/claude/{type}_{target}.j
 - `required: false` + `default` — filled automatically if not provided
 - `greedy: true` — absorbs all remaining positional words (use for free-text input like intents or descriptions)
 - `inject` — filled by sources.py, not by the user. Don't include a description — the user doesn't see these.
+- `usage` — Optional top-level field (alongside `group` and `description`, not inside `params`). 5–10 comma-separated phrases written in the user's voice, not system jargon. These power the plan module's resolver to match natural language intents to modules. Ask yourself: "what would someone type right before they need this module and no other?" Keep phrases short and discriminating — avoid generic verbs like "analyze" or "create" that many modules would match.
 
 ### RESOLVE.py Contract
 
@@ -205,6 +207,11 @@ The resolver prints `variant-name|reason`. Dispatch loads `variants/{variant-nam
 - How would this module appear in a chain? What comes before it? What comes after?
 - Does it produce JSON that downstream modules can read? If so, follow the `/home/claude/{type}_{target}.json` convention.
 - Does it consume upstream JSON? If so, include `{findings}` and workspace scanning instructions.
+
+**Write usage phrases:**
+- What would a user say when they need this? Not synonyms for the description — actual phrases someone would type.
+- Keep it to 5–10 short phrases. More words means more collision surface at scale.
+- Avoid words that appear in many module descriptions ("analyze", "create", "generate", "data").
 
 5. Write the files to `/home/claude/modules/{module-name}/`.
 6. Show 2-3 example chains demonstrating how the new module composes with existing ones.
