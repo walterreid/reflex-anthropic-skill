@@ -20,6 +20,13 @@ Give a concise introduction to the system:
 - How params work: positional (`/reflex swot anthropic`) or named (`target:anthropic`)
 - Mention `/reflex plan "your goal"` for help composing chains
 
+### If topic is "list" or "all" or "modules"
+Show the full module catalog as a table grouped by category (Sources, Analyzers, Transformers, Formatters, Utility, Meta). For each module, show:
+- Module name
+- Params (mark required ones with `*`)
+- One-line description
+Use a markdown table per group. This gives users a complete, scannable reference of every module and its arguments.
+
 ### If topic is a module name (matches something in the registry)
 Explain that specific module:
 - What it does (1-2 sentences)
