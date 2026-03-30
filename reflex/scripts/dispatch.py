@@ -318,7 +318,7 @@ def dispatch(message: str) -> str:
 
     # Support multiple trigger words — skip if found at any position
     reflex_idx = -1
-    for trigger in ("callsign", "tango", "reflex"):
+    for trigger in ("callsign", "tango", "reflex", "/reflex"):
         if trigger in words:
             reflex_idx = words.index(trigger)
             break
