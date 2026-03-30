@@ -1,0 +1,24 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The competitor company or product to profile"
+    },
+    "vs": {
+      "required": false,
+      "description": "The company to compare against (provides context for overlap analysis)",
+      "default": ""
+    },
+    "focus": {
+      "required": false,
+      "description": "Specific angle: pricing, product, positioning, funding, or all",
+      "default": "all"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Deep competitive intelligence dossier on a single rival — positioning, pricing, ICP overlap, recent moves, and scale indicators",
+  "usage": "competitor analysis, competitive intelligence, rival profile, who competes with, competitor deep dive"
+}

@@ -6,14 +6,24 @@
     },
     "format": {
       "required": false,
-      "description": "Output format: grid, narrative, or brief",
+      "description": "Output format: grid, narrative, or brief (quick variant) / json+narrative (deep variant)",
       "default": "grid"
-    }, 
+    },
+    "depth": {
+      "required": false,
+      "description": "Analysis depth: quick (simple 2x2) or deep (TOWS, quality gates, confidence scoring)",
+      "default": "quick"
+    },
+    "industry": {
+      "required": false,
+      "description": "Industry context for deep analysis (e.g. SaaS, fintech, healthcare)",
+      "default": ""
+    },
     "workspace": {
       "inject": "workspace_state"
     }
   },
   "group": "analyzer",
-  "description": "SWOT analysis from findings or web research",
-  "usage": "strengths weaknesses opportunities threats, SWOT analysis, strategic assessment of, competitive position"
+  "description": "SWOT analysis from findings or web research — routes to quick (2x2) or deep (TOWS + quality gates) based on depth",
+  "usage": "strengths weaknesses opportunities threats, SWOT analysis, strategic assessment of, competitive position, TOWS"
 }

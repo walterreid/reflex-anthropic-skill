@@ -1,0 +1,19 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Company or product to analyze positioning for"
+    },
+    "audience": {
+      "required": false,
+      "description": "Intended audience for the positioning analysis (e.g. founders, investors, marketing team)",
+      "default": ""
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Strategic positioning analysis — ICP definition, differentiation matrix, messaging vs. market reality gap assessment",
+  "usage": "positioning analysis, how is it positioned, differentiation, value proposition, messaging analysis, brand positioning, market position"
+}

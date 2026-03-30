@@ -1,0 +1,19 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Company or product to assess for defensibility"
+    },
+    "format": {
+      "required": false,
+      "description": "Output format: scorecard (default) or narrative",
+      "default": "scorecard"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Defensibility analysis — evaluates network effects, switching costs, scale economies, brand, data advantages, and regulatory capture",
+  "usage": "moat analysis, defensibility, competitive advantage durability, how defensible is, barriers to entry, why hard to compete with"
+}

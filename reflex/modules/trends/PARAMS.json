@@ -1,0 +1,24 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Industry, market, or domain to scan for trends (e.g. fintech, remote work, AI infrastructure)"
+    },
+    "horizon": {
+      "required": false,
+      "description": "Time horizon for trend relevance: 6mo, 12mo, or 24mo",
+      "default": "24mo"
+    },
+    "focus": {
+      "required": false,
+      "description": "Narrow the scan: tech, regulatory, demand, investment, talent, or all",
+      "default": "all"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "source",
+  "description": "Market and macro trend scanner — identifies signals with velocity, impact horizon, and relevance tagging for downstream analysis",
+  "usage": "market trends, industry trends, what's happening in, emerging trends, macro trends, signal scanning, trend analysis"
+}

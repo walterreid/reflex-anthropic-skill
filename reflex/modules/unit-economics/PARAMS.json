@@ -1,0 +1,19 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Company or business to analyze unit economics for"
+    },
+    "model_type": {
+      "required": false,
+      "description": "Business model hint: saas, marketplace, ecommerce, fintech, hardware, or auto-detect",
+      "default": "auto"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Business model breakdown — structures known/estimated unit economics (CAC, LTV, margins, payback) with sourced vs. estimated flagging",
+  "usage": "unit economics, business model, CAC LTV, margins, revenue model, how do they make money, monetization, profitability"
+}

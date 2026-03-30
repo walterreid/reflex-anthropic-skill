@@ -1,12 +1,13 @@
 {
   "group": "meta",
-  "description": "Interactive module designer — walks a user through creating a new Reflex module with the right level, group, params, dependencies, and inject sources",
-  "usage": "create a new reflex module, build a custom module, design a reflex module",
+  "description": "Interactive module designer — create new modules, upgrade existing ones, or clone and modify",
+  "usage": "create a new reflex module, build a custom module, design a reflex module, upgrade module, edit module, improve module, change module, fix module, modify module",
   "params": {
     "intent": {
-      "required": true,
-      "description": "What the new module should do, in natural language",
-      "greedy": true
+      "required": false,
+      "description": "What the new module should do, or which module to modify, in natural language",
+      "greedy": true,
+      "default": ""
     },
     "registry": {
       "inject": "module_registry"
