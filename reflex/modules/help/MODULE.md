@@ -21,7 +21,11 @@ Give a concise introduction to the system:
 - Mention `/reflex plan "your goal"` for help composing chains
 
 ### If topic is a module name (matches something in the registry)
-Explain that specific module: what it does, its params, what group it belongs to, and 2-3 example chains it works well in.
+Explain that specific module:
+- What it does (1-2 sentences)
+- Its group
+- Its params — list each with name, required/optional, and what it controls
+- 2-3 complete example commands with realistic params that could be copy-pasted. Show it both standalone and in chains where it shines. For example:
 
 ### If topic is a concept ("chains", "sources", "params", "groups")
 Explain that concept with examples.

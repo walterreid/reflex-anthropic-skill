@@ -1,0 +1,26 @@
+{
+    "group": "analyzer",
+    "description": "Map competitors across strategic dimensions, producing a positioned landscape with clusters, white space, and movement vectors",
+    "usage": "competitive landscape, market map, who competes with whom, plot competitors, positioning map, landscape analysis, competitive positioning, player map",
+    "params": {
+      "domain": {
+        "required": true,
+        "description": "The market, industry, or category to map (e.g., 'cloud infrastructure', 'electric vehicles', 'project management tools')"
+      },
+      "dimensions": {
+        "required": false,
+        "description": "Two axes to position players on, separated by 'vs' (e.g., 'price vs capability', 'scale vs specialization'). Use 'auto' to let the module pick the most revealing axes.",
+        "default": "auto"
+      },
+      "players": {
+        "required": false,
+        "description": "Comma-separated list of specific competitors to include. If omitted, players are extracted from upstream findings or identified from domain knowledge.",
+        "default": "auto"
+      },
+      "format": {
+        "required": false,
+        "description": "'full' for landscape map + strategic analysis, 'brief' for map and positioning only",
+        "default": "full"
+      }
+    }
+  }

@@ -1,0 +1,21 @@
+{
+    "group": "source",
+    "description": "Fetch a URL and produce a structured summary of its content, writing findings to disk for downstream modules",
+    "usage": "fetch this url, summarize this page, pull this link, read this article, what does this page say, grab this url, scrape this page, fetch and summarize",
+    "params": {
+      "url": {
+        "required": true,
+        "description": "The URL to fetch and summarize"
+      },
+      "focus": {
+        "required": false,
+        "description": "What to focus on in the summary (e.g., 'pricing', 'technical details', 'main argument'). If omitted, produces a general summary.",
+        "default": "auto"
+      },
+      "depth": {
+        "required": false,
+        "description": "'summary' for a concise overview (~3-5 key points), 'detailed' for thorough extraction with evidence",
+        "default": "summary"
+      }
+    }
+  }

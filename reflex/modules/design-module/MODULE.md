@@ -234,3 +234,9 @@ reflex {chain examples using the new module}
 ```
 
 **Design rationale:** 2-3 sentences on why this level, this group, and these composition patterns were chosen over alternatives.
+
+After presenting the design summary, offer the user these next steps:
+- **Download** — present the files for download using the present_files tool
+- **Install** — copy the module folder into the skill's modules directory so dispatch picks it up immediately
+- **Both** — install and present for download
+- **Adjust** — revisit any design decision before finalizing

@@ -1,0 +1,27 @@
+{
+    "group": "formatter",
+    "description": "Convert analysis, findings, or a story into a LinkedIn-ready post or article with platform-native formatting",
+    "usage": "linkedin post, write for linkedin, social post from research, turn this into a linkedin article, post about this on linkedin, linkedin content, thought leadership post",
+    "params": {
+      "target": {
+        "required": true,
+        "greedy": true,
+        "description": "What to write about — a topic, or refers to upstream findings in a chain"
+      },
+      "tone": {
+        "required": false,
+        "description": "Voice of the post: 'professional' (default), 'conversational', 'provocative', or 'storytelling'",
+        "default": "professional"
+      },
+      "length": {
+        "required": false,
+        "description": "'post' for a short LinkedIn post (~150-300 words), 'article' for long-form (~800-1500 words)",
+        "default": "post"
+      },
+      "hook": {
+        "required": false,
+        "description": "A specific opening line or angle to lead with. If omitted, one is crafted from the content.",
+        "default": "auto"
+      }
+    }
+  }
