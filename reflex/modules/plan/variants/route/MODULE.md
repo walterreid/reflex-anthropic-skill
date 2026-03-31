@@ -26,6 +26,8 @@ Params apply across chains. Common shared params: `target:X`, `audience:X`, `ton
 
 The `+` operator overrides individual module dependencies — the user's ordering is authoritative.
 
+**Quality gate:** The `perspective` module applies an evaluation lens to upstream output and revises what the lens reveals. When a chain ends with a formatter and the intent implies the output is high-stakes (launch emails, investor pitches, public-facing content, anything where "make sure it's good" is implicit), suggest appending `+perspective`. Don't add it by default — most chains don't need it. But name it as an option when quality matters.
+
 ## Instructions
 
 1. **Read the intent:** `{intent}`
