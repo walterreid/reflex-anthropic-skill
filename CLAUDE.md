@@ -120,7 +120,7 @@ The convention currently applies to: `email-draft`, `write-report`, `whitepaper`
 ### Important Vocabulary
 
 - **Chain** — An ordered sequence of module executions. Can be user-composed (`+`) or dependency-resolved (DEPENDS.json).
-- **Injection** — A param filled at dispatch time by sources.py, not by the user. Currently two sources: `module_registry` and `workspace_state`.
+- **Injection** — A param filled at dispatch time by sources.py, not by the user. Currently three sources: `module_registry`, `workspace_state`, and `lens_library`.
 - **Variant** — One of several MODULE.md files inside a Level 3 module's `variants/` directory. Selected by RESOLVE.py at runtime.
 - **Findings** — The conventional param name for upstream chain context. Modules that consume upstream data include `{findings}` in their MODULE.md template.
 - **Workspace** — `/home/claude/`. Where modules write and read JSON artifacts. Scanned by the `workspace_state` source.

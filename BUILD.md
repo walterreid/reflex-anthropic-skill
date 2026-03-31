@@ -2,14 +2,14 @@
 
 ## Current State
 
-The system is built and functional. 71 modules across 6 groups. The dispatch engine, source injection, chain composition, Level 0-3 routing, dependency resolution, and workspace persistence all work. This document is not a build plan — it's a diagnostic of where the system's design assumptions are under pressure and what to do about it.
+The system is built and functional. 72 modules across 6 groups, 3 context sources, 7 evaluation lenses. The dispatch engine, source injection, chain composition, Level 0-3 routing, dependency resolution, workspace persistence, and the perspective/lens concern self-improvement architecture all work. This document is not a build plan — it's a diagnostic of where the system's design assumptions are under pressure and what to do about it.
 
 ## Phase 0 — Foundation [COMPLETE]
 
 | Task | Description | Status |
 |------|-------------|--------|
 | 0.1 | dispatch.py — param extraction, chain building, resolver execution | [x] |
-| 0.2 | sources.py — module_registry and workspace_state injection | [x] |
+| 0.2 | sources.py — module_registry, workspace_state, and lens_library injection | [x] |
 | 0.3 | SKILL.md — frontmatter trigger, architecture docs, protocol spec | [x] |
 | 0.4 | Level 0-3 module support with variant routing | [x] |
 | 0.5 | Inline chain composition with `+` operator | [x] |
@@ -78,22 +78,27 @@ The `debrief` module revealed that evidence degrades across long chains. Specifi
 | 3.3 | Determine whether `debrief` should run automatically as a final step in chains above N modules | [ ] |
 | 3.4 | Consider whether the workspace_state source should include a brief evidence summary, not just filenames | [ ] |
 
-## Phase 4 — Self-Correction Loop [PLANNED]
+## Phase 4 — Self-Improvement Architecture [COMPLETE]
 
-`refine` exists as a Level 1 transformer. The next step is making it iterative.
+The self-improvement problem was solved not by making the loop infrastructure smarter, but by making evaluation and revision the same act. The `perspective` module applies a lens that reveals what output can't see about itself — and the revelation IS the revision. No separate scoring/fixing cycle. No `LOOP:` protocol needed.
 
 | Task | Description | Status |
 |------|-------------|--------|
-| 4.1 | `refine` module built — reads audit/evaluate/debrief feedback, re-executes the deliverable step with revision constraints | [x] |
-| 4.2 | Upgrade `audit` to Level 3 with a resolver that rotates quality dimensions per pass | [ ] |
-| 4.3 | Design a `LOOP:` protocol in dispatch.py — `audit+refine` repeats until score threshold or max iterations | [ ] |
-| 4.4 | Test convergence: does `email-draft+audit+refine+audit` produce measurably better output than `email-draft+audit+refine`? | [ ] |
+| 4.1 | `refine` module built — reads audit/evaluate/debrief feedback, re-executes with revision constraints | [x] |
+| 4.2 | `perspective` module built — lens-based evaluation where diagnosis and correction are the same act | [x] |
+| 4.3 | 7 built-in lenses defined in LENSES.json, drawn from manual evaluation prompts | [x] |
+| 4.4 | Lens concern convention added to all 5 formatters — pre-commit to weakness before writing | [x] |
+| 4.5 | `lens_library` source in sources.py — canonical lens definitions injected at dispatch time | [x] |
+| 4.6 | `test-perspective` calibration module — 7 scenarios with planted flaws, misdirection resistance test | [x] Scored 7/7 HIT, 1/1 INDEPENDENT on misdirection |
+| 4.7 | `plan` updated to suggest `+perspective` for high-stakes formatter chains | [x] |
+| 4.8 | Upgrade `perspective` to Level 3 with time-based resolver that rotates lenses per pass | [ ] |
+| 4.9 | Test multi-pass convergence: does `email-draft+perspective+perspective` produce measurably better output than single-pass? | [ ] |
 
-**Why dimension rotation matters:** Without it, running `audit+refine` twice on the same input produces the same critique and the same fix — the loop is degenerate. The `coin-flip` module already demonstrates time-based resolver variance. Applying the same pattern to `audit` — rotate which dimensions get primary scoring weight per pass — makes each iteration genuinely different. Pass 1 emphasizes voice+structure, pass 2 emphasizes evidence+actionability. The resolver mechanism (Level 3) is already proven; this is applying it to a quality gate instead of a novelty.
+**The key insight:** The `plan` lesson (don't make Python replicate Claude's judgment) applies to self-correction too. Score-based evaluation (audit) produces numbers that need translation back into revision instructions — a lossy round-trip. Lens-based evaluation (perspective) skips the translation. The lens reveals, the revelation implies the fix, the module produces the revised output. One step.
 
-**Acceptance criteria for 4.2:** `audit` becomes Level 3. RESOLVE.py uses a time-based or pass-count seed to select a variant from `variants/voice-structure/`, `variants/evidence-action/`, `variants/completeness-first/`. Each variant's MODULE.md weights its focal dimensions more heavily. The resolver prints a reason explaining which lens this pass uses.
+**The coin-flip connection:** `perspective` becomes Level 3 when you want multi-pass improvement. A time-based resolver (same mechanism as coin-flip) rotates which lens gets applied per pass. Each iteration examines a different blind spot. The escape hatch terminates the loop: "the lens found nothing new."
 
-**Acceptance criteria for 4.3:** [DECISION NEEDED] Two options: (a) a `LOOP:` protocol output from dispatch that tells Claude to repeat a sub-chain until a condition is met, or (b) a `loop` meta-module (like `run`) that wraps any chain with iteration logic. Option (b) is more consistent with the convention-based architecture — no dispatch.py changes.
+**What `refine` is for:** Cases where structured feedback (scores, verdicts) already exists and needs to be actioned. `audit+refine` translates scored deficiencies into fixes. `perspective` is preferred for iterative improvement; `refine` is for consuming existing evaluations.
 
 ## Phase 5 — Structured Data as First-Class Input [PLANNED]
 

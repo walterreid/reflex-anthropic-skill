@@ -81,12 +81,9 @@ reflex help chains       # Explain how chaining works
 
 ### `reflex plan`
 
-Translates natural language into a runnable chain. This is a **Level 3 module** — a Python resolver evaluates the intent against the full module registry and routes to the appropriate variant:
+Translates natural language into a runnable chain. This is a **Level 3 module** — a passthrough resolver always routes to the `route` variant, where the LLM evaluates the intent against the full module registry and decides whether to compose a chain from existing modules or design a new one.
 
-- **`route` variant**: The intent can be served by existing modules. Outputs a suggested `/reflex` command with explanation.
-- **`suggest` variant**: No existing modules fit. Designs a new module (MODULE.md + PARAMS.json) and proposes chains using it.
-
-Plan also writes `plan_output.json` to disk, which the `run` module can pick up for step-by-step execution.
+Plan writes `run_plan.json` to disk, which the `run` module picks up for step-by-step execution. For high-stakes chains ending with a formatter, `plan` may suggest appending `+perspective` as a quality gate.
 
 ```
 reflex plan intent:"research my competitor Acme Corp, build a SWOT, then write a pitch for investors"
@@ -187,6 +184,7 @@ Modules can declare `"inject": "source_name"` on any parameter in PARAMS.json. A
 
 - **`module_registry`**: Scanned list of all installed modules, grouped by role (source, analyzer, transformer, formatter, utility, meta), with params and descriptions. This is how `plan` and `help` know what's available without hardcoding.
 - **`workspace_state`**: Summary of JSON files in the current session workspace. This is how `run` knows whether to start, continue, or reset.
+- **`lens_library`**: Canonical lens definitions from `perspective/LENSES.json` plus any custom `lens_*.json` files in the workspace. This is how formatters know which evaluation lenses exist for pre-commit self-assessment.
 
 To add a new source: write a function in `sources.py`, register it in the `SOURCES` dict. Any module can then request it. No changes to `dispatch.py`.
 
@@ -263,23 +261,25 @@ Current specialization modules:
 
 ## Self-Improving Chains
 
-The `refine` module closes the evaluator-optimizer loop. It reads feedback from `audit`, `evaluate`, or `debrief`, extracts specific revision constraints, and re-executes the original deliverable with those constraints injected. This enables chains that don't just produce output — they improve it:
+The `perspective` module applies an evaluation lens to upstream output — the lens reveals what the output can't see about itself, and the revelation IS the revision. No separate scoring step, no separate fixing step. Seven built-in lenses, plus workspace lenses and custom text. Self-terminating: if the lens finds nothing, the module says so and stops.
 
 ```
-# Write, score, fix
-reflex email-draft+audit+refine target:"launch email" recipient:"skincare buyers"
+# Write, then improve through a lens
+reflex email-draft+perspective target:"launch email" recipient:"skincare buyers"
 
-# Score existing work, fix it
-reflex audit+refine target:"launch email"
+# Two lenses, two angles
+reflex email-draft+perspective+perspective target:"investor update"
 
-# Score against a rubric, fix it
-reflex evaluate+refine target:"Q3 memo" domain:"executive communication"
-
-# Double-pass: write, score, fix, score again
-reflex email-draft+audit+refine+audit target:"investor update"
+# Score it AND improve based on what the scores reveal
+reflex email-draft+audit+perspective target:"launch email"
 ```
 
-The pattern generalizes: any chain that ends with a formatter can append `+audit+refine` to get a quality gate and automatic revision. The `scope` param controls how many issues `refine` addresses per pass (`top1`, `top3`, or `all`).
+The `refine` module serves a different purpose: it reads structured feedback from `audit`, `evaluate`, or `debrief` and re-executes the deliverable with revision constraints injected. Use `refine` when scored evaluations already exist; use `perspective` when you want iterative improvement.
+
+```
+# Write, score, fix (feedback-based)
+reflex email-draft+audit+refine target:"launch email"
+```
 
 ## Lens Concern Convention
 

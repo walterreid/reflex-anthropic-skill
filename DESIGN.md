@@ -46,6 +46,16 @@ The cost is friction. A 7-step chain requires 7 confirmations. Whether to add a 
 
 What it doesn't do yet (and probably should): contextual suggestion. After running a module, `help` could say "you just produced a competitive messaging analysis. Modules that typically follow: creative-brief, positioning, tagline." This turns help from a reference tool into a guide.
 
+### The Self-Improvement Pattern
+
+The system improves its own output the same way the user improves the system's output — through evaluation lenses that reveal what the work can't see about itself. The revelation IS the revision. There is no separate scoring step and no separate fixing step. Seeing the gap and knowing how to close it are the same act.
+
+This emerged from a design observation: score-based evaluation (rate this 1-5, then translate scores into fixes) is a lossy round-trip. The insight → score → score → instruction → revision pipeline loses information at every translation. Lens-based evaluation skips the translation entirely: the lens reveals, the module produces what the original would have produced if it had seen what the lens sees.
+
+The **pre-commitment pattern** extends this further. Formatters name their expected weakness *before writing*, using the lens library. This is prediction about the task, not judgment about the output — a different cognitive operation. Making the weakness conscious before execution partially corrects it. When `perspective` follows, it reads the upstream prediction and starts there — confirming or finding the real gap.
+
+The principle: **self-awareness as an input to the work, not a review of it.**
+
 ## Information Architecture
 
 ### Workspace as State
