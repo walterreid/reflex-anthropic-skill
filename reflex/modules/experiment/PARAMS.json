@@ -1,0 +1,21 @@
+{
+  "group": "analyzer",
+  "description": "Design a testable hypothesis with variables, success criteria, measurement plan, and debrief template — turn analysis into action",
+  "usage": "experiment, hypothesis, test, validate, prove, try, micro-experiment, test idea",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The claim, assumption, or idea to test"
+    },
+    "scope": {
+      "required": false,
+      "default": "micro",
+      "description": "Experiment scale: micro (1-2 weeks, low cost), standard (1-2 months), ambitious (quarter+)"
+    },
+    "constraints": {
+      "required": false,
+      "default": "none",
+      "description": "Known constraints — budget, time, team size, tools available"
+    }
+  }
+}

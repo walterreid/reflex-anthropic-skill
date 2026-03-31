@@ -1,0 +1,13 @@
+{
+  "before": [
+    {
+      "module": "scenario",
+      "forward_params": {
+        "target": "{target}",
+        "horizon": "6mo",
+        "count": "2"
+      },
+      "output_key": "projected_futures"
+    }
+  ]
+}

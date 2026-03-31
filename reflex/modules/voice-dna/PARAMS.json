@@ -1,0 +1,21 @@
+{
+  "group": "source",
+  "description": "Analyze writing samples to extract a reusable voice profile — sentence rhythm, tone markers, vocabulary patterns, structural preferences",
+  "usage": "voice dna, voice profile, writing style, analyze my voice, my writing style, voice analysis",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Writing sample(s) to analyze — a file, URL, or pasted text"
+    },
+    "focus": {
+      "required": false,
+      "default": "tone, rhythm, vocabulary, structure, personality",
+      "description": "Which voice dimensions to extract"
+    },
+    "label": {
+      "required": false,
+      "default": "default",
+      "description": "Name for this voice profile (e.g., 'professional', 'newsletter', 'casual')"
+    }
+  }
+}

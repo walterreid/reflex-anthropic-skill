@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "recap",
+      "forward_params": {
+        "target": "{target}",
+        "length": "detailed"
+      },
+      "output_key": "session_recap"
+    }
+  ]
+}

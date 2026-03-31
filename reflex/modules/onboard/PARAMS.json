@@ -1,0 +1,21 @@
+{
+  "group": "formatter",
+  "description": "Package accumulated findings into a handoff document for a new person or AI system — what they need to know, not what happened",
+  "usage": "onboard, handoff, brief someone, bring up to speed, context document, new team member",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The project, domain, or topic to create a handoff for"
+    },
+    "audience": {
+      "required": false,
+      "default": "new team member",
+      "description": "Who is being onboarded — new hire, contractor, AI system, executive, partner"
+    },
+    "depth": {
+      "required": false,
+      "default": "standard",
+      "description": "Depth: quick (1-page), standard (comprehensive reference), deep (includes rationale for every decision)"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "debrief",
+      "forward_params": {
+        "target": "{target}",
+        "scope": "full"
+      },
+      "output_key": "fidelity_report"
+    }
+  ]
+}

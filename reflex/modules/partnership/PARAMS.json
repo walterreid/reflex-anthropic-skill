@@ -1,0 +1,15 @@
+{
+    "group": "meta",
+    "description": "Capture, load, and evolve a working relationship profile — how to think together, not how to write",
+    "usage": "partnership, how I work, working style, collaboration preferences, remember how I think, load my profile, update partnership",
+    "params": {
+      "mode": {
+        "required": false,
+        "description": "capture (extract from conversation), load (apply existing profile), update (revise with new evidence), or empty for status",
+        "default": ""
+      },
+      "workspace": {
+        "inject": "workspace_state"
+      }
+    }
+  }

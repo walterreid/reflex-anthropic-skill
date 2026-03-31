@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "decompose",
+      "forward_params": {
+        "question": "{target}",
+        "depth": "broad"
+      },
+      "output_key": "sub_questions"
+    }
+  ]
+}

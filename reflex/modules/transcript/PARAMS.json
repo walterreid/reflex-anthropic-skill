@@ -1,0 +1,21 @@
+{
+  "group": "source",
+  "description": "Extract structured data from meeting transcripts or conversation logs — action items, decisions, open questions, sentiment shifts, and ownership",
+  "usage": "transcript, meeting notes, meeting transcript, call notes, conversation analysis",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The transcript file or text to analyze"
+    },
+    "focus": {
+      "required": false,
+      "default": "action items, decisions, open questions, ownership, sentiment shifts",
+      "description": "What to extract — defaults to full meeting structure"
+    },
+    "format": {
+      "required": false,
+      "default": "structured",
+      "description": "Output format: structured (JSON) or narrative"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "extract",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "{focus}"
+      },
+      "output_key": "extracted"
+    }
+  ]
+}

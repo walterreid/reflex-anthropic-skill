@@ -1,0 +1,17 @@
+{
+  "group": "meta",
+  "description": "Session retrospective — extract what was learned, what surprised, what to carry forward, and what to do differently next time",
+  "usage": "retro, retrospective, what did we learn, session review, lessons learned, wrap up",
+  "params": {
+    "target": {
+      "required": false,
+      "default": "this session",
+      "description": "What to retrospect on — defaults to current session workspace"
+    },
+    "scope": {
+      "required": false,
+      "default": "full",
+      "description": "Scope: full (everything), chain (specific chain results), decision (specific decision)"
+    }
+  }
+}

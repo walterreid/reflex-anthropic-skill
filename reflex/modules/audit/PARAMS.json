@@ -1,0 +1,21 @@
+{
+  "group": "analyzer",
+  "description": "Quality gate for any deliverable — scores a draft against dimensions like accuracy, voice, structure, completeness, and actionability",
+  "usage": "audit, quality check, qa, review draft, check my work, quality gate",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The deliverable to audit — a file, upstream chain output, or pasted content"
+    },
+    "criteria": {
+      "required": false,
+      "default": "accuracy, structure, completeness, voice, actionability",
+      "description": "Quality dimensions to score against — comma-separated"
+    },
+    "standard": {
+      "required": false,
+      "default": "professional",
+      "description": "Quality bar: draft (early feedback), professional (send-ready), publication (public-facing)"
+    }
+  }
+}

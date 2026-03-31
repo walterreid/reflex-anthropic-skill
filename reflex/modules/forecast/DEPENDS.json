@@ -1,0 +1,13 @@
+{
+  "before": [
+    {
+      "module": "trends",
+      "forward_params": {
+        "target": "{target}",
+        "horizon": "{horizon}",
+        "focus": "all"
+      },
+      "output_key": "trend_signals"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "group": "analyzer",
+  "description": "Structured projection from trend signals — explicitly separates sourced data from estimates and flags confidence levels. Not a prediction engine — a structured way to think about what might happen",
+  "usage": "forecast, project, projection, predict, what will happen, growth estimate, forward looking",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "What to forecast — a market, metric, product, or outcome"
+    },
+    "horizon": {
+      "required": false,
+      "default": "12mo",
+      "description": "How far forward to project: 6mo, 12mo, 24mo, 5yr"
+    },
+    "assumptions": {
+      "required": false,
+      "default": "stated",
+      "description": "How to handle assumptions: stated (list all explicitly), optimistic, conservative"
+    }
+  }
+}

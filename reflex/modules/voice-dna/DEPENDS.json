@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "extract",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "writing style, tone, sentence structure, vocabulary patterns, rhetorical devices, paragraph rhythm"
+      },
+      "output_key": "raw_patterns"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "group": "source",
+  "description": "Generate multiple angles and framings for a topic — divergent thinking before strategy, not after",
+  "usage": "ideate, brainstorm, angles, ideas, framings, creative angles, what if",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The topic, problem, or domain to ideate on"
+    },
+    "count": {
+      "required": false,
+      "default": "7",
+      "description": "Number of angles to generate"
+    },
+    "lens": {
+      "required": false,
+      "default": "mixed",
+      "description": "Framing approach: mixed (all frameworks), inversion (flip assumptions), analogy (cross-domain), audience (different perspectives), constraint (what if we couldn't...)"
+    }
+  }
+}
