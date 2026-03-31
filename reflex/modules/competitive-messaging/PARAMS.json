@@ -1,0 +1,23 @@
+{
+  "group": "analyzer",
+  "description": "Map the competitive messaging landscape — lanes, language patterns, tone, crowding, and white space for brand positioning",
+  "usage": "what are competitors saying, messaging landscape, competitive messaging, brand voice map, who owns what positioning, messaging lanes, what messaging is crowded",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The market or category to map (e.g., 'DTC men's skincare', 'project management tools')"
+    },
+    "focus": {
+      "required": false,
+      "description": "Narrow the analysis to a specific angle (e.g., 'taglines and ad copy', 'social media voice', 'email messaging')",
+      "default": "all"
+    },
+    "findings": {
+      "required": false,
+      "description": "Upstream research findings from chained modules"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

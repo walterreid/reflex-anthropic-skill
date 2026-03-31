@@ -1,0 +1,33 @@
+{
+  "group": "transformer",
+  "description": "Generate tagline options with strategic rationale, extensibility analysis, and a recommended pick",
+  "usage": "tagline, slogan, write a tagline, come up with a tagline, brand slogan, catchphrase, one-liner for my brand",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The brand, product, or campaign to create taglines for"
+    },
+    "audience": {
+      "required": false,
+      "description": "Who the tagline needs to resonate with",
+      "default": "infer from context"
+    },
+    "tone": {
+      "required": false,
+      "description": "Desired tone: warm, bold, witty, minimal, provocative, earnest",
+      "default": "infer from context"
+    },
+    "count": {
+      "required": false,
+      "description": "Number of tagline options to generate",
+      "default": "5"
+    },
+    "findings": {
+      "required": false,
+      "description": "Upstream findings from chained modules"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

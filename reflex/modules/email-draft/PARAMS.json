@@ -1,4 +1,7 @@
 {
+  "group": "formatter",
+  "description": "Compress analysis into a send-ready email using the interactive message compose tool",
+  "usage": "write an email, draft a message, cold email, email to someone about, compose mail, launch email, send an email",
   "params": {
     "target": {
       "required": true,
@@ -6,16 +9,25 @@
     },
     "recipient": {
       "required": false,
-      "description": "Recipient role: cto, ceo, team, client, manager, partner",
+      "description": "Who receives this: cold-list, manager, ceo, client, team, investor, partner, customer",
       "default": "manager"
     },
     "tone": {
       "required": false,
-      "description": "Email tone: formal, direct, or warm",
+      "description": "Email tone: formal, direct, warm, bold, conversational",
       "default": "direct"
+    },
+    "variants": {
+      "required": false,
+      "description": "Number of strategic variants to generate (1-3). Multiple variants offer different approaches, not just different tones.",
+      "default": "1"
+    },
+    "findings": {
+      "required": false,
+      "description": "Upstream research or analysis findings from chained modules"
+    },
+    "workspace": {
+      "inject": "workspace_state"
     }
-  },
-  "group": "formatter",
-  "description": "Compress analysis into a send-ready email",
-  "usage": "write an email, draft a message, cold email, email to someone about, compose mail"
+  }
 }

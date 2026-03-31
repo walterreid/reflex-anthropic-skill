@@ -1,0 +1,23 @@
+{
+  "group": "analyzer",
+  "description": "Build a vivid behavioral and psychographic portrait of a target audience — language, emotions, barriers, triggers, and identity",
+  "usage": "who is the customer, audience portrait, customer psychology, how do they talk, buyer persona, what makes them buy, audience insight, customer language",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The audience to profile (e.g., 'skincare-curious millennial men', 'first-time founders', 'budget-conscious parents')"
+    },
+    "focus": {
+      "required": false,
+      "description": "Narrow to a specific aspect: 'language', 'barriers', 'triggers', 'identity', or 'all'",
+      "default": "all"
+    },
+    "findings": {
+      "required": false,
+      "description": "Upstream research findings from chained modules"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

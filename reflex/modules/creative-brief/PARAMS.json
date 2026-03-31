@@ -1,0 +1,23 @@
+{
+  "group": "analyzer",
+  "description": "Synthesize research into a complete creative strategy — positioning, messaging pillars, white space, ICP, and tagline options with rationale",
+  "usage": "creative brief, brand positioning, brand strategy, messaging strategy, build a brand, positioning and taglines, creative strategy from research",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The brand or product being positioned (e.g., 'DTC men's skincare brand', 'AI writing tool for lawyers')"
+    },
+    "audience": {
+      "required": false,
+      "description": "The target audience if not already defined in upstream research",
+      "default": "infer from research"
+    },
+    "findings": {
+      "required": false,
+      "description": "Upstream research findings from chained modules"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}
