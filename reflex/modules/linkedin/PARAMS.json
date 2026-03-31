@@ -22,6 +22,9 @@
         "required": false,
         "description": "A specific opening line or angle to lead with. If omitted, one is crafted from the content.",
         "default": "auto"
+      },
+      "lenses": {
+        "inject": "lens_library"
       }
     }
   }

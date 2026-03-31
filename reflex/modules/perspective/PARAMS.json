@@ -1,0 +1,19 @@
+{
+  "group": "transformer",
+  "description": "Apply an evaluation lens to upstream output — the lens reveals what the output can't see about itself, and the revelation IS the revision",
+  "usage": "improve this, look at this differently, what am I missing, perspective, apply a lens, what is this not seeing, blind spots, second look, reexamine",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The deliverable or analysis to examine through a lens"
+    },
+    "lens": {
+      "required": false,
+      "default": "auto",
+      "description": "Which evaluation lens to apply: missed-implications, wrong-framing, hidden-assumptions, strategic-avoidance, operational-gap, steelman-then-gap, changed-context, or auto (module selects based on what it sees). Also accepts custom lens text or a workspace lens filename."
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

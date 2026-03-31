@@ -28,6 +28,9 @@
     },
     "workspace": {
       "inject": "workspace_state"
+    },
+    "lenses": {
+      "inject": "lens_library"
     }
   }
 }

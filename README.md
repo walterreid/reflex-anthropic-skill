@@ -261,9 +261,44 @@ Current specialization modules:
 | `retro` | `debrief` | Session reflection: surprises, carry-forward items, process lessons |
 | `full-analysis` | `websearch+distill+rubric+evaluate` | One-command pipeline: the original specialization module |
 
-## Module Catalog (71 modules)
+## Self-Improving Chains
 
-### Sources (12)
+The `refine` module closes the evaluator-optimizer loop. It reads feedback from `audit`, `evaluate`, or `debrief`, extracts specific revision constraints, and re-executes the original deliverable with those constraints injected. This enables chains that don't just produce output — they improve it:
+
+```
+# Write, score, fix
+reflex email-draft+audit+refine target:"launch email" recipient:"skincare buyers"
+
+# Score existing work, fix it
+reflex audit+refine target:"launch email"
+
+# Score against a rubric, fix it
+reflex evaluate+refine target:"Q3 memo" domain:"executive communication"
+
+# Double-pass: write, score, fix, score again
+reflex email-draft+audit+refine+audit target:"investor update"
+```
+
+The pattern generalizes: any chain that ends with a formatter can append `+audit+refine` to get a quality gate and automatic revision. The `scope` param controls how many issues `refine` addresses per pass (`top1`, `top3`, or `all`).
+
+## Lens Concern Convention
+
+Formatter modules (email-draft, write-report, whitepaper, pitch, linkedin) pre-commit to a weakness before writing. Each module identifies which evaluation lens would most likely find a problem in its upcoming output, and writes this prediction to a `lens_concern` field in its output JSON:
+
+```json
+"lens_concern": {
+  "lens": "strategic-avoidance",
+  "prediction": "I'll describe the competitive dynamics without recommending a specific market entry approach"
+}
+```
+
+The available lenses are injected at dispatch time from `perspective/LENSES.json` via the `lens_library` source. Adding a new lens to LENSES.json makes it visible to every formatter automatically — no per-module updates needed.
+
+This field exists whether or not a `perspective` step follows. When `perspective` does follow, it reads the upstream `lens_concern` and starts there — confirming the module's self-assessment or finding the real weakness elsewhere. The `concern_confirmed` field in perspective's output closes the feedback loop.
+
+## Module Catalog (72 modules)
+
+### Sources (13)
 Gather raw data from the world.
 
 | Module | Params | Description |
@@ -282,7 +317,7 @@ Gather raw data from the world.
 | `voice-dna` | target\*, focus, label | Extract reusable voice profile from writing samples. Depends on `extract` |
 | `websearch` | target\*, focus | Web search with structured JSON output |
 
-### Analyzers (21)
+### Analyzers (23)
 Interpret and evaluate evidence.
 
 | Module | Params | Description |
@@ -311,7 +346,7 @@ Interpret and evaluate evidence.
 | `swot` | target\*, format, depth, industry | SWOT analysis — routes to quick or deep variant |
 | `unit-economics` | target\*, model\_type | Unit economics breakdown (CAC, LTV, margins) |
 
-### Transformers (9)
+### Transformers (11)
 Reshape, filter, or stress-test existing analysis.
 
 | Module | Params | Description |
@@ -322,6 +357,8 @@ Reshape, filter, or stress-test existing analysis.
 | `distill` | target\*, lens | Distill findings into weighted categories |
 | `filter` | target\*, criteria\*, threshold | Prune findings to relevant subset |
 | `reframe` | target\*, audience\*, purpose | Reframe analysis for a different audience |
+| `perspective` | target\*, lens | Apply an evaluation lens — reveals what the output can't see about itself, then produces the revision. 7 built-in lenses + workspace + custom |
+| `refine` | target\*, scope | Close the evaluator-optimizer loop — re-execute a deliverable with audit/evaluate feedback injected |
 | `rubric` | domain\*, depth | Generate a weighted evaluation rubric |
 | `simplify` | target\*, audience | Explain analysis in plain language |
 | `tagline` | target\*, audience, tone, count, findings | Generate taglines with strategic rationale |
@@ -352,7 +389,7 @@ Helpers, fallbacks, and fun.
 | `restore` | Unpack a snapshot to resume a previous session |
 | `snapshot` | Package workspace into a downloadable snapshot |
 
-### Meta (9)
+### Meta (11)
 Modules that operate on the system itself.
 
 | Module | Description |
@@ -361,11 +398,13 @@ Modules that operate on the system itself.
 | `diagnose` | Analyze a chain that produced weak results |
 | `full-analysis` | One-command: research + rubric + evaluate + whitepaper. Depends on `websearch+distill+rubric+evaluate` |
 | `help` | Explain modules, params, and composition grammar |
+| `partnership` | Working relationship profile — captures thinking style, quality signals, collaboration preferences |
 | `plan` | Propose a module chain from natural language |
 | `retro` | Session retrospective — surprises, lessons, carry-forward items. Depends on `debrief` |
 | `run` | Step-by-step pipeline execution with pause/resume/skip/reset |
 | `status` | Show workspace artifacts from current session |
 | `test-dispatch` | Smoke test dispatch routing |
+| `test-perspective` | Calibrate perspective lenses — produces deliverables with planted flaws, tests whether each lens catches them |
 
 \* = required parameter
 

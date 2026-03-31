@@ -1,0 +1,40 @@
+{
+  "description": "Canonical lens definitions for the perspective module. Consumed by the lens_library source and injected into any module that declares inject: lens_library.",
+  "lenses": [
+    {
+      "name": "missed-implications",
+      "when": "The output feels thin but you can't say why",
+      "prompt": "If the previous step's conclusion diverged from the evidence's strongest implications, identify where that interpretive gap occurred."
+    },
+    {
+      "name": "wrong-framing",
+      "when": "The answer might be correct within the wrong question",
+      "prompt": "If the previous step's conclusion diverged from the evidence's strongest implications, identify whether the gap was in the reasoning — or in what they chose to reason about."
+    },
+    {
+      "name": "hidden-assumptions",
+      "when": "A confident answer was given too quickly",
+      "prompt": "If the previous step's conclusion diverged from the evidence's strongest implications, identify what assumption they didn't examine that, if wrong, would change the answer entirely."
+    },
+    {
+      "name": "strategic-avoidance",
+      "when": "Technically correct but someone answered the easy version of the question",
+      "prompt": "If the previous step's conclusion diverged from the evidence's strongest implications, identify what they accurately described but declined to follow all the way to its logical end."
+    },
+    {
+      "name": "operational-gap",
+      "when": "The insight needs to become a decision",
+      "prompt": "If the previous step's conclusion diverged from the evidence's strongest implications, identify the gap — and state what decision that gap, correctly closed, would change."
+    },
+    {
+      "name": "steelman-then-gap",
+      "when": "High stakes — take the answer seriously before interrogating it",
+      "prompt": "Take the previous step's conclusion at its strongest. Then identify where even that strongest version diverges from what the evidence most directly implies."
+    },
+    {
+      "name": "changed-context",
+      "when": "Evidence has evolved since the conclusion was drawn",
+      "prompt": "Given what's been established since the previous step's conclusion was drawn, identify where that conclusion now diverges from the strongest current reading of the evidence."
+    }
+  ]
+}

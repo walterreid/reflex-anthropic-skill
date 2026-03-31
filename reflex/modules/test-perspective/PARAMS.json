@@ -1,0 +1,15 @@
+{
+  "group": "meta",
+  "description": "Smoke test the perspective module — produces a deliverable with a known weakness, then tests whether perspective catches it",
+  "usage": "test perspective, verify lenses work, smoke test perspective, test lens",
+  "params": {
+    "scenario": {
+      "required": false,
+      "default": "all",
+      "description": "Which test scenario to run: quick (one lens), all (cycle through all 7 built-in lenses), or a specific lens name to test"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

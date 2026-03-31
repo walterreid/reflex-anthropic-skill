@@ -36,7 +36,17 @@ Based on `{recipient}`, adapt the approach:
 - **team**: Be direct, skip the formalities, focus on what's changed and what needs to happen next.
 - **customer**: Match the brand voice from upstream creative brief if available. Be human.
 
-### Step 3: Write the Email(s)
+### Step 3: Pre-Commit — Name Your Weakness
+
+Before writing, stop. Consider the available evaluation lenses:
+
+{lenses}
+
+Which lens would most likely reveal a problem in what you're about to write? Name it. Be specific — not "voice might be off" but "I'll default to marketing register in the body instead of matching the audience portrait's conversational vocabulary" or "the CTA will be safe instead of direct because the upstream research supports multiple actions and I'll hedge."
+
+Write this to your output JSON as `lens_concern`. This field exists whether or not a `perspective` step follows. It costs nothing. It's you being honest about the work before it exists.
+
+### Step 4: Write the Email(s)
 
 If `{variants}` is 1, write a single email. If 2-3, write multiple variants that represent **different strategic approaches**, not just different tones. For example:
 - Variant 1: Lead with empathy (acknowledge their problem)
@@ -52,7 +62,7 @@ For each email:
 - **CTA**: One clear action. Not three options. One.
 - **Close**: Brand voice. If a tagline exists upstream, use it. If a secondary descriptor exists, layer it.
 
-### Step 4: Adapt to Tone
+### Step 5: Adapt to Tone
 
 - **formal**: Professional structure, measured language, no colloquialisms
 - **direct**: Short sentences, no softening, clear and assertive
@@ -60,7 +70,7 @@ For each email:
 - **bold**: Provocative, confident, slightly edgy — takes a stance
 - **conversational**: Reads like a text from a smart friend, casual but substantive
 
-### Step 5: Render with Message Compose Tool
+### Step 6: Render with Message Compose Tool
 
 **CRITICAL**: Use the `message_compose_v1` tool to render the email. This produces an interactive draft the user can open in their mail client.
 
@@ -71,9 +81,27 @@ Set `kind` to `"email"`. For each variant, provide:
 
 Set `summary_title` to a brief description of what the email is about.
 
-### Step 6: Brief Confirmation
+### Step 7: Brief Confirmation
 
 After rendering the email with the tool, provide a 1-2 sentence confirmation of what was produced and which upstream evidence was threaded in. Do not repeat the email content — the tool rendering is the deliverable.
+
+### Step 8: Write to Disk
+
+Write to `/home/claude/email_draft_{target_slug}.json`:
+
+```json
+{
+  "type": "email_draft",
+  "target": "{target}",
+  "recipient": "{recipient}",
+  "tone": "{tone}",
+  "generated_at": "ISO timestamp",
+  "lens_concern": {
+    "lens": "the lens name you identified in Step 3",
+    "prediction": "your specific prediction about where this output is weakest"
+  }
+}
+```
 
 ## Output
 

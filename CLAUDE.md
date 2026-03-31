@@ -39,10 +39,10 @@ Levels compose: a module can have both DEPENDS.json and RESOLVE.py (Level 2+3). 
 
 - **source** — Gathers raw data. `websearch`, `research`, `trends`, `context`, `extract`, `fetch`, `compare`, `merge`, `decompose`, `job-search`, `voice-dna`, `transcript`, `ideate`.
 - **analyzer** — Interprets data through a framework. `evaluate`, `swot`, `positioning`, `competitors`, `landscape`, `competitive-messaging`, `audience-portrait`, `creative-brief`, `audit`, `experiment`, `forecast`, `grade`, `match`, `moat`, `opportunities`, `persona`, `risks`, `scenario`, `stakeholders`, `unit-economics`, `code-review`, `adaptive-review`, `review`.
-- **transformer** — Reshapes without adding evidence. `distill`, `challenge`, `reframe`, `filter`, `rubric`, `tagline`, `debrief`, `actions`, `simplify`.
+- **transformer** — Reshapes without adding evidence. `distill`, `challenge`, `reframe`, `filter`, `rubric`, `tagline`, `debrief`, `actions`, `simplify`, `refine`, `perspective`.
 - **formatter** — Delivers for a human audience. `email-draft`, `write-report`, `whitepaper`, `pitch`, `linkedin`, `recap`, `recipe`, `onboard`.
 - **utility** — Standalone tools. `do`, `snapshot`, `restore`, `coin-flip`, `foxtrot`, `pirate`.
-- **meta** — System management. `help`, `plan`, `run`, `status`, `design-module`, `diagnose`, `full-analysis`, `test-dispatch`, `retro`, `partnership`.
+- **meta** — System management. `help`, `plan`, `run`, `status`, `design-module`, `diagnose`, `full-analysis`, `test-dispatch`, `test-perspective`, `retro`, `partnership`.
 
 ### The Dispatch Pipeline
 
@@ -88,6 +88,35 @@ trends   ──►  forecast     (adds structured projection with sourced-vs-est
 
 This is distinct from duplication (Golden Rule 6 in DESIGN.md). A specialized module never reimplements its dependency's work — it delegates via DEPENDS.json and only adds the domain-specific framing. If the dependency improves, every specialization improves automatically.
 
+### The Self-Improving Chain Pattern
+
+Two mechanisms for self-improvement, serving different purposes:
+
+**`perspective`** — Lens-based improvement. Applies an evaluation lens that reveals what the output can't see about itself. The revelation IS the revision — no separate scoring/fixing cycle. Seven built-in lenses (missed-implications, wrong-framing, hidden-assumptions, strategic-avoidance, operational-gap, steelman-then-gap, changed-context) plus workspace lenses (rubrics, voice profiles, audit findings) and custom user-supplied lenses. Self-terminating: if a lens reveals nothing, the module says so and stops.
+
+- `email-draft+perspective` — write, then improve through a lens
+- `email-draft+perspective+perspective` — two lenses, two angles (resolver can rotate)
+- `audit+perspective` — score it, then improve based on what the scores reveal
+
+**`refine`** — Feedback-based revision. Reads structured feedback from `audit`, `evaluate`, or `debrief` and re-executes the deliverable with revision constraints injected. More mechanical than `perspective` — translates scores into fixes.
+
+- `email-draft+audit+refine` — write, score, fix
+- `evaluate+refine` — score against rubric, fix
+
+The distinction: `perspective` asks "what is this not seeing about itself?" `refine` asks "how do I address these specific scored deficiencies?" `perspective` is the preferred pattern for iterative improvement; `refine` is for cases where structured feedback (scores, verdicts) already exists and needs to be actioned.
+
+The `coin-flip` module's resolver pattern (time-based variant selection) is the mechanism that would make multi-pass `perspective` non-degenerate — rotating which lens gets applied per pass so each iteration examines a different blind spot.
+
+### The Lens Concern Convention
+
+Formatter modules pre-commit to a weakness before writing. Before producing the deliverable, the module identifies which evaluation lens would most likely find a problem in its upcoming output and writes this prediction to a `lens_concern` field in its output JSON. This is self-awareness as an input to the work, not a review of it.
+
+The available lenses are injected at dispatch time via the `lens_library` source (reads `perspective/LENSES.json`). Formatters declare `"lenses": {"inject": "lens_library"}` in PARAMS.json and reference `{lenses}` in their MODULE.md. Adding a new lens to LENSES.json makes it visible to every formatter automatically — no per-module updates.
+
+When `perspective` follows a formatter in a chain, it reads the upstream `lens_concern` and starts there. The module already said where to look. Perspective confirms the prediction or finds the real gap elsewhere, recording `concern_confirmed` in its output to close the feedback loop.
+
+The convention currently applies to: `email-draft`, `write-report`, `whitepaper`, `pitch`, `linkedin`. Any module that produces a human-facing deliverable should adopt it.
+
 ### Important Vocabulary
 
 - **Chain** — An ordered sequence of module executions. Can be user-composed (`+`) or dependency-resolved (DEPENDS.json).
@@ -95,6 +124,7 @@ This is distinct from duplication (Golden Rule 6 in DESIGN.md). A specialized mo
 - **Variant** — One of several MODULE.md files inside a Level 3 module's `variants/` directory. Selected by RESOLVE.py at runtime.
 - **Findings** — The conventional param name for upstream chain context. Modules that consume upstream data include `{findings}` in their MODULE.md template.
 - **Workspace** — `/home/claude/`. Where modules write and read JSON artifacts. Scanned by the `workspace_state` source.
+- **Self-improving chain** — A chain that includes `audit+refine` (or `evaluate+refine`) to evaluate and revise its own output. The evaluator-optimizer pattern as a composable chain suffix.
 
 ## What Done Means
 

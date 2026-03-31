@@ -1,0 +1,19 @@
+{
+  "group": "transformer",
+  "description": "Turn evaluation or audit feedback into specific revision instructions, then re-execute the original step with feedback injected",
+  "usage": "fix it, revise, improve based on feedback, apply the audit, refine this, make it better, iterate, redo with fixes",
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The deliverable to refine — matches the target used in the upstream audit or evaluate"
+    },
+    "scope": {
+      "required": false,
+      "default": "top3",
+      "description": "How many issues to address: top1 (single biggest fix), top3 (three highest-leverage changes), all (every issue found)"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  }
+}

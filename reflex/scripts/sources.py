@@ -5,6 +5,7 @@ Context Providers — Runtime-discoverable state for modules.
 Modules declare what context they need via PARAMS.json:
     {"inject": "module_registry"}
     {"inject": "workspace_state"}
+    {"inject": "lens_library"}
 
 The dispatch script calls resolve() with the param schema.
 This file returns the filled values. Dispatch never knows
@@ -124,11 +125,55 @@ def workspace_state() -> str:
     return "\n".join(lines)
 
 
+def lens_library() -> str:
+    """
+    Read the canonical lens definitions from perspective/LENSES.json.
+    Also scan workspace for custom lens files (lens_*.json).
+    Returns a compact summary for formatter modules to reference
+    when pre-committing to a weakness.
+    """
+    # Built-in lenses from perspective module
+    lenses_file = MODULES_DIR / "perspective" / "LENSES.json"
+    built_in = []
+    if lenses_file.exists():
+        data = _load_json(lenses_file)
+        for lens in data.get("lenses", []):
+            name = lens.get("name", "")
+            when = lens.get("when", "")
+            if name:
+                built_in.append(f"- {name}: {when}")
+
+    # Custom workspace lenses
+    workspace = Path("/home/claude")
+    custom = []
+    if workspace.exists():
+        for f in sorted(workspace.glob("lens_*.json")):
+            data = _load_json(f)
+            if "lenses" in data:
+                for lens in data["lenses"]:
+                    name = lens.get("name", f.stem)
+                    when = lens.get("when", "custom lens")
+                    custom.append(f"- {name}: {when}")
+            elif "name" in data:
+                custom.append(f"- {data['name']}: {data.get('when', 'custom lens')}")
+
+    lines = []
+    if built_in:
+        lines.append("Built-in lenses:")
+        lines.extend(built_in)
+    if custom:
+        lines.append("Custom lenses (from workspace):")
+        lines.extend(custom)
+
+    return "\n".join(lines) if lines else "No lenses found."
+
+
 # --- The convention: name → function ---
 # Adding a source = adding one function + one entry here.
 SOURCES = {
     "module_registry": module_registry,
     "workspace_state": workspace_state,
+    "lens_library": lens_library,
 }
 
 

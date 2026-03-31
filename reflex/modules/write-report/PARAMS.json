@@ -8,6 +8,12 @@
       "required": false,
       "description": "Report format: brief, full, or memo",
       "default": "brief"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    },
+    "lenses": {
+      "inject": "lens_library"
     }
   },
   "group": "formatter",

@@ -13,7 +13,13 @@ Format findings as a long-form whitepaper that preserves the full evidence chain
 ## Instructions
 
 1. Gather all upstream findings from `{findings}`. Also review the workspace data above to identify all structured JSON files related to `{domain}` — research files, distill files, comparison files, rubric files, evaluation files. Read all of them. The whitepaper should synthesize everything available, not just the most recent step's output.
-2. Structure the whitepaper with these sections:
+2. **Pre-commit — name your weakness.** Before writing, consider the available evaluation lenses:
+
+{lenses}
+
+Which lens would most likely find a problem in what you're about to produce? Name it specifically. A whitepaper is long — be precise about which section and which analytical choice you're least confident in. Write it to the `lens_concern` field in your output JSON.
+
+3. Structure the whitepaper with these sections:
 
    **Title**: A specific, descriptive title — not "Whitepaper on {domain}" but something that captures the argument (e.g. "Convention Over Configuration: How Reflex's Composition Grammar Addresses the Skill Chaining Gap").
 
@@ -29,11 +35,26 @@ Format findings as a long-form whitepaper that preserves the full evidence chain
 
    **Conclusion**: The argument in its tightest form. 2-3 paragraphs. No new evidence — only synthesis of what was already presented.
 
-3. Apply `{depth}`:
+4. Apply `{depth}`:
    - **standard**: 8-12 paragraphs total. Each section gets 1-2 paragraphs. Prioritize analysis and implications.
    - **comprehensive**: 15-20 paragraphs. Each section gets 2-4 paragraphs. Landscape and analysis sections expand significantly with more evidence detail.
 
-4. Write the whitepaper to `/home/claude/whitepaper_{domain}.md`.
+5. Write the whitepaper to `/home/claude/whitepaper_{domain}.md`.
+
+6. Write metadata to `/home/claude/whitepaper_{domain}.json`:
+
+```json
+{
+  "type": "whitepaper",
+  "domain": "{domain}",
+  "depth": "{depth}",
+  "generated_at": "ISO timestamp",
+  "lens_concern": {
+    "lens": "the lens name",
+    "prediction": "specific prediction — which section, which analytical choice you're least confident in"
+  }
+}
+```
 
 ## Evidence Chain Rules
 

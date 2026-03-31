@@ -137,6 +137,7 @@ Add a function to `scripts/sources.py` and register it in the `SOURCES` dict. An
 Current sources:
 - `module_registry` — scanned list of all modules, grouped by role, with params and descriptions
 - `workspace_state` — summary of JSON files produced in the current session
+- `lens_library` — canonical lens definitions from `perspective/LENSES.json` plus any custom `lens_*.json` in the workspace
 
 No changes to dispatch.py. The convention is the interface.
 

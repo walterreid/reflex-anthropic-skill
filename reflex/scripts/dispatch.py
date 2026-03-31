@@ -231,6 +231,7 @@ def build_inline_chain(module_names: list, extra_words: list) -> str:
     merged_schema = {"params": all_param_names}
     extracted = extract_params_from_message(extra_words, merged_schema)
     extracted = apply_defaults(extracted, merged_schema)
+    extracted = inject_params(extracted, merged_schema)
 
     # Build the chain steps — IGNORE each module's DEPENDS.json
     steps = []
