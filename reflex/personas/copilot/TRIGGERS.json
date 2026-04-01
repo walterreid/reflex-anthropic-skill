@@ -68,7 +68,7 @@
         "package this",
         "turn this into"
       ],
-      "suggest_modules": ["write-report", "email-draft", "linkedin", "pitch", "whitepaper"],
+      "suggest_modules": ["report", "email", "linkedin", "pitch", "whitepaper"],
       "behavior": "confirm_format_then_invoke",
       "note": "MUST dispatch a formatter module. Never write deliverables with native file tools. Confirm format/audience, then chain research into the formatter via dispatch."
     },

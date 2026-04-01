@@ -40,7 +40,7 @@ Levels compose: a module can have both DEPENDS.json and RESOLVE.py (Level 2+3). 
 - **source** — Gathers raw data. `websearch`, `research`, `trends`, `context`, `extract`, `fetch`, `compare`, `merge`, `decompose`, `job-search`, `voice-dna`, `transcript`, `ideate`.
 - **analyzer** — Interprets data through a framework. `evaluate`, `swot`, `positioning`, `competitors`, `landscape`, `competitive-messaging`, `audience-portrait`, `creative-brief`, `audit`, `experiment`, `forecast`, `grade`, `match`, `moat`, `opportunities`, `persona`, `risks`, `scenario`, `stakeholders`, `unit-economics`, `code-review`, `adaptive-review`, `review`.
 - **transformer** — Reshapes without adding evidence. `distill`, `challenge`, `reframe`, `filter`, `rubric`, `tagline`, `debrief`, `actions`, `simplify`, `refine`, `perspective`.
-- **formatter** — Delivers for a human audience. `email-draft`, `write-report`, `whitepaper`, `pitch`, `linkedin`, `recap`, `recipe`, `onboard`.
+- **formatter** — Delivers for a human audience. `email`, `report`, `whitepaper`, `pitch`, `linkedin`, `recap`, `recipe`, `onboard`.
 - **utility** — Standalone tools. `do`, `snapshot`, `restore`, `coin-flip`, `foxtrot`, `pirate`.
 - **meta** — System management. `help`, `plan`, `run`, `status`, `design-module`, `diagnose`, `full-analysis`, `test-dispatch`, `test-perspective`, `retro`, `partnership`.
 
@@ -114,13 +114,13 @@ Two mechanisms for self-improvement, serving different purposes:
 
 **`perspective`** — Lens-based improvement. Applies an evaluation lens that reveals what the output can't see about itself. The revelation IS the revision — no separate scoring/fixing cycle. Seven built-in lenses (missed-implications, wrong-framing, hidden-assumptions, strategic-avoidance, operational-gap, steelman-then-gap, changed-context) plus workspace lenses (rubrics, voice profiles, audit findings) and custom user-supplied lenses. Self-terminating: if a lens reveals nothing, the module says so and stops.
 
-- `email-draft+perspective` — write, then improve through a lens
-- `email-draft+perspective+perspective` — two lenses, two angles (resolver can rotate)
+- `email+perspective` — write, then improve through a lens
+- `email+perspective+perspective` — two lenses, two angles (resolver can rotate)
 - `audit+perspective` — score it, then improve based on what the scores reveal
 
 **`refine`** — Feedback-based revision. Reads structured feedback from `audit`, `evaluate`, or `debrief` and re-executes the deliverable with revision constraints injected. More mechanical than `perspective` — translates scores into fixes.
 
-- `email-draft+audit+refine` — write, score, fix
+- `email+audit+refine` — write, score, fix
 - `evaluate+refine` — score against rubric, fix
 
 The distinction: `perspective` asks "what is this not seeing about itself?" `refine` asks "how do I address these specific scored deficiencies?" `perspective` is the preferred pattern for iterative improvement; `refine` is for cases where structured feedback (scores, verdicts) already exists and needs to be actioned.
@@ -135,7 +135,7 @@ The available lenses are injected at dispatch time via the `lens_library` source
 
 When `perspective` follows a formatter in a chain, it reads the upstream `lens_concern` and starts there. The module already said where to look. Perspective confirms the prediction or finds the real gap elsewhere, recording `concern_confirmed` in its output to close the feedback loop.
 
-The convention currently applies to: `email-draft`, `write-report`, `whitepaper`, `pitch`, `linkedin`. Any module that produces a human-facing deliverable should adopt it.
+The convention currently applies to: `email`, `report`, `whitepaper`, `pitch`, `linkedin`. Any module that produces a human-facing deliverable should adopt it.
 
 ### Important Vocabulary
 

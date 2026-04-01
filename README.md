@@ -18,7 +18,7 @@ The cost is always: one SKILL.md frontmatter entry (~50 tokens) + one MODULE.md 
 
 Reflex shines when you need **structured, multi-step analytical pipelines** — the kind of work where each stage's output feeds the next and the final deliverable is grounded in accumulated evidence. Examples:
 
-- **Market analysis chains**: `reflex trends+competitive-messaging+audience-portrait+creative-brief+tagline+email-draft target:"DTC skincare for men"`
+- **Market analysis chains**: `reflex trends+competitive-messaging+audience-portrait+creative-brief+tagline+email target:"DTC skincare for men"`
 - **Competitive intelligence**: `reflex websearch+competitors+landscape+opportunities target:anthropic`
 - **Code review with adaptive routing**: `reflex adaptive-review language:python` (auto-routes to quick, deep, or security review based on code context)
 - **One-shot tasks**: `reflex research topic:"quantum computing"` or `reflex pitch target:acme audience:investors`
@@ -159,7 +159,7 @@ reflex/
 |-------|---------------|------------|---------|
 | **0** | `MODULE.md` | Pure behavioral injection. No params. | `pirate`, `foxtrot` |
 | **1** | + `PARAMS.json` | Declared inputs with validation, defaults, injection | `research`, `swot`, `code-review` |
-| **2** | + `DEPENDS.json` | Dependency chains with conditional execution | `write-report`, `evaluate`, `full-analysis` |
+| **2** | + `DEPENDS.json` | Dependency chains with conditional execution | `report`, `evaluate`, `full-analysis` |
 | **3** | + `RESOLVE.py` + `variants/` | Runtime variant selection via Python | `plan`, `run`, `adaptive-review`, `coin-flip` |
 
 Levels compose: a module can be Level 2+3 (both `DEPENDS.json` and `RESOLVE.py`). Dependencies run first, then the resolver selects a variant. The `run` module uses this pattern.
@@ -233,7 +233,7 @@ This pattern has three properties that make it valuable:
 
 2. **Clean routing for `plan`.** When the `plan` module scans the registry, it sees both `extract` (general-purpose) and `transcript` (meeting-specific). It can route precisely: a user who says "analyze this transcript" gets `transcript`; a user who says "pull data from this CSV" gets `extract`. No ambiguity.
 
-3. **Composable in chains.** Because specialized modules are just Level 2 modules, they chain normally with `+`. You can run `transcript+actions+email-draft` — the dependency runs silently, and the chain sees a clean meeting record flowing into action extraction flowing into a follow-up email.
+3. **Composable in chains.** Because specialized modules are just Level 2 modules, they chain normally with `+`. You can run `transcript+actions+email` — the dependency runs silently, and the chain sees a clean meeting record flowing into action extraction flowing into a follow-up email.
 
 **When to use this vs. inline chains (`+`):**
 
@@ -265,25 +265,25 @@ The `perspective` module applies an evaluation lens to upstream output — the l
 
 ```
 # Write, then improve through a lens
-reflex email-draft+perspective target:"launch email" recipient:"skincare buyers"
+reflex email+perspective target:"launch email" recipient:"skincare buyers"
 
 # Two lenses, two angles
-reflex email-draft+perspective+perspective target:"investor update"
+reflex email+perspective+perspective target:"investor update"
 
 # Score it AND improve based on what the scores reveal
-reflex email-draft+audit+perspective target:"launch email"
+reflex email+audit+perspective target:"launch email"
 ```
 
 The `refine` module serves a different purpose: it reads structured feedback from `audit`, `evaluate`, or `debrief` and re-executes the deliverable with revision constraints injected. Use `refine` when scored evaluations already exist; use `perspective` when you want iterative improvement.
 
 ```
 # Write, score, fix (feedback-based)
-reflex email-draft+audit+refine target:"launch email"
+reflex email+audit+refine target:"launch email"
 ```
 
 ## Lens Concern Convention
 
-Formatter modules (email-draft, write-report, whitepaper, pitch, linkedin) pre-commit to a weakness before writing. Each module identifies which evaluation lens would most likely find a problem in its upcoming output, and writes this prediction to a `lens_concern` field in its output JSON:
+Formatter modules (email, report, whitepaper, pitch, linkedin) pre-commit to a weakness before writing. Each module identifies which evaluation lens would most likely find a problem in its upcoming output, and writes this prediction to a `lens_concern` field in its output JSON:
 
 ```json
 "lens_concern": {
@@ -368,14 +368,14 @@ Deliver analysis in a specific format.
 
 | Module | Params | Description |
 |--------|--------|-------------|
-| `email-draft` | target\*, recipient, tone, variants, findings | Send-ready email via message compose tool |
+| `email` | target\*, recipient, tone, variants, findings | Send-ready email via message compose tool |
 | `linkedin` | target\*, tone, length, hook | LinkedIn-native post or article |
 | `onboard` | target\*, audience, depth | Handoff document for new people or AI systems. Depends on `recap` |
 | `pitch` | target\*, audience, ask | Situation-Complication-Resolution narrative |
 | `recap` | target, length | Executive summary of workspace artifacts |
 | `recipe` | dish\*, style, servings | Interactive recipe via recipe widget |
 | `whitepaper` | domain\*, depth | Long-form whitepaper preserving full evidence chain |
-| `write-report` | topic\*, format | Structured report or memo |
+| `report` | topic\*, format | Structured report or memo |
 
 ### Utility (6)
 Helpers, fallbacks, and fun.

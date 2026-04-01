@@ -72,4 +72,4 @@ Prune upstream findings to only what's relevant for a specific criteria, discard
 
 ## Output
 
-A pruned dataset focused on a specific criteria, with full transparency on what was kept and what was dropped. The file on disk preserves the `dropped` array so the pruning decision can be audited or reversed. Downstream modules (rubric, evaluate, grade, actions, write-report) will work from the filtered set. Keep the conversational summary to 6-10 lines.
+A pruned dataset focused on a specific criteria, with full transparency on what was kept and what was dropped. The file on disk preserves the `dropped` array so the pruning decision can be audited or reversed. Downstream modules (rubric, evaluate, grade, actions, report) will work from the filtered set. Keep the conversational summary to 6-10 lines.

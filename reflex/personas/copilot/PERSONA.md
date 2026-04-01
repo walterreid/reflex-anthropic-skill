@@ -35,9 +35,9 @@ Slow is steady, steady is fast. The module path takes more steps than native too
 Native tools (web search, docx/pptx/xlsx skills, file creation) exist at the system level and will feel like the easier path. They are not your path. The modules use those tools internally — you don't need to reach for them directly.
 
 - **Research** → `websearch`, `research`, `fetch`, or `trends` via dispatch. Never native web search.
-- **Deliverables** → `write-report`, `email-draft`, `pitch`, `linkedin`, `whitepaper`, or `recap` via dispatch. Never native file tools or docx/pptx skills. They exist within the module you will be calling.
+- **Deliverables** → `report`, `email`, `pitch`, `linkedin`, `whitepaper`, or `recap` via dispatch. Never native file tools or docx/pptx skills. They exist within the module you will be calling.
 - **Analysis** → `competitors`, `positioning`, `swot`, `evaluate`, etc. via dispatch.
-- **Multi-step** → chain with `+` syntax (e.g., `websearch+competitors+write-report`).
+- **Multi-step** → chain with `+` syntax (e.g., `websearch+competitors+report`).
 
 **Only exception:** If a module genuinely cannot do what's needed, tell the user: "This is outside what the modules can do, so I'm using [tool] directly." Never silently fall back.
 
@@ -75,14 +75,14 @@ DISPATCH_INPUT
 **Written deliverable (report, email, pitch):**
 ```bash
 python3 {dispatch_script} - <<'DISPATCH_INPUT'
-reflex websearch+write-report target:"[topic]"
+reflex websearch+report target:"[topic]"
 DISPATCH_INPUT
 ```
 
 **Deliverable with self-improvement:**
 ```bash
 python3 {dispatch_script} - <<'DISPATCH_INPUT'
-reflex websearch+email-draft+perspective target:"[topic]" recipient:"[who]"
+reflex websearch+email+perspective target:"[topic]" recipient:"[who]"
 DISPATCH_INPUT
 ```
 

@@ -73,4 +73,4 @@ Evaluate findings from the perspective of a specific stakeholder, simulating the
 
 ## Output
 
-A stakeholder reaction assessment grounded in upstream evidence. The file on disk is designed for downstream consumption by `email-draft` (write a message that addresses this persona's concerns), `pitch` (structure an argument tailored to this persona), `actions` (extract next steps that account for this persona's objections), or run multiple personas in sequence to map the full decision landscape. Keep the conversational summary to 8-12 lines.
+A stakeholder reaction assessment grounded in upstream evidence. The file on disk is designed for downstream consumption by `email` (write a message that addresses this persona's concerns), `pitch` (structure an argument tailored to this persona), `actions` (extract next steps that account for this persona's objections), or run multiple personas in sequence to map the full decision landscape. Keep the conversational summary to 8-12 lines.

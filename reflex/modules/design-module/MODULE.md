@@ -42,7 +42,7 @@ This means adding a module has zero cost until it's actually invoked. There can 
 - DEPENDS.json declares `before` steps with `module`, `forward_params`, and `output_key`.
 - The dependent module runs automatically before this one — user doesn't need to know about it.
 - Important: Don't use DEPENDS.json when the dependency is *enhancing* rather than *inherent*. If the module works fine alone but is better with upstream data, let users compose with the `+` operator instead.
-- Example: `write-report` depends on `research` — it needs findings to write about.
+- Example: `report` depends on `research` — it needs findings to write about.
 
 **Level 3** — `MODULE.md` + `PARAMS.json` + `RESOLVE.py` + `variants/`. Module adapts at runtime.
 - File structure: `modules/{name}/MODULE.md`, `modules/{name}/PARAMS.json`, `modules/{name}/RESOLVE.py`, `modules/{name}/variants/{variant-name}/MODULE.md`
@@ -65,7 +65,7 @@ This means adding a module has zero cost until it's actually invoked. There can 
 
 **The `+` operator:** Users compose modules ad-hoc: `reflex websearch+swot+pitch target:X`. Params are collected from all modules, deduplicated by first occurrence. Data flows forward through conversational context. Use this for flexible, user-directed pipelines.
 
-**DEPENDS.json:** Modules declare inherent dependencies. `reflex write-report topic:X` automatically runs `research` first. Use this when the module can't function without the upstream step.
+**DEPENDS.json:** Modules declare inherent dependencies. `reflex report topic:X` automatically runs `research` first. Use this when the module can't function without the upstream step.
 
 **Typical flow:** source → analyzer → transformer → formatter. Not every chain needs all four. Some are two steps, some are five. Match the task.
 

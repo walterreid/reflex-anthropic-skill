@@ -77,4 +77,4 @@ Project 2-4 plausible future scenarios from research findings, with implications
 
 ## Output
 
-A structured set of future scenarios grounded in evidence, with probabilities, signals, and implications. The file on disk is designed for downstream consumption by `actions` (extract steps per scenario), `risks` (assess risks per scenario), `pitch` (argue for a strategy), or `write-report` (full scenario planning document). Keep the conversational summary to 10-15 lines.
+A structured set of future scenarios grounded in evidence, with probabilities, signals, and implications. The file on disk is designed for downstream consumption by `actions` (extract steps per scenario), `risks` (assess risks per scenario), `pitch` (argue for a strategy), or `report` (full scenario planning document). Keep the conversational summary to 10-15 lines.

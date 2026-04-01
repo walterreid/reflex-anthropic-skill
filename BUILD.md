@@ -21,7 +21,7 @@ The system is built and functional. 72 modules across 6 groups, 3 context source
 
 This is the central tension the system currently faces. It was surfaced during a comparative evaluation session where two reports answering the same question were scored against a rubric. The findings:
 
-**More modules produce better results.** A 6-module chain (trends → competitive-messaging → audience-portrait → creative-brief → tagline → email-draft) scored 148/150 against a rubric where a 4-module chain scored 121/150 and a manually-composed response scored 142/150. Each specialized module contributed a specific analytical layer that improved the final output.
+**More modules produce better results.** A 6-module chain (trends → competitive-messaging → audience-portrait → creative-brief → tagline → email) scored 148/150 against a rubric where a 4-module chain scored 121/150 and a manually-composed response scored 142/150. Each specialized module contributed a specific analytical layer that improved the final output.
 
 **But more modules increase the composition burden.** A 7-module chain is not something a casual user will type. The system's power scales with module count; its approachability does not.
 
@@ -51,14 +51,14 @@ The evaluation revealed a consistent pattern: analytical modules produce excelle
 
 | Task | Description | Status |
 |------|-------------|--------|
-| 2.1 | Audit `email-draft` MODULE.md — does it instruct Claude to shift voice, or does it just say "compress"? | [~] |
+| 2.1 | Audit `email` MODULE.md — does it instruct Claude to shift voice, or does it just say "compress"? | [~] |
 | 2.2 | Test whether adding an explicit voice-shift instruction ("forget you're an analyst, you're the brand now") measurably changes email warmth | [ ] |
 | 2.3 | Determine whether the formatter group needs a "mode" param: `analytical` vs `creative` | [ ] |
 | 2.4 | Test whether the same chain produces warmer output in claude.ai chat vs Claude Code | [ ] |
 
-**Acceptance criteria for 2.1:** Read the current email-draft MODULE.md. Identify every instruction that references upstream data. Count the ratio of "reference the research" instructions to "write with voice" instructions. If the ratio is >2:1, the module is analytically biased.
+**Acceptance criteria for 2.1:** Read the current email MODULE.md. Identify every instruction that references upstream data. Count the ratio of "reference the research" instructions to "write with voice" instructions. If the ratio is >2:1, the module is analytically biased.
 
-**Acceptance criteria for 2.2:** Run the same chain twice with the same inputs — once with current email-draft, once with a modified version that includes a voice-shift instruction. Have a human compare the two emails blind. If neither is consistently preferred, the instruction doesn't help.
+**Acceptance criteria for 2.2:** Run the same chain twice with the same inputs — once with current email, once with a modified version that includes a voice-shift instruction. Have a human compare the two emails blind. If neither is consistently preferred, the instruction doesn't help.
 
 **Acceptance criteria for 2.3:** [DECISION NEEDED] A `mode:creative` param could tell the formatter to prioritize voice over evidence density. But this might be better solved by writing better MODULE.md instructions than by adding a param. Params should control what varies; if the answer is "always write with more voice," that's an instruction fix, not a param.
 
@@ -92,7 +92,7 @@ The self-improvement problem was solved not by making the loop infrastructure sm
 | 4.6 | `test-perspective` calibration module — 9 scenarios with planted flaws, misdirection resistance test, invention detection, multi-pass rotation | [x] Scored 7/7 HIT, 1/1 INDEPENDENT on misdirection (original 7). Scenario 8: HIT on unsupported-confidence. Scenario 9: ROTATE confirmed. |
 | 4.7 | `plan` updated to suggest `+perspective` for high-stakes formatter chains | [x] |
 | 4.8 | Upgrade `perspective` to Level 3 with time-based resolver that rotates lenses per pass | [x] Resolved by design — no resolver needed. See notes below. |
-| 4.9 | Test multi-pass convergence: does `email-draft+perspective+perspective` produce measurably better output than single-pass? | [~] Partially validated: pass 2 > pass 1. Pass 2 found a hidden-assumptions problem introduced by pass 1's fix (condescension to beta users). Debrief also found invention-detection gap — neither lens catches fabricated claims. New `unsupported-confidence` lens (lens #8) added to address this. |
+| 4.9 | Test multi-pass convergence: does `email+perspective+perspective` produce measurably better output than single-pass? | [~] Partially validated: pass 2 > pass 1. Pass 2 found a hidden-assumptions problem introduced by pass 1's fix (condescension to beta users). Debrief also found invention-detection gap — neither lens catches fabricated claims. New `unsupported-confidence` lens (lens #8) added to address this. |
 | 4.10 | Validate `unsupported-confidence` lens and multi-pass rotation | [x] Scenario 8: HIT — caught all 3 planted fabrications (40% stat, manufactured quote, false operational specificity), correctly distinguished from defensible feature claims. Scenario 9: ROTATE — Pass 1 selected hidden-assumptions, Pass 2 selected strategic-avoidance. LLM naturally rotates without a resolver. |
 
 **The key insight:** The `plan` lesson (don't make Python replicate Claude's judgment) applies to self-correction too. Score-based evaluation (audit) produces numbers that need translation back into revision instructions — a lossy round-trip. Lens-based evaluation (perspective) skips the translation. The lens reveals, the revelation implies the fix, the module produces the revised output. One step.
@@ -101,7 +101,7 @@ The self-improvement problem was solved not by making the loop infrastructure sm
 
 **4.8 resolution (2026-04-01):**
 
-Resolved by design — no Level 3 upgrade needed. In live testing of `email-draft+perspective+perspective`, the LLM naturally selected different lenses across passes (strategic-avoidance on pass 1, hidden-assumptions on pass 2) without any resolver. The MODULE.md auto-selection logic in Step 3 plus upstream chain context (which includes `lens_applied` from the first pass's `perspective_*.json`) gives the LLM everything it needs to not repeat.
+Resolved by design — no Level 3 upgrade needed. In live testing of `email+perspective+perspective`, the LLM naturally selected different lenses across passes (strategic-avoidance on pass 1, hidden-assumptions on pass 2) without any resolver. The MODULE.md auto-selection logic in Step 3 plus upstream chain context (which includes `lens_applied` from the first pass's `perspective_*.json`) gives the LLM everything it needs to not repeat.
 
 A resolver would have been redundant — and couldn't have worked anyway. `build_inline_chain()` doesn't run resolvers (it loads the root MODULE.md, not variants), so a Level 3 upgrade would have been invisible in the `+` chain path, which is the primary multi-pass pattern. The right answer was always Option 3: trust the LLM's judgment, same bet `plan` makes. Validated by test scenario 9 (multi-pass rotation test).
 
@@ -136,7 +136,7 @@ Every analytical module currently runs on web search + Claude's knowledge. Struc
 - **Module discovery UX** — Can `help` be more contextual? "You just ran competitive-messaging. Modules that typically follow it: creative-brief, positioning, tagline."
 - **Chain templates** — Named chains that encode common workflows. `reflex brand-launch target:X` expands to the full research → creative → email pipeline. Different from `full-analysis` in that it's a named alias, not a dependency tree.
 - **Multi-user workspace** — If reflex ever runs in a shared context, workspace files need namespacing. Currently irrelevant (single user) but the `/home/claude/{type}_{target}.json` convention would collide.
-- **Module versioning** — No mechanism for A/B testing module instructions. If you want to test whether a modified `email-draft` produces better output, you currently have to overwrite it. A `variants/` approach could work but adds Level 3 complexity to Level 1 modules.
+- **Module versioning** — No mechanism for A/B testing module instructions. If you want to test whether a modified `email` produces better output, you currently have to overwrite it. A `variants/` approach could work but adds Level 3 complexity to Level 1 modules.
 - **Claim-testing modules** — The space between `do` (catch-all) and named analytical modules is underserved. Statements like "our pricing is wrong" or "is this market growing?" aren't research questions, analysis questions, or formatting questions — they're claims that need testing. A module (or chain pattern) that takes a claim, identifies what would need to be true for it to hold, and sets up downstream evidence gathering would fill this gap. This is where module growth produces genuine new capability, not diminishing returns.
 
 ## Phase 8 — Persona System [IN PROGRESS]
@@ -171,8 +171,8 @@ Personas are a persistent conversational layer over module dispatch. A user type
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| 2026-03-31 | Added 5 marketing/creative modules (competitive-messaging, audience-portrait, creative-brief, tagline, email-draft upgrade) | Evaluation showed Report A scored 3-4 on dimensions where Report B scored 5. Each new module targets a specific scoring gap. |
-| 2026-03-31 | `email-draft` upgraded to use `message_compose_v1` tool | Produces interactive email drafts with "Open in Mail" button instead of plain text |
+| 2026-03-31 | Added 5 marketing/creative modules (competitive-messaging, audience-portrait, creative-brief, tagline, email upgrade) | Evaluation showed Report A scored 3-4 on dimensions where Report B scored 5. Each new module targets a specific scoring gap. |
+| 2026-03-31 | `email` upgraded to use `message_compose_v1` tool | Produces interactive email drafts with "Open in Mail" button instead of plain text |
 | 2026-03-31 | `tagline` placed in transformer group, not analyzer | It reshapes upstream positioning into a specific creative artifact. It doesn't interpret data through a new framework — it distills existing strategy into a form. |
 | [ASSUMED: pre-session] | `plan` threshold set at 0.18 for TF-IDF routing | Low threshold favors routing over suggesting new modules. Appropriate for a system that's module-rich. May need raising if false-positive routing becomes a problem. |
 | [ASSUMED: pre-session] | `run` pauses after each step | Gives user control at the cost of friction. Decision on "just go" mode is open (Phase 1, Task 1.5). |
@@ -181,9 +181,9 @@ Personas are a persistent conversational layer over module dispatch. A user type
 | 2026-03-31 | `run/start` reads `run_plan.json` file-first, conversation-context as fallback | Deterministic handoff. Shows plan summary before executing step 1. |
 | 2026-03-31 | 8 specialization modules added (audit, experiment, forecast, ideate, onboard, retro, transcript, voice-dna) | Each uses the DEPENDS.json specialization pattern — thin synthesis layer on top of an existing module. Designed to address gaps identified by fetching external skill catalog and diffing against registry, then stress-tested with `challenge` at high intensity. |
 | 2026-03-31 | `partnership` module added | Behavioral calibration module that loads a structured user profile (thinking style, quality signals, collaboration preferences) to orient a new session. |
-| 2026-03-31 | `refine` module added | Level 1 transformer that closes the evaluator-optimizer loop. Reads audit/evaluate/debrief feedback, extracts revision constraints, and re-executes the original deliverable step with feedback injected. Enables self-improving chains like `email-draft+audit+refine`. |
+| 2026-03-31 | `refine` module added | Level 1 transformer that closes the evaluator-optimizer loop. Reads audit/evaluate/debrief feedback, extracts revision constraints, and re-executes the original deliverable step with feedback injected. Enables self-improving chains like `email+audit+refine`. |
 | 2026-03-31 | `perspective` module added | Level 1 transformer with lens-based evaluation. Applies a perspective shift to upstream output — the lens reveals what the output can't see about itself, and the revelation IS the revision. 7 built-in lenses drawn from Walter's manual evaluation prompts, plus workspace lenses (rubrics, voice profiles, audit findings) and custom user text. Self-terminating: "if thorough, say so and stop." Preferred over `audit+refine` for iterative improvement because it skips the lossy score-to-instruction translation. |
-| 2026-03-31 | Lens concern convention added to all 5 formatters | email-draft, write-report, whitepaper, pitch, linkedin now pre-commit to a weakness before writing. Each writes a `lens_concern` field to output JSON. `perspective` reads it and starts there. The convention closes the feedback loop: modules predict their weakness, perspective confirms or surprises. |
+| 2026-03-31 | Lens concern convention added to all 5 formatters | email, report, whitepaper, pitch, linkedin now pre-commit to a weakness before writing. Each writes a `lens_concern` field to output JSON. `perspective` reads it and starts there. The convention closes the feedback loop: modules predict their weakness, perspective confirms or surprises. |
 | 2026-03-31 | `test-perspective` module added | Calibration module: generates deliverables with known, planted flaws, then tests whether each of the 7 lenses catches its target flaw. Scenario 1 plants a deliberately wrong lens_concern to test whether perspective follows the misdirection or finds the actual gap. |
 | 2026-03-31 | Lens library extracted to LENSES.json + sources.py | Hardcoded lens names removed from all 5 formatter MODULE.md files. Canonical lens definitions now live in `perspective/LENSES.json`, read by `lens_library` source, injected via PARAMS.json. Adding a lens = one file edit. |
 | 2026-03-31 | Fixed: inject params missing from inline chains | `build_inline_chain()` in dispatch.py was not calling `inject_params()`. Source-injected params (workspace_state, lens_library) were silently missing from `+` chain steps. One-line fix. |

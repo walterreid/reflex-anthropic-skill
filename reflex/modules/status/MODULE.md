@@ -13,7 +13,7 @@ Report what's been produced in the current session.
 3. If the workspace is empty, say so and suggest starting with a source module like `websearch` or `context`.
 4. If prior work exists, suggest logical next steps based on what's already there. For example:
    - Research JSON exists but no analysis → suggest an analyzer (`swot`, `risks`, `opportunities`)
-   - Analysis exists but no output → suggest a formatter (`pitch`, `email-draft`, `write-report`)
+   - Analysis exists but no output → suggest a formatter (`pitch`, `email`, `report`)
    - Everything exists → suggest `challenge` to stress-test or `simplify` for a different audience
 
 ## Output

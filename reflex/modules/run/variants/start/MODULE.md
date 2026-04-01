@@ -39,7 +39,7 @@ If `run_plan.json` doesn't exist or is unreadable, fall back to reading the plan
 Give the user a brief overview of what's about to happen:
 
 - How many steps total
-- The modules in order (one line, e.g., "research → trends → competitive-messaging → creative-brief → email-draft")
+- The modules in order (one line, e.g., "research → trends → competitive-messaging → creative-brief → email")
 - If multiple steps use the same module (repeated task), note this: "Steps 1-8 each run design-module with a different target"
 - Estimated complexity: "This is a [light/moderate/substantial] workflow"
 

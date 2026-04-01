@@ -51,7 +51,7 @@ For each issue, write a **revision constraint** in this format:
 
 This is the core move. You are not writing revision notes — you are producing the revised deliverable.
 
-1. Identify which module originally produced the deliverable (e.g., `email-draft`, `write-report`, `creative-brief`, `whitepaper`, `pitch`)
+1. Identify which module originally produced the deliverable (e.g., `email`, `report`, `creative-brief`, `whitepaper`, `pitch`)
 2. Re-execute that module's task, using the same upstream context and params, but with the revision constraints injected as additional instructions
 3. The revision constraints override the original instructions where they conflict — if the audit said "voice is too formal," the revised version uses a warmer voice even if the original module instructions say "maintain professional tone"
 

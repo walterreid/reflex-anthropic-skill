@@ -84,4 +84,4 @@ Write to `/home/claude/voice_profile_{label}.json`:
 
 ## Output
 
-Present the voice profile as a readable character sketch — not a data dump. Write it as if you're briefing a ghostwriter: "This person writes like [X]. They tend to [Y]. You'll know you've got the voice right when [Z]." Then confirm the JSON was written and note which downstream modules can consume it (email-draft, linkedin, pitch, write-report, whitepaper).
+Present the voice profile as a readable character sketch — not a data dump. Write it as if you're briefing a ghostwriter: "This person writes like [X]. They tend to [Y]. You'll know you've got the voice right when [Z]." Then confirm the JSON was written and note which downstream modules can consume it (email, linkedin, pitch, report, whitepaper).

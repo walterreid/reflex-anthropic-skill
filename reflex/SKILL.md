@@ -1,6 +1,6 @@
 ---
 name: Reflex
-description: ALWAYS use this skill when the user says the word "reflex" in any form. This includes "reflex" by itself, "reflex foxtrot", "reflex pirate", "reflex code-review", "reflex help", "reflex plan", "reflex write-report", or "reflex" followed by any other word. Even if the message is just the single word "reflex" with nothing else, use this skill. This skill MUST fire on any message containing "reflex" — do not attempt to handle it yourself. This is a Convention-Based Meta-Skill Dispatcher that dynamically loads sub-skills (called modules) at runtime through filesystem convention.
+description: ALWAYS use this skill when the user says the word "reflex" in any form. This includes "reflex" by itself, "reflex foxtrot", "reflex pirate", "reflex code-review", "reflex help", "reflex plan", "reflex report", or "reflex" followed by any other word. Even if the message is just the single word "reflex" with nothing else, use this skill. This skill MUST fire on any message containing "reflex" — do not attempt to handle it yourself. This is a Convention-Based Meta-Skill Dispatcher that dynamically loads sub-skills (called modules) at runtime through filesystem convention.
 ---
 
 # Reflex — Convention-Based Meta-Skill Dispatcher
