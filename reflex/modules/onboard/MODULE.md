@@ -61,6 +61,10 @@ Organize into sections (adjust depth per `{depth}`):
 
 Write to `/home/claude/onboard_{target_slug}.md` as a readable markdown document (not JSON — this is meant to be read by humans or AI systems directly).
 
+## Delivery
+
+After writing the markdown to disk, **deliver as a formatted Word document (.docx)** using Anthropic's document skill. The markdown on disk is the portable source. The .docx is what you hand to a human. Both are required.
+
 ## Output
 
-Present the handoff document in full. It should pass the "cold start test": could someone who has never seen this project read this document and start contributing the same day? If the answer is no, something is missing.
+The handoff document delivered as a Word document (.docx). It should pass the "cold start test": could someone who has never seen this project read this document and start contributing the same day? If the answer is no, something is missing.

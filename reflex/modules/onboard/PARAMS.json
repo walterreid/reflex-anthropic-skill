@@ -1,7 +1,7 @@
 {
   "group": "formatter",
-  "description": "Package accumulated findings into a handoff document for a new person or AI system — what they need to know, not what happened",
-  "usage": "onboard, handoff, brief someone, bring up to speed, context document, new team member",
+  "description": "Package accumulated findings into a handoff document delivered as Word (.docx) — what they need to know, not what happened. Markdown source on disk + professional document delivery.",
+  "usage": "onboard, handoff, brief someone, bring up to speed, context document, new team member, handoff doc",
   "params": {
     "target": {
       "required": true,
