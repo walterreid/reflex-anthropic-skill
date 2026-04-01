@@ -77,6 +77,32 @@ State the data. Don't connect the dots.
 
 **Expected**: The lens should identify that the first-mover/technical-lead thesis no longer holds given open-source competition.
 
+### Scenario 8: unsupported-confidence
+
+**Seed**: Write a 2-paragraph launch announcement for a fictional developer tool ("ArcLine") that helps teams manage feature flags. **The planted flaw**: weave in fabricated social proof and unearned specificity — claims like "beta teams reported 40% fewer rollback incidents," "engineers described it as the tool they didn't know they needed," and "early adoption exceeded internal projections." None of these claims have an evidence trail. They sound earned but were invented.
+
+Make the fabricated claims feel natural. Embed them alongside real, defensible claims (feature descriptions, integration capabilities) so the invented material doesn't stand out on casual reading.
+
+**Lens**: `unsupported-confidence`
+
+**Expected**: The lens should flag the specific fabricated claims — the 40% stat, the "engineers described it" quote, the "exceeded projections" characterization — as confident assertions with no evidence trail. It should distinguish these from the defensible feature descriptions that don't require sourcing.
+
+### Scenario 9: multi-pass rotation
+
+**Seed**: Write a 2-paragraph strategy memo for a fictional ed-tech startup ("LearnPath") deciding whether to expand from K-12 into corporate training. Make it competent but give it multiple exploitable angles — some missed implications about market size, some hidden assumptions about customer acquisition costs transferring across segments, and some strategic avoidance about the organizational complexity of serving two different buyer types.
+
+**This is not a single-lens test.** This scenario tests multi-pass behavior.
+
+**Pass 1**: Apply `perspective` with `lens:auto` to the seed. Record which lens was selected and what it revealed.
+
+**Pass 2**: Apply `perspective` with `lens:auto` again, this time with the Pass 1 output as upstream context (including the `perspective_*.json` artifact from Pass 1, which contains `lens_applied`).
+
+**Expected**: Pass 2 must select a **different lens** than Pass 1. The upstream context contains `lens_applied` from Pass 1 — the auto-selection logic should naturally avoid repeating. If both passes select the same lens, score as **FAIL** — it would mean the LLM doesn't rotate without a resolver, and Phase 4.8 needs to be revisited.
+
+**Scoring**:
+- **ROTATE** — Pass 2 selected a different lens than Pass 1
+- **REPEAT** — Pass 2 selected the same lens as Pass 1 (FAIL — resolver may be needed)
+
 ## Instructions
 
 ### If scenario is "quick"
@@ -85,11 +111,11 @@ Run Scenario 1 only. Fastest validation.
 
 ### If scenario is "all"
 
-Run all 7 scenarios in order. This is the full calibration.
+Run all 9 scenarios in order. This is the full calibration.
 
-### If scenario is a specific lens name
+### If scenario is a specific lens name or number
 
-Run only the scenario that matches that lens.
+Run only the scenario that matches that lens name or number (e.g., "unsupported-confidence" or "8" both run Scenario 8). "multi-pass" or "rotation" or "9" runs Scenario 9.
 
 ### For each scenario:
 
@@ -118,7 +144,7 @@ Write results to `/home/claude/test_perspective.json`:
 {
   "type": "test_perspective",
   "generated_at": "ISO timestamp",
-  "scenarios_run": 7,
+  "scenarios_run": 9,
   "results": [
     {
       "scenario": 1,
@@ -130,11 +156,19 @@ Write results to `/home/claude/test_perspective.json`:
       "notes": "any observations about lens behavior"
     }
   ],
+  "multi_pass_result": {
+    "scenario": 9,
+    "pass_1_lens": "which lens auto-selected",
+    "pass_2_lens": "which lens auto-selected",
+    "result": "ROTATE|REPEAT",
+    "notes": "observations about rotation behavior"
+  },
   "summary": {
     "hits": 0,
     "adjacent": 0,
     "misses": 0,
-    "lens_concern_independent": true
+    "lens_concern_independent": true,
+    "multi_pass_rotated": true
   },
   "calibration_notes": "Which lenses need tuning, if any. What patterns you noticed."
 }
@@ -150,6 +184,8 @@ A results table:
 | 1 | missed-implications   | HIT/ADJ/MISS | IND/MISLED | ... |
 | 2 | wrong-framing         | ...      | N/A           | ... |
 ...
+| 8 | unsupported-confidence | ...     | N/A           | ... |
+| 9 | multi-pass rotation   | ROTATE/REPEAT | N/A      | pass 1: X, pass 2: Y |
 ```
 
 Followed by calibration notes: which lenses are sharp, which need tuning, and what you'd change in the lens language to improve detection. Keep it to 3-5 sentences. This is a diagnostic, not a report.

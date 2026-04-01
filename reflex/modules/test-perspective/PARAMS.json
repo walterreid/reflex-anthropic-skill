@@ -6,7 +6,7 @@
     "scenario": {
       "required": false,
       "default": "all",
-      "description": "Which test scenario to run: quick (one lens), all (cycle through all 7 built-in lenses), or a specific lens name to test"
+      "description": "Which test scenario to run: quick (scenario 1 only), all (all 9 scenarios), a specific lens name (e.g. unsupported-confidence), a number (e.g. 8), or multi-pass/rotation for scenario 9"
     },
     "workspace": {
       "inject": "workspace_state"
