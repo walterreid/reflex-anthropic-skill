@@ -1,0 +1,12 @@
+{
+  "before": [
+    {
+      "module": "gtm-strategy",
+      "forward_params": {
+        "target": "{target}"
+      },
+      "output_key": "gtm_strategy",
+      "unless_exists": "gtm_strategy_*.json"
+    }
+  ]
+}

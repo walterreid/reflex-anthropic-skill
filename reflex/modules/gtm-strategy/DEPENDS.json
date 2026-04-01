@@ -1,0 +1,39 @@
+{
+  "before": [
+    {
+      "module": "websearch",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "market size, competitors, switching costs, customer adoption patterns"
+      },
+      "output_key": "market_research",
+      "unless_exists": "websearch_{target}.json"
+    },
+    {
+      "module": "competitors",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "all"
+      },
+      "output_key": "competitive_intel",
+      "unless_exists": "competitors_*.json"
+    },
+    {
+      "module": "positioning",
+      "forward_params": {
+        "target": "{target}"
+      },
+      "output_key": "positioning",
+      "unless_exists": "positioning_*.json"
+    },
+    {
+      "module": "audience-portrait",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "buyer persona, decision-making patterns, purchase triggers, objections, where they congregate"
+      },
+      "output_key": "audience",
+      "unless_exists": "audience_portrait_*.json"
+    }
+  ]
+}

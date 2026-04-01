@@ -1,0 +1,29 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The product or company to build ad campaigns for (e.g., 'RouteForge field service platform')"
+    },
+    "platforms": {
+      "required": false,
+      "description": "Specific platforms to plan for (e.g., 'google,linkedin,meta,tiktok,reddit,youtube') or 'recommend' to let the module select based on ICP fit",
+      "default": "recommend"
+    },
+    "budget": {
+      "required": false,
+      "description": "Monthly ad budget: a dollar amount (e.g., '$2000') or a tier ('minimal', 'moderate', 'aggressive'). Minimal = under $1K/mo, moderate = $1-5K/mo, aggressive = $5K+/mo",
+      "default": "minimal"
+    },
+    "goal": {
+      "required": false,
+      "description": "Primary campaign goal: 'awareness', 'leads', 'demos', 'signups', or 'mixed'",
+      "default": "leads"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Platform-specific paid advertising campaign plan — platform selection based on ICP fit, campaign structures, audience targeting, ad creative direction, budget allocation, keyword strategy, and expected performance. Depends on audience-portrait upstream.",
+  "usage": "advertising, ad campaign, paid ads, google ads, linkedin ads, meta ads, facebook ads, tiktok ads, paid media, ad strategy, campaign plan, paid acquisition, SEM, PPC"
+}

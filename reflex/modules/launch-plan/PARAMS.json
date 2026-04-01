@@ -1,0 +1,24 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The product or company being launched (e.g., 'RouteForge')"
+    },
+    "horizon": {
+      "required": false,
+      "description": "Planning horizon in days: 30, 60, 90, or 180",
+      "default": "90"
+    },
+    "budget": {
+      "required": false,
+      "description": "Budget constraint: bootstrapped, seed, series-a, or a specific dollar amount",
+      "default": "bootstrapped"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "formatter",
+  "description": "Operational launch playbook from a GTM strategy — week-by-week timeline, channel tactics with keywords and CPCs, community targets, outreach scripts, founding customer program, budget breakdown, and milestone metrics. Depends on gtm-strategy upstream.",
+  "usage": "launch plan, 90 day plan, go to market execution, operational plan, channel strategy, ad keywords, launch playbook, marketing plan, advertising plan, first customers plan"
+}

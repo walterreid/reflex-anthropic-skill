@@ -1,0 +1,24 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The product or company entering the market (e.g., 'RouteForge field service platform')"
+    },
+    "market": {
+      "required": false,
+      "description": "The market or category being entered, if different from what upstream research covers",
+      "default": "infer from research"
+    },
+    "constraints": {
+      "required": false,
+      "description": "Founder constraints: bootstrapped, funded, team size, budget range, timeline pressure",
+      "default": "bootstrapped"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "analyzer",
+  "description": "Go-to-market strategy from research — beachhead selection with evidence, phased expansion, pricing strategy, founding customer program, channel strategy, risk register. Depends on websearch+competitors+positioning upstream.",
+  "usage": "go to market, GTM strategy, market entry, beachhead, launch strategy, how to enter market, first customers, go-to-market plan"
+}

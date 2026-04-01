@@ -1,0 +1,13 @@
+{
+  "before": [
+    {
+      "module": "audience-portrait",
+      "forward_params": {
+        "target": "{target}",
+        "focus": "ad targeting, media consumption, platform behavior, purchase triggers"
+      },
+      "output_key": "audience",
+      "unless_exists": "audience_portrait_*.json"
+    }
+  ]
+}
