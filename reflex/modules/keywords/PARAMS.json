@@ -1,0 +1,24 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "Product, company, or vertical to research keywords for"
+    },
+    "verticals": {
+      "required": false,
+      "description": "Specific verticals to research (comma-separated), or 'infer' to pull from workspace GTM strategy or positioning data",
+      "default": "infer"
+    },
+    "intent": {
+      "required": false,
+      "description": "Focus on specific intent tiers: 'all' (bottom/mid/top funnel), 'bottom' (high-intent only), or 'content' (top-funnel for content marketing)",
+      "default": "all"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "source",
+  "description": "Research and structure keyword opportunities by vertical and intent tier — uses web search to find real keyword data, CPC estimates, and competition levels. Writes structured JSON for downstream use by advertising, launch-plan, and content strategy.",
+  "usage": "keyword research, find keywords, search terms, SEO keywords, ad keywords, what people search for, PPC keywords, content keywords, search volume"
+}

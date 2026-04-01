@@ -7,6 +7,15 @@
       },
       "output_key": "gtm_strategy",
       "unless_exists": "gtm_strategy_*.json"
+    },
+    {
+      "module": "keywords",
+      "forward_params": {
+        "target": "{target}",
+        "intent": "all"
+      },
+      "output_key": "keyword_research",
+      "unless_exists": "keywords_*.json"
     }
   ]
 }

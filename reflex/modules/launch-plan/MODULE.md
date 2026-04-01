@@ -27,23 +27,22 @@ Read the GTM strategy from workspace. Extract:
 - Phase 1 timeline and success criteria
 
 Also read any available:
+- `keywords_*.json` — keyword research with intent tiers, CPC estimates, competition levels. Use this directly for paid search planning — do not re-research keywords that are already on disk.
 - `creative_brief_*.json` — messaging pillars, taglines, voice
 - `positioning_*.json` — differentiation angles
 - `audience_portrait_*.json` — psychographic detail
-- `competitors_*.json` — competitive landscape for keyword/positioning context
+- `competitors_*.json` — competitive landscape for positioning context
 - `research_*.json`, `websearch_*.json` — market data
 
 ### Step 2: Channel Strategy
 
-For each beachhead vertical, research and recommend specific channels. **Use web search** to find real communities, associations, and keyword data. Do not invent community names or assume they exist without checking.
+For each beachhead vertical, research and recommend specific channels. **Use web search** to find real communities, associations, and events. Do not invent community names or assume they exist without checking.
 
 #### Paid Search (Google Ads)
-- Research actual keywords for each beachhead vertical using web search
-- Provide 10-20 keywords per vertical, grouped by intent (awareness, consideration, action)
-- Estimate CPC ranges based on niche competitiveness (search for "[vertical] software" ad competition if needed)
-- Recommend landing page strategy: which keywords map to which pages
-- Set budget allocation per vertical based on estimated CPCs and `{budget}` constraint
-- Flag any keywords where competition is unusually high or low
+- Read keyword data from `keywords_*.json` — intent tiers, CPC estimates, and competition levels are already researched upstream
+- Recommend landing page strategy: which keyword groups map to which pages
+- Set budget allocation per vertical based on estimated CPCs from keyword data and `{budget}` constraint
+- Flag any high-opportunity or high-competition keywords from the research
 
 #### Organic Communities
 - **Search for real communities**: Facebook groups, Reddit subreddits, trade forums, LinkedIn groups

@@ -20,6 +20,7 @@ This module produces paid advertising campaign plans — platform selection, aud
 
 Read all available upstream data. Check for:
 - `audience_portrait_*.json` — psychographic and behavioral data (critical for this module)
+- `keywords_*.json` — keyword research with CPC estimates, competition levels, intent tiers. Use this directly — do not re-research keywords that are already on disk.
 - `gtm_strategy_*.json` — beachhead verticals, ICP, pricing, positioning
 - `creative_brief_*.json` — messaging pillars, taglines, voice
 - `positioning_*.json` — differentiation angles, competitive white space
@@ -57,15 +58,7 @@ For each selected platform, design the campaign structure:
 
 #### Google Search Campaigns
 
-**Keyword Research** — Use web search to find real keyword data:
-- Search for "[vertical] software" and related terms to gauge competition
-- Group keywords by intent tier:
-  - **Bottom-funnel** (highest priority, lowest volume): "[vertical] software", "[vertical] dispatch software", "[competitor] alternative"
-  - **Mid-funnel**: "how to manage [vertical] routes", "best software for [vertical]", "[vertical] scheduling"
-  - **Top-funnel** (awareness, lower priority): "[vertical] business tips", "how to grow [vertical] company"
-- Provide 15-25 keywords per vertical with estimated CPC ranges
-- Identify negative keywords to exclude waste
-- Flag any keywords where competition appears unusually low (opportunity) or high (caution)
+**Keywords** — Read from `keywords_*.json` in the workspace (produced by the upstream `keywords` module). Use the structured keyword data directly — intent tiers, CPC estimates, competition levels, and negative keywords are already researched. If keyword data is missing, flag it rather than re-researching inline.
 
 **Campaign Structure:**
 - Campaigns by vertical (if multi-vertical)

@@ -8,6 +8,15 @@
       },
       "output_key": "audience",
       "unless_exists": "audience_portrait_*.json"
+    },
+    {
+      "module": "keywords",
+      "forward_params": {
+        "target": "{target}",
+        "intent": "all"
+      },
+      "output_key": "keyword_research",
+      "unless_exists": "keywords_*.json"
     }
   ]
 }
