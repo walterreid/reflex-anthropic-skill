@@ -2,7 +2,7 @@
 
 ## Current State
 
-The system is built and functional. 72 modules across 6 groups, 3 context sources, 7 evaluation lenses. The dispatch engine, source injection, chain composition, Level 0-3 routing, dependency resolution, workspace persistence, and the perspective/lens concern self-improvement architecture all work. This document is not a build plan — it's a diagnostic of where the system's design assumptions are under pressure and what to do about it.
+The system is built and functional. 72 modules across 6 groups, 3 context sources, 8 evaluation lenses. The dispatch engine, source injection, chain composition, Level 0-3 routing, dependency resolution, workspace persistence, and the perspective/lens concern self-improvement architecture all work. This document is not a build plan — it's a diagnostic of where the system's design assumptions are under pressure and what to do about it.
 
 ## Phase 0 — Foundation [COMPLETE]
 
@@ -91,12 +91,24 @@ The self-improvement problem was solved not by making the loop infrastructure sm
 | 4.5 | `lens_library` source in sources.py — canonical lens definitions injected at dispatch time | [x] |
 | 4.6 | `test-perspective` calibration module — 7 scenarios with planted flaws, misdirection resistance test | [x] Scored 7/7 HIT, 1/1 INDEPENDENT on misdirection |
 | 4.7 | `plan` updated to suggest `+perspective` for high-stakes formatter chains | [x] |
-| 4.8 | Upgrade `perspective` to Level 3 with time-based resolver that rotates lenses per pass | [ ] |
-| 4.9 | Test multi-pass convergence: does `email-draft+perspective+perspective` produce measurably better output than single-pass? | [ ] |
+| 4.8 | Upgrade `perspective` to Level 3 with time-based resolver that rotates lenses per pass | [ ] See justification notes below |
+| 4.9 | Test multi-pass convergence: does `email-draft+perspective+perspective` produce measurably better output than single-pass? | [~] Partially validated: pass 2 > pass 1. Pass 2 found a hidden-assumptions problem introduced by pass 1's fix (condescension to beta users). Debrief also found invention-detection gap — neither lens catches fabricated claims. New `unsupported-confidence` lens (lens #8) added to address this. |
+| 4.10 | Validate `unsupported-confidence` lens — test with `test-perspective` calibration scenarios | [ ] |
 
 **The key insight:** The `plan` lesson (don't make Python replicate Claude's judgment) applies to self-correction too. Score-based evaluation (audit) produces numbers that need translation back into revision instructions — a lossy round-trip. Lens-based evaluation (perspective) skips the translation. The lens reveals, the revelation implies the fix, the module produces the revised output. One step.
 
 **The coin-flip connection:** `perspective` becomes Level 3 when you want multi-pass improvement. A time-based resolver (same mechanism as coin-flip) rotates which lens gets applied per pass. Each iteration examines a different blind spot. The escape hatch terminates the loop: "the lens found nothing new."
+
+**4.8 justification notes (from 2026-04-01 investigation):**
+
+The case for upgrading perspective to Level 3 is real but has a blocker. The problem: `build_inline_chain()` in dispatch.py does **not** run resolvers. It always loads the root MODULE.md, never a variant. This means `email-draft+perspective+perspective` — the primary multi-pass pattern — would bypass the resolver entirely. The rotation would never happen in the path users actually use.
+
+Three options:
+1. **Fix `build_inline_chain()` to run resolvers for Level 3 modules.** This is a dispatch.py change, which Golden Rule 1 says should be avoided. But this isn't adding module-specific logic — it's fixing a gap where inline chains don't fully support Level 3 modules. The resolver mechanism is general-purpose; inline chains just don't invoke it. This is arguably a bug, not a feature request.
+2. **Make perspective's resolver stateful via workspace files.** The resolver reads `perspective_*.json` files from `/home/claude/` to see which lenses have already been applied in the current chain, and selects a different one. This works without touching dispatch.py but makes the resolver dependent on workspace state, which is a new pattern.
+3. **Keep perspective at Level 1 and let the LLM rotate.** The auto-selection logic in Step 3 of MODULE.md already says "select based on what you see." In multi-pass, the second instance sees the first's `perspective_*.json` output (which records `lens_applied`). The LLM can avoid repeating the same lens without any Python resolver. This is the lightest touch — it relies on the LLM's judgment, which is the same bet `plan` makes.
+
+Current recommendation: Option 3 first (test whether the LLM naturally avoids lens repetition in multi-pass), then Option 2 if it doesn't. Option 1 only if deterministic rotation is required.
 
 **What `refine` is for:** Cases where structured feedback (scores, verdicts) already exists and needs to be actioned. `audit+refine` translates scored deficiencies into fixes. `perspective` is preferred for iterative improvement; `refine` is for consuming existing evaluations.
 
@@ -159,3 +171,5 @@ Every analytical module currently runs on web search + Claude's knowledge. Struc
 | 2026-03-31 | `test-perspective` module added | Calibration module: generates deliverables with known, planted flaws, then tests whether each of the 7 lenses catches its target flaw. Scenario 1 plants a deliberately wrong lens_concern to test whether perspective follows the misdirection or finds the actual gap. |
 | 2026-03-31 | Lens library extracted to LENSES.json + sources.py | Hardcoded lens names removed from all 5 formatter MODULE.md files. Canonical lens definitions now live in `perspective/LENSES.json`, read by `lens_library` source, injected via PARAMS.json. Adding a lens = one file edit. |
 | 2026-03-31 | Fixed: inject params missing from inline chains | `build_inline_chain()` in dispatch.py was not calling `inject_params()`. Source-injected params (workspace_state, lens_library) were silently missing from `+` chain steps. One-line fix. |
+| 2026-04-01 | `unsupported-confidence` lens added (lens #8) | Debrief on multi-pass perspective test found invention-detection gap: existing 7 lenses watch for omission and misframing, none catch fabricated claims. New lens targets social proof, unearned specificity, and confidence that appeared from nowhere. |
+| 2026-04-01 | Phase 4.8 investigated — Level 3 upgrade deferred | `build_inline_chain()` doesn't run resolvers, so a Level 3 upgrade wouldn't affect the `+` chain path (the primary multi-pass pattern). Recommended: test whether LLM naturally avoids lens repetition first (Option 3), escalate to workspace-stateful resolver (Option 2) if needed. |

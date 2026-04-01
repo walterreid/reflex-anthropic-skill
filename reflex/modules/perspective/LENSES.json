@@ -35,6 +35,11 @@
       "name": "changed-context",
       "when": "Evidence has evolved since the conclusion was drawn",
       "prompt": "Given what's been established since the previous step's conclusion was drawn, identify where that conclusion now diverges from the strongest current reading of the evidence."
+    },
+    {
+      "name": "unsupported-confidence",
+      "when": "The output sounds authoritative but some claims may have no evidence trail",
+      "prompt": "Identify any claim, figure, or characterization in the output that reads as earned knowledge but traces to no evidence in the upstream context. Social proof, specificity, and certainty that appeared from nowhere — not gaps in reasoning, but inventory that was never sourced."
     }
   ]
 }

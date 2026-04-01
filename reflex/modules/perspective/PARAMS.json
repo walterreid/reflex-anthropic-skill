@@ -10,7 +10,7 @@
     "lens": {
       "required": false,
       "default": "auto",
-      "description": "Which evaluation lens to apply: missed-implications, wrong-framing, hidden-assumptions, strategic-avoidance, operational-gap, steelman-then-gap, changed-context, or auto (module selects based on what it sees). Also accepts custom lens text or a workspace lens filename."
+      "description": "Which evaluation lens to apply: missed-implications, wrong-framing, hidden-assumptions, strategic-avoidance, operational-gap, steelman-then-gap, changed-context, unsupported-confidence, or auto (module selects based on what it sees). Also accepts custom lens text or a workspace lens filename."
     },
     "workspace": {
       "inject": "workspace_state"

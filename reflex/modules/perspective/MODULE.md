@@ -64,6 +64,11 @@ The full lens descriptions below are the implementation details — what each le
 
 *What this reveals*: that the output was correct when written but the ground shifted. That new information in the workspace (from later chain steps or new research) makes an earlier conclusion stale. Most useful in long chains or when re-examining snapshotted work.
 
+**unsupported-confidence** — When the output sounds authoritative but some claims may have no evidence trail.
+> Identify any claim, figure, or characterization in the output that reads as earned knowledge but traces to no evidence in the upstream context. Social proof, specificity, and certainty that appeared from nowhere — not gaps in reasoning, but inventory that was never sourced.
+
+*What this reveals*: invented social proof ("users loved it"), unearned specificity ("a 40% improvement"), confident characterizations that sound researched but were fabricated during the writing process. The other lenses watch for what's missing or misframed. This one watches for what appeared from nowhere. Most valuable after perspective rewrites or in research-free chains where there's no upstream evidence to ground claims against.
+
 ### Workspace Lenses
 
 Before applying a built-in lens, check the workspace for custom lens sources:
@@ -113,6 +118,7 @@ If `{lens}` is `auto` and no upstream `lens_concern` was found: Read the output.
 - Output describes well but doesn't tell you what to do → `operational-gap`
 - Output is high-stakes and needs charitable interrogation → `steelman-then-gap`
 - Output was produced earlier and context has since evolved → `changed-context`
+- Output reads confidently but has no upstream research to ground it → `unsupported-confidence`
 
 If `{lens}` names a built-in lens, use it. If it names a workspace file, load it. Otherwise, treat it as custom text.
 
