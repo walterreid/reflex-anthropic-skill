@@ -18,13 +18,25 @@ Reflex doesn't have a voice — Claude does. The modules should not impose a per
 
 ## Interaction Patterns
 
-### The Two Entry Points
+### The Three Entry Points
 
 **Power user:** Types `reflex competitive-messaging+audience-portrait+creative-brief target:"DTC skincare" audience:"millennial men"`. Knows the modules, knows the params, knows the chain. Sees the machinery and likes it.
 
-**Normal user:** Types `reflex run "help me figure out my brand positioning and write a launch email"`. Doesn't know modules exist. Gets the same result. Sees only the output.
+**Normal user:** Types `reflex run "help me figure out my brand positioning and write a launch email"`. Doesn't know modules exist. `plan` composes the chain, `run` executes it. Sees only the output.
 
-Both are first-class citizens. The system should never force a normal user to become a power user, and should never slow down a power user with training wheels.
+**Conversational user:** Types `reflex persona copilot` and just talks. Doesn't know modules or chains exist. The persona decides when to invoke modules, which ones, with what params — all invisibly. The conversation IS the interface.
+
+All three are first-class citizens. Each is a different depth of engagement with the same underlying system: direct module access, plan-mediated access, and persona-mediated access.
+
+### Bounded vs. Unbounded — Why Personas Are Not Modules
+
+Modules are bounded: they receive input, produce output, and end. This is what makes them composable — you can chain them because each one has a defined input shape and output shape.
+
+Personas are unbounded: they persist across an entire conversation, deciding when to act and when to just talk. They have no defined output shape — the conversation itself is the output.
+
+This distinction is architectural, not cosmetic. If a persona were a module, it would be composable. `websearch+copilot` would be valid syntax. But a persistent behavioral overlay has no meaningful output to pass downstream in a chain. The result would be incoherent — not an error, just nonsense.
+
+The parallel `personas/` directory protects this boundary at the filesystem level. Personas can't be chained because they don't exist where the chain builder looks. No flags, no exclusion lists, no special cases in dispatch.py.
 
 ### The Pause Pattern
 

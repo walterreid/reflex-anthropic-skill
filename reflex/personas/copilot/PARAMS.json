@@ -1,0 +1,13 @@
+{
+  "description": "Persistent conversational partner that silently orchestrates reflex modules — adapts tone, invokes chains when needed, stays in the conversation",
+  "params": {
+    "registry": {
+      "inject": "module_registry",
+      "description": "Available modules for silent invocation"
+    },
+    "workspace": {
+      "inject": "workspace_state",
+      "description": "Current session artifacts for context awareness"
+    }
+  }
+}

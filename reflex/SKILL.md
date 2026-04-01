@@ -9,11 +9,13 @@ A skill that discovers and loads modules at runtime through filesystem conventio
 
 ## Architecture
 
-Three layers, three files, three jobs:
+Four layers, two dispatch paths, shared injection:
 
 - **`scripts/dispatch.py`** — Routes modules. Reads the filesystem, extracts params, builds chains, runs resolvers. Knows nothing about what modules do.
-- **`scripts/sources.py`** — Provides context. Gathers runtime state (module registry, workspace files) that modules can request via injection. Knows nothing about which modules use it.
-- **`modules/`** — Defines behavior. Each module is a folder. Convention determines capability.
+- **`scripts/persona.py`** — Routes personas. Assembles persistent conversational context from persona files. Knows nothing about modules.
+- **`scripts/sources.py`** — Provides context. Gathers runtime state (module registry, workspace files) that both modules and personas can request via injection.
+- **`modules/`** — Bounded tools. Each module is a folder. Composable via `+` chains.
+- **`personas/`** — Persistent wrappers. Each persona is a folder. Not composable — they invoke modules internally.
 
 ## Context Efficiency
 
@@ -77,9 +79,18 @@ Conditional dependencies: A dependency can declare "unless_exists": "pattern.jso
 
 ## How to respond
 
-### Step 1: Run the dispatch script
+### Step 1: Route to the correct dispatcher
 
-Always run the dispatch script first. Pass the user's exact message via stdin using a heredoc. Do NOT modify, reformat, or "fix" the message in any way:
+Check whether the user's message contains the word "persona" (e.g., "reflex persona copilot", "reflex persona list").
+
+**If the message contains "persona"** → route to persona.py:
+```bash
+python3 {SKILL_DIR}/scripts/persona.py - <<'DISPATCH_INPUT'
+{USER_MESSAGE}
+DISPATCH_INPUT
+```
+
+**Otherwise** → route to dispatch.py (the default):
 ```bash
 python3 {SKILL_DIR}/scripts/dispatch.py - <<'DISPATCH_INPUT'
 {USER_MESSAGE}
@@ -110,6 +121,19 @@ The script outputs one of these:
 
 **`ERROR:message`** → Reply with "Unknown reflex."
 
+#### Persona protocol (from persona.py)
+
+**`LOAD_PERSONA:/path|CONTEXT:{...}`** → A persona is loading. Parse the CONTEXT JSON — it contains:
+- `persona_md`: Full persona instructions (already param-substituted). Read and follow these as your operating frame for the rest of the conversation.
+- `style`: Voice and formatting rules. Internalize these.
+- `triggers`: Situational patterns to watch for. Use these to decide when to invoke modules.
+- `dispatch_script`: Path to dispatch.py. Use this when the persona decides to invoke a module.
+- `skill_dir`: Path to the reflex skill directory.
+
+Once a persona is loaded, you ARE that persona until the user shifts away or explicitly exits. Every subsequent response follows the persona's instructions. When the persona decides to invoke a module, call dispatch.py directly — the persona stays active while modules run underneath.
+
+**`LIST_PERSONAS:[...]`** → Show the available personas to the user.
+
 ### Rules
 
 - Do NOT skip the dispatch script
@@ -129,6 +153,17 @@ The script outputs one of these:
 **Level 3**: Add `RESOLVE.py` + `variants/{name}/MODULE.md`
 
 The resolver receives params as a JSON string argument and prints the variant name to stdout. The dispatch script resolves that name to `variants/{name}/MODULE.md`.
+
+## Adding personas
+
+Create `personas/{name}/PERSONA.md` — that's the only required file.
+
+Optional files (degrade gracefully if absent):
+- `PARAMS.json` — Inject-only params (registry, workspace). Same format as module PARAMS.json.
+- `TRIGGERS.json` — Situational patterns the persona watches for. Maps conversational signals to suggested modules and behaviors.
+- `STYLE.json` — Voice characteristics, tone adaptation rules, signal phrases, formatting rules.
+
+Personas are not modules. They don't appear in the module registry, can't be chained with `+`, and can't be referenced in DEPENDS.json. They invoke modules internally via dispatch.py.
 
 ## Adding context sources
 

@@ -139,6 +139,27 @@ Every analytical module currently runs on web search + Claude's knowledge. Struc
 - **Module versioning** — No mechanism for A/B testing module instructions. If you want to test whether a modified `email-draft` produces better output, you currently have to overwrite it. A `variants/` approach could work but adds Level 3 complexity to Level 1 modules.
 - **Claim-testing modules** — The space between `do` (catch-all) and named analytical modules is underserved. Statements like "our pricing is wrong" or "is this market growing?" aren't research questions, analysis questions, or formatting questions — they're claims that need testing. A module (or chain pattern) that takes a claim, identifies what would need to be true for it to hold, and sets up downstream evidence gathering would fill this gap. This is where module growth produces genuine new capability, not diminishing returns.
 
+## Phase 8 — Persona System [IN PROGRESS]
+
+Personas are a persistent conversational layer over module dispatch. A user types `reflex persona copilot` and gets a thinking partner who silently orchestrates modules — no chain syntax, no module names, just conversation.
+
+**Why personas are not modules:** Modules are bounded (input → output → done) and composable (`+` chains, DEPENDS.json). A persona is persistent (stays active across turns) and unbounded (no defined output shape). If a persona lived in `modules/`, it would be chainable — `websearch+copilot` would be valid syntax, producing incoherent behavior. The parallel `personas/` directory protects this invariant at the type level: everything in `modules/` is composable, everything in `personas/` is persistent. No flags, no exclusion lists, no special cases in dispatch.py.
+
+**Architecture:** `persona.py` is a parallel dispatch script that reads `personas/` by convention. It shares `sources.py` injection (same import, same sources) and can call `dispatch.py` for module invocation. Neither script knows about the other's internals. dispatch.py is untouched (Golden Rule 1).
+
+**File conventions:**
+- `PERSONA.md` — Required. Identity, behavior, module invocation instructions. Like MODULE.md but for persistent operation.
+- `PARAMS.json` — Optional. Inject-only params (registry, workspace). Same format as module PARAMS.json.
+- `TRIGGERS.json` — Optional. Persona-specific. Maps conversational signals to suggested modules and behaviors.
+- `STYLE.json` — Optional. Persona-specific. Voice characteristics, tone adaptation, signal phrases, formatting rules.
+
+| Task | Description | Status |
+|------|-------------|--------|
+| 8.0 | Persona architecture: persona.py, personas/ directory, SKILL.md routing | [x] |
+| 8.1 | First persona: `copilot` with PERSONA.md, PARAMS.json, TRIGGERS.json, STYLE.json | [x] Installed, not yet live-tested |
+| 8.2 | Live test: `reflex persona copilot` in a fresh conversation — validate persistence, module invocation, trigger recognition, style adaptation | [ ] |
+| 8.3 | Test persona/module isolation — confirm copilot does not appear in module registry or chain composition | [ ] Verify via dispatch.py --list and plan's registry injection |
+
 ## ONGOING
 
 - **Module count is now 72.** The `help list` output is long. Consider whether `help` should group by use case ("I want to launch a brand" → shows relevant modules) in addition to group taxonomy.
@@ -170,3 +191,4 @@ Every analytical module currently runs on web search + Claude's knowledge. Struc
 | 2026-04-01 | Phase 4.8 investigated — Level 3 upgrade deferred | `build_inline_chain()` doesn't run resolvers, so a Level 3 upgrade wouldn't affect the `+` chain path (the primary multi-pass pattern). Recommended: test whether LLM naturally avoids lens repetition first (Option 3), escalate to workspace-stateful resolver (Option 2) if needed. |
 | 2026-04-01 | Phase 4.8 resolved by design — no resolver needed | Live test confirmed LLM naturally rotates lenses in multi-pass (strategic-avoidance → hidden-assumptions). Scenario 9 calibration test confirmed: hidden-assumptions → strategic-avoidance. Upstream `lens_applied` in chain context is sufficient signal. |
 | 2026-04-01 | Phase 4.10 validated — unsupported-confidence lens + rotation | Scenario 8: HIT on all 3 planted fabrications. Scenario 9: ROTATE confirmed. test-perspective now has 9 scenarios (up from 7). |
+| 2026-04-01 | Persona system added as parallel architecture (not as modules) | Personas violate the module composition contract — they're persistent and unbounded, modules are bounded and composable. Putting a persona in `modules/` would make it chainable (`websearch+copilot`), producing incoherent behavior. The parallel `personas/` directory protects the composition invariant at the type level. dispatch.py untouched. |

@@ -1,0 +1,127 @@
+{
+  "triggers": {
+    "needs_research": {
+      "signals": [
+        "I don't know enough about",
+        "what's the market like",
+        "who are the competitors",
+        "is there data on",
+        "what's happening with",
+        "I've heard about but don't know",
+        "can you look into",
+        "what do we know about"
+      ],
+      "suggest_modules": ["research", "websearch", "trends", "fetch"],
+      "behavior": "invoke_with_signal",
+      "note": "User needs real-world information. Signal briefly, then run."
+    },
+    "needs_comparison": {
+      "signals": [
+        "compare",
+        "versus",
+        "which is better",
+        "what's the difference between",
+        "how does X stack up against",
+        "pros and cons"
+      ],
+      "suggest_modules": ["compare", "evaluate", "landscape"],
+      "behavior": "invoke_with_signal",
+      "note": "User wants to weigh options. Usually needs research first if targets are external."
+    },
+    "needs_stress_test": {
+      "signals": [
+        "what could go wrong",
+        "devil's advocate",
+        "poke holes",
+        "what am I missing",
+        "is this actually good",
+        "challenge this",
+        "red team",
+        "worst case"
+      ],
+      "suggest_modules": ["challenge", "risks", "perspective"],
+      "behavior": "invoke_with_signal",
+      "note": "User wants their thinking tested. Don't soften — that defeats the purpose."
+    },
+    "needs_structure": {
+      "signals": [
+        "help me think through",
+        "how should I approach",
+        "what's the framework for",
+        "organize my thinking",
+        "break this down",
+        "I'm overwhelmed"
+      ],
+      "suggest_modules": ["decompose", "ideate", "swot", "scenario"],
+      "behavior": "invoke_with_signal",
+      "note": "User needs structure imposed on ambiguity. Pick the framework that fits."
+    },
+    "wants_deliverable": {
+      "signals": [
+        "write that up",
+        "send this as an email",
+        "make a report",
+        "put that in a doc",
+        "draft a",
+        "can you write",
+        "I need to send",
+        "package this",
+        "turn this into"
+      ],
+      "suggest_modules": ["write-report", "email-draft", "linkedin", "pitch", "whitepaper"],
+      "behavior": "confirm_format_then_invoke",
+      "note": "User wants output. Confirm the format/audience before running."
+    },
+    "wants_next_steps": {
+      "signals": [
+        "what should I do next",
+        "next steps",
+        "what now",
+        "where do I go from here",
+        "action items",
+        "make this actionable"
+      ],
+      "suggest_modules": ["actions", "experiment"],
+      "behavior": "invoke_with_signal",
+      "note": "User wants to move from analysis to action."
+    },
+    "situation_shift": {
+      "signals": [
+        "actually let's talk about",
+        "switching gears",
+        "different topic",
+        "change of subject",
+        "one more thing",
+        "unrelated but"
+      ],
+      "behavior": "acknowledge_and_pivot",
+      "note": "Don't fight the shift. Acknowledge, snapshot if useful, then follow."
+    },
+    "wants_to_preserve": {
+      "signals": [
+        "save this",
+        "remember this",
+        "I want to come back to",
+        "don't lose this",
+        "capture what we discussed"
+      ],
+      "suggest_modules": ["context", "snapshot", "recap"],
+      "behavior": "invoke_with_signal",
+      "note": "User wants to preserve conversation state. Use context or snapshot."
+    },
+    "wants_audience_adaptation": {
+      "signals": [
+        "explain this to my",
+        "how would I tell",
+        "make this simpler",
+        "for a non-technical",
+        "for my boss",
+        "for the board",
+        "for investors"
+      ],
+      "suggest_modules": ["simplify", "reframe", "persona"],
+      "behavior": "invoke_with_signal",
+      "note": "User needs the same content reshaped for a different audience."
+    }
+  }
+}

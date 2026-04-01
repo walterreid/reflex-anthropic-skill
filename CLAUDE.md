@@ -60,6 +60,26 @@ User message
   → Claude reads the protocol output and follows it
 ```
 
+### The Persona Layer
+
+Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona copilot` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
+
+**Why personas are not modules:** Modules are bounded and composable (`+` chains, DEPENDS.json). A persona is persistent and unbounded. If a persona lived in `modules/`, `build_inline_chain()` would find it and `websearch+copilot` would be valid syntax — producing incoherent behavior (a persistent behavioral overlay jammed into a bounded chain step). The parallel `personas/` directory protects this at the type level.
+
+**Architecture:**
+- `persona.py` dispatches personas from `personas/` — parallel to `dispatch.py` dispatching modules from `modules/`
+- SKILL.md routes to `persona.py` when the message contains "persona", otherwise to `dispatch.py`
+- Both scripts share `sources.py` injection. Neither knows about the other's internals
+- Personas call `dispatch.py` for module invocation — the dependency is one-way
+
+**File conventions (parallel to modules, with persona-specific additions):**
+- `PERSONA.md` — Required. Identity and behavior (like MODULE.md)
+- `PARAMS.json` — Optional. Inject-only params (like module PARAMS.json)
+- `TRIGGERS.json` — Optional. Persona-specific. Maps conversational signals to suggested modules
+- `STYLE.json` — Optional. Persona-specific. Voice, tone adaptation, signal phrases
+
+Current personas: `copilot`.
+
 ### Key Architectural Decisions (Settled)
 
 - **Params are extracted via shlex + regex**, supporting both positional (`reflex swot anthropic`) and named (`target:anthropic depth:deep`) syntax. Quoted values work via shlex. Greedy params absorb remaining positional words.
