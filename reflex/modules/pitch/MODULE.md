@@ -48,6 +48,10 @@ Pitches compress aggressively — which lens would most likely find a problem? N
 }
 ```
 
+## Delivery
+
+After writing the pitch content and JSON to disk, **deliver as a formatted document** using Anthropic's document skill (.docx). The JSON on disk is the evidence trail. The document is the work product. Both are required.
+
 ## Output
 
-A one-page persuasive narrative. Situation, complication, resolution, ask. No headers labeled "Situation" etc. — the structure should be invisible, the narrative should flow. End with the ask as its own short paragraph.
+A one-page persuasive narrative delivered as a Word document. Situation, complication, resolution, ask. No headers labeled "Situation" etc. — the structure should be invisible, the narrative should flow. End with the ask as its own short paragraph.

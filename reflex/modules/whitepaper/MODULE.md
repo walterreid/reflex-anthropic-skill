@@ -63,6 +63,12 @@ Which lens would most likely find a problem in what you're about to produce? Nam
 - If a claim cannot be traced back through this chain, cut it.
 - If upstream data contains scores, percentages, or metrics, include them — do not round or approximate.
 
+## Delivery
+
+After writing the whitepaper markdown and metadata JSON to disk, **deliver the document using Anthropic's document skill** (docx). The module's job isn't done when the files are saved — it's done when the user has a professional document they can download or share.
+
+The markdown file on disk is the evidence-traced source. The delivered .docx is the work product. Both are required.
+
 ## Output
 
-The complete whitepaper as a polished document. Write it to disk and present the key argument in 2-3 sentences as confirmation. This is a deliverable, not conversation.
+The complete whitepaper delivered as a formatted Word document (.docx) with proper title, headings, and sections. Present the key argument in 2-3 sentences as confirmation alongside the download.

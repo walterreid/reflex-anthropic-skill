@@ -40,6 +40,15 @@ Which lens would most likely find a problem in what you're about to produce? Nam
 }
 ```
 
+## Delivery
+
+After writing the report content and JSON to disk, **deliver the document using Anthropic's document skill** (docx, pptx, or the appropriate format tool). The module's job isn't done when the JSON is saved — it's done when the user has a professional document they can download or share.
+
+- **brief** or **memo** format → deliver as a Word document (.docx)
+- **full** format → deliver as a Word document (.docx) with proper headings, sections, and formatting
+
+The structured JSON on disk is the evidence trail. The delivered document is the work product. Both are required.
+
 ## Output
 
-The report in the requested format. Polished deliverable, not conversation.
+The report delivered as a formatted document. The user should receive a downloadable file, not just text in the chat.
