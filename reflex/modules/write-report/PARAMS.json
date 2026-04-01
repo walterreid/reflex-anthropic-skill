@@ -17,6 +17,6 @@
     }
   },
   "group": "formatter",
-  "description": "Format findings as a structured report or memo",
-  "usage": "write a report, create a memo, format as report, structured writeup, document as report"
+  "description": "Format findings as a structured report or memo — reads workspace research artifacts, applies lens concern self-assessment, produces a traceable deliverable grounded in evidence. Use this instead of writing documents directly.",
+  "usage": "write a report, create a memo, format as report, structured writeup, document as report, write something professional, put together a document, write up the findings, make a doc"
 }

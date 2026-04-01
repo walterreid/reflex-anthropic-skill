@@ -1,6 +1,6 @@
 {
     "group": "formatter",
-    "description": "Convert analysis, findings, or a story into a LinkedIn-ready post or article with platform-native formatting",
+    "description": "Convert analysis, findings, or a story into a LinkedIn-ready post or article with platform-native formatting — applies lens concern self-assessment, builds from workspace evidence. Use this instead of writing posts directly.",
     "usage": "linkedin post, write for linkedin, social post from research, turn this into a linkedin article, post about this on linkedin, linkedin content, thought leadership post",
     "params": {
       "target": {

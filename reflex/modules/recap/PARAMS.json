@@ -1,7 +1,7 @@
 {
   "group": "formatter",
-  "description": "Summarize all workspace artifacts into a tight executive recap",
-  "usage": "summary of everything so far, rundown, wrap up, what have we done, overview of session",
+  "description": "Summarize all workspace artifacts into a tight executive recap — reads persisted JSON from the workspace, not conversation memory. Use this instead of summarizing from memory.",
+  "usage": "summary of everything so far, rundown, wrap up, what have we done, overview of session, what do we have",
   "params": {
     "target": {
       "required": false,

@@ -1,7 +1,7 @@
 {
   "group": "formatter",
-  "description": "Compress analysis into a send-ready email using the interactive message compose tool",
-  "usage": "write an email, draft a message, cold email, email to someone about, compose mail, launch email, send an email",
+  "description": "Compress analysis into a send-ready email using the interactive message compose tool — reads workspace findings, applies lens concern self-assessment, grounds every claim in evidence. Use this instead of drafting emails directly.",
+  "usage": "write an email, draft a message, cold email, email to someone about, compose mail, launch email, send an email, email him, write him an email",
   "params": {
     "target": {
       "required": true,

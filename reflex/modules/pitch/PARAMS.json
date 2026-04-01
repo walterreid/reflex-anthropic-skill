@@ -22,6 +22,6 @@
     }
   },
   "group": "formatter",
-  "description": "Structure findings as a persuasive Situation-Complication-Resolution narrative",
-  "usage": "make the case for, sell this idea, persuasive narrative, convince stakeholders, pitch this"
+  "description": "Structure findings as a persuasive Situation-Complication-Resolution narrative — reads workspace evidence, applies lens concern self-assessment, builds argument from researched data not conversation. Use this instead of writing pitches directly.",
+  "usage": "make the case for, sell this idea, persuasive narrative, convince stakeholders, pitch this, make a presentation, pitch deck content"
 }
