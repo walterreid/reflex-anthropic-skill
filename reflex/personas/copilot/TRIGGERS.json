@@ -13,7 +13,7 @@
       ],
       "suggest_modules": ["research", "websearch", "trends", "fetch"],
       "behavior": "invoke_with_signal",
-      "note": "User needs real-world information. Signal briefly, then run."
+      "note": "MUST use websearch/research/fetch via dispatch.py. Never use native web search. Signal briefly, then dispatch."
     },
     "needs_comparison": {
       "signals": [
@@ -26,7 +26,7 @@
       ],
       "suggest_modules": ["compare", "evaluate", "landscape"],
       "behavior": "invoke_with_signal",
-      "note": "User wants to weigh options. Usually needs research first if targets are external."
+      "note": "MUST dispatch compare or evaluate module. Chain with websearch first if targets are external."
     },
     "needs_stress_test": {
       "signals": [
@@ -41,7 +41,7 @@
       ],
       "suggest_modules": ["challenge", "risks", "perspective"],
       "behavior": "invoke_with_signal",
-      "note": "User wants their thinking tested. Don't soften — that defeats the purpose."
+      "note": "MUST dispatch challenge/risks/perspective module. Don't soften — that defeats the purpose."
     },
     "needs_structure": {
       "signals": [
@@ -54,7 +54,7 @@
       ],
       "suggest_modules": ["decompose", "ideate", "swot", "scenario"],
       "behavior": "invoke_with_signal",
-      "note": "User needs structure imposed on ambiguity. Pick the framework that fits."
+      "note": "MUST dispatch a structuring module. Pick the framework that fits."
     },
     "wants_deliverable": {
       "signals": [
@@ -70,7 +70,7 @@
       ],
       "suggest_modules": ["write-report", "email-draft", "linkedin", "pitch", "whitepaper"],
       "behavior": "confirm_format_then_invoke",
-      "note": "User wants output. Confirm the format/audience before running."
+      "note": "MUST dispatch a formatter module. Never write deliverables with native file tools. Confirm format/audience, then chain research into the formatter via dispatch."
     },
     "wants_next_steps": {
       "signals": [
@@ -83,7 +83,7 @@
       ],
       "suggest_modules": ["actions", "experiment"],
       "behavior": "invoke_with_signal",
-      "note": "User wants to move from analysis to action."
+      "note": "MUST dispatch actions or experiment module."
     },
     "situation_shift": {
       "signals": [
@@ -107,7 +107,7 @@
       ],
       "suggest_modules": ["context", "snapshot", "recap"],
       "behavior": "invoke_with_signal",
-      "note": "User wants to preserve conversation state. Use context or snapshot."
+      "note": "MUST dispatch context/snapshot/recap module to persist state."
     },
     "wants_audience_adaptation": {
       "signals": [
@@ -121,7 +121,7 @@
       ],
       "suggest_modules": ["simplify", "reframe", "persona"],
       "behavior": "invoke_with_signal",
-      "note": "User needs the same content reshaped for a different audience."
+      "note": "MUST dispatch simplify/reframe module via dispatch.py."
     }
   }
 }

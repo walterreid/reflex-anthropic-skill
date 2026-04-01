@@ -157,7 +157,7 @@ Personas are a persistent conversational layer over module dispatch. A user type
 |------|-------------|--------|
 | 8.0 | Persona architecture: persona.py, personas/ directory, SKILL.md routing | [x] |
 | 8.1 | First persona: `copilot` with PERSONA.md, PARAMS.json, TRIGGERS.json, STYLE.json | [x] Installed, not yet live-tested |
-| 8.2 | Live test: `reflex persona copilot` in a fresh conversation — validate persistence, module invocation, trigger recognition, style adaptation | [ ] |
+| 8.2 | Live test: `reflex persona copilot` in a fresh conversation — validate persistence, module invocation, trigger recognition, style adaptation | [~] First test: persona loaded, style worked, triggers fired, but copilot used zero reflex modules — routed all work through Claude's native tools (WebSearch, Write, etc.). Root cause: PERSONA.md instructions were suggestive, not directive. Fix: added mandatory module rule, concrete dispatch examples, and MUST directives in TRIGGERS.json. Needs re-test. |
 | 8.3 | Test persona/module isolation — confirm copilot does not appear in module registry or chain composition | [ ] Verify via dispatch.py --list and plan's registry injection |
 
 ## ONGOING
@@ -192,3 +192,4 @@ Personas are a persistent conversational layer over module dispatch. A user type
 | 2026-04-01 | Phase 4.8 resolved by design — no resolver needed | Live test confirmed LLM naturally rotates lenses in multi-pass (strategic-avoidance → hidden-assumptions). Scenario 9 calibration test confirmed: hidden-assumptions → strategic-avoidance. Upstream `lens_applied` in chain context is sufficient signal. |
 | 2026-04-01 | Phase 4.10 validated — unsupported-confidence lens + rotation | Scenario 8: HIT on all 3 planted fabrications. Scenario 9: ROTATE confirmed. test-perspective now has 9 scenarios (up from 7). |
 | 2026-04-01 | Persona system added as parallel architecture (not as modules) | Personas violate the module composition contract — they're persistent and unbounded, modules are bounded and composable. Putting a persona in `modules/` would make it chainable (`websearch+copilot`), producing incoherent behavior. The parallel `personas/` directory protects the composition invariant at the type level. dispatch.py untouched. |
+| 2026-04-01 | Copilot PERSONA.md rewritten: suggestive → directive module invocation | First live test showed copilot used zero reflex modules despite having the full registry injected. LLM chose native tools (WebSearch, Write) as path of least resistance. Fix: mandatory module rule ("MUST use reflex modules for any work product"), concrete dispatch examples for 7 common patterns, MUST directives in all TRIGGERS.json notes. |
