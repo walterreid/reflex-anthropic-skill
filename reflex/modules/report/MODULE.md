@@ -40,6 +40,10 @@ Which lens would most likely find a problem in what you're about to produce? Nam
 }
 ```
 
+## Evidence Certification
+
+If `certify_*.json` exists in the workspace, read the `appendix_for_formatter` section and embed it as an "Evidence & Confidence Assessment" appendix at the end of the document. Include the claim table, gaps disclosure, and methodology note as-is. Do not editorialize — present the certification exactly as produced.
+
 ## Delivery
 
 After writing the report content and JSON to disk, **deliver the document using Anthropic's document skill** (docx, pptx, or the appropriate format tool). The module's job isn't done when the JSON is saved — it's done when the user has a professional document they can download or share.

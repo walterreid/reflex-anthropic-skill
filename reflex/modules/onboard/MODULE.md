@@ -61,6 +61,10 @@ Organize into sections (adjust depth per `{depth}`):
 
 Write to `/home/claude/onboard_{target_slug}.md` as a readable markdown document (not JSON — this is meant to be read by humans or AI systems directly).
 
+## Evidence Certification
+
+If `certify_*.json` exists in the workspace, read the `appendix_for_formatter` section and embed it as an "Evidence & Confidence Assessment" appendix at the end of the document. Include the claim table, gaps disclosure, and methodology note as-is. Do not editorialize — present the certification exactly as produced.
+
 ## Delivery
 
 After writing the markdown to disk, **deliver as a formatted Word document (.docx)** using Anthropic's document skill. The markdown on disk is the portable source. The .docx is what you hand to a human. Both are required.

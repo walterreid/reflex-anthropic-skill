@@ -213,6 +213,10 @@ Write the launch plan to `/home/claude/launch_plan_{target}.json`:
 }
 ```
 
+## Evidence Certification
+
+If `certify_*.json` exists in the workspace, read the `appendix_for_formatter` section and embed it as an "Evidence & Confidence Assessment" appendix at the end of the document. Include the claim table, gaps disclosure, and methodology note as-is. Do not editorialize — present the certification exactly as produced.
+
 ## Delivery
 
 After writing the launch plan JSON to disk, **deliver as a formatted Word document (.docx)** using Anthropic's document skill. A launch plan is an operational playbook a founder works from daily and shares with team and advisors. The JSON on disk is the evidence trail. The .docx is the deliverable. Both are required.

@@ -63,6 +63,10 @@ Which lens would most likely find a problem in what you're about to produce? Nam
 - If a claim cannot be traced back through this chain, cut it.
 - If upstream data contains scores, percentages, or metrics, include them — do not round or approximate.
 
+## Evidence Certification
+
+If `certify_*.json` exists in the workspace, read the `appendix_for_formatter` section and embed it as an "Evidence & Confidence Assessment" appendix at the end of the document. Include the claim table, gaps disclosure, and methodology note as-is. Do not editorialize — present the certification exactly as produced.
+
 ## Delivery
 
 After writing the whitepaper markdown and metadata JSON to disk, **deliver the document using Anthropic's document skill** (docx). The module's job isn't done when the files are saved — it's done when the user has a professional document they can download or share.

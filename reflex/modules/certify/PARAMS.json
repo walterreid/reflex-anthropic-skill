@@ -1,0 +1,19 @@
+{
+  "params": {
+    "target": {
+      "required": true,
+      "description": "The subject of the deliverable being certified (e.g., 'RouteForge GTM strategy')"
+    },
+    "scope": {
+      "required": false,
+      "description": "What to certify: 'all' scans entire workspace, or a specific file pattern (e.g., 'gtm_strategy_*')",
+      "default": "all"
+    },
+    "workspace": {
+      "inject": "workspace_state"
+    }
+  },
+  "group": "transformer",
+  "description": "Evidence certification for deliverables — scans workspace artifacts, maps claims to sources, flags confidence levels, identifies gaps and contradictions. Produces a structured evidence appendix that downstream formatters embed in the final document.",
+  "usage": "certify evidence, evidence appendix, source verification, confidence assessment, claim mapping, attest, evidence trail, self-assessment, document certification"
+}

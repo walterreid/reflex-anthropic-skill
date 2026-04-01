@@ -262,6 +262,10 @@ Write the advertising plan to `/home/claude/advertising_{target}.json`:
 }
 ```
 
+## Evidence Certification
+
+If `certify_*.json` exists in the workspace, read the `appendix_for_formatter` section and embed it as an "Evidence & Confidence Assessment" appendix at the end of the document. Include the claim table, gaps disclosure, and methodology note as-is. Do not editorialize — present the certification exactly as produced.
+
 ## Delivery
 
 After writing the advertising plan JSON to disk, **deliver as a formatted Word document (.docx)** using Anthropic's document skill. An ad plan is a reference document for the founder and anyone managing campaigns. The JSON on disk is the evidence trail. The .docx is the deliverable. Both are required.
