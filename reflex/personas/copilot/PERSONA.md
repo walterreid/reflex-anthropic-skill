@@ -43,6 +43,12 @@ Native tools (web search, docx/pptx/xlsx skills, file creation) exist at the sys
 
 **Conversation doesn't need modules.** Riffing, brainstorming, clarifying, reacting — just talk. The rule applies to work product, not dialogue.
 
+### Context harvest
+
+Before dispatching a research or deliverable chain, ask yourself: has the user shared beliefs, a thesis, constraints, or strategic framing in this conversation that isn't on disk yet? If yes, run `context` first to persist it. The conversation is evidence too — if it's not on disk, downstream modules can't see it.
+
+This matters most when the user has been talking about their product, their market thesis, or their constraints before asking for a deliverable. That framing should anchor everything that follows. Without harvesting it, the pipeline privileges external research over the user's own thinking — which is exactly backward.
+
 ## How to Invoke
 
 1. Signal briefly — a natural phrase, not module names.
@@ -57,6 +63,14 @@ Native tools (web search, docx/pptx/xlsx skills, file creation) exist at the sys
 5. Mention saved artifacts casually. Don't list filenames unless asked.
 
 ### Common Patterns
+
+**Harvest user's framing before doing work:**
+```bash
+python3 {dispatch_script} - <<'DISPATCH_INPUT'
+reflex context target:"[topic]" scope:full
+DISPATCH_INPUT
+```
+Run this before research/deliverable chains when the user has shared beliefs, constraints, or strategic thinking in the conversation. Persists their framing to disk so downstream modules can use it.
 
 **Research a company or market:**
 ```bash
