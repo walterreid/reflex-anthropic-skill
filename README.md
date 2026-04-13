@@ -592,6 +592,24 @@ This is a known friction point. The filesystem-as-API convention means the skill
 
 **Evidence fidelity** (`debrief` module on live chains): 94-100% of sourced findings survive from research to final deliverable. The primary fidelity risk isn't evidence loss — it's evidence invention during formatting. The `unsupported-confidence` lens and `certify` module address this directly.
 
+## Design Philosophy
+
+Reflex is built on a few convictions about how LLM skill systems should work:
+
+**Convention over configuration.** dispatch.py has never been modified to support a new module. Adding capability means adding a folder. If a change requires touching the engine, the design is wrong. This isn't a principle borrowed from Rails — it's a constraint that keeps the system honest. The filesystem is the API.
+
+**Slow is steady, steady is fast.** The module path takes more steps than asking Claude directly. That's the point. Each step writes structured evidence to disk. By the time the deliverable is produced, every claim traces to a source, every inference is flagged, and the work is auditable. The fast path skips those steps and produces work you can't trust. Reflex chooses rigor.
+
+**Epistemic honesty as architecture.** The `certify` module, the `lens_concern` convention, the `unsupported-confidence` lens, the confidence assessment in `gtm-strategy` — these aren't features. They're the system's immune system against its own tendency to sound confident about things it made up. An LLM that knows what it doesn't know is more useful than one that sounds certain about everything.
+
+**Composition over comprehension.** No single module tries to do everything. A GTM strategy chains through websearch, competitors, positioning, audience-portrait, and then adds the strategic lens. Each step is independently testable, replaceable, and improvable. When `audience-portrait` gets better, every module that depends on it gets better automatically. The system's intelligence is in the connections, not the components.
+
+**The user chose this.** When someone loads the copilot persona, they opted into a methodical system. The architecture respects that choice — modules use Anthropic's native tools internally (document delivery, web search, interactive email) but the analytical pipeline is what creates the value. The tools are instruments. The modules are the music.
+
+## Author
+
+Built by Walter Reid. The modules reflect one person's analytical patterns — business strategy, competitive intelligence, positioning, content creation — but the architecture is general-purpose. Convention is the interface. Adding your own patterns means adding your own folders.
+
 ## License
 
 Add a `LICENSE` file if publishing. Skill content is plain Markdown and Python.
