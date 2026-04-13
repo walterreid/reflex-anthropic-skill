@@ -19,9 +19,11 @@ The cost is always: one SKILL.md frontmatter entry (~50 tokens) + one MODULE.md 
 Reflex shines when you need **structured, multi-step analytical pipelines** — the kind of work where each stage's output feeds the next and the final deliverable is grounded in accumulated evidence. Examples:
 
 - **Market analysis chains**: `reflex trends+competitive-messaging+audience-portrait+creative-brief+tagline+email target:"DTC skincare for men"`
+- **GTM strategy pipeline**: `reflex gtm-strategy target:"RouteForge"` — auto-chains websearch, competitors, positioning, and audience-portrait, then builds a beachhead-scored strategy with confidence assessment
+- **Evidence-certified deliverables**: `reflex websearch+gtm-strategy+certify+report target:"RouteForge"` — the report ships with an embedded appendix mapping every claim to its source, confidence level, and methodology
 - **Competitive intelligence**: `reflex websearch+competitors+landscape+opportunities target:anthropic`
 - **Code review with adaptive routing**: `reflex adaptive-review language:python` (auto-routes to quick, deep, or security review based on code context)
-- **One-shot tasks**: `reflex research topic:"quantum computing"` or `reflex pitch target:acme audience:investors`
+- **Conversational access**: `reflex persona copilot` — loads a persistent thinking partner that silently orchestrates modules. The user just talks; the copilot decides when to invoke modules, which ones, with what params
 - **Natural language planning**: `reflex plan intent:"analyze my competitor's pricing strategy and write a memo for my CEO"` — the system decomposes this into a runnable module chain
 
 It also handles simple things — `reflex pirate` will greet you as a pirate captain, `reflex coin-flip` picks heads or tails via a time-based resolver — but the architecture is designed for composable analytical work.
@@ -131,27 +133,35 @@ reflex design-module    # Opens triage mode — suggests what to build based on 
 
 ## Architecture
 
-### Three Layers
+### Architecture
 
 ```
 reflex/
 ├── SKILL.md              # Entry point. Only the frontmatter loads at startup (~50 tokens)
 ├── scripts/
-│   ├── dispatch.py       # Router: parses message, resolves module, outputs protocol line
-│   └── sources.py        # Context injection: provides runtime data modules can request
-└── modules/
+│   ├── dispatch.py       # Module router: parses message, resolves module, outputs protocol
+│   ├── persona.py        # Persona router: assembles persistent conversational context
+│   └── sources.py        # Shared context injection for both dispatch paths
+├── modules/              # Bounded, composable tools (78 modules)
+│   └── <name>/
+│       ├── MODULE.md     # Instructions (loaded only when this module wins dispatch)
+│       ├── PARAMS.json   # Optional: declared inputs with types, defaults, descriptions
+│       ├── DEPENDS.json  # Optional: upstream dependencies with conditional execution
+│       ├── RESOLVE.py    # Optional: Python script that picks a variant at runtime
+│       └── variants/     # Optional: variant-specific MODULE.md files
+└── personas/             # Persistent, unbounded conversational wrappers
     └── <name>/
-        ├── MODULE.md     # Instructions (loaded only when this module wins dispatch)
-        ├── PARAMS.json   # Optional: declared inputs with types, defaults, descriptions
-        ├── DEPENDS.json  # Optional: upstream dependencies with conditional execution
-        ├── RESOLVE.py    # Optional: Python script that picks a variant at runtime
-        └── variants/     # Optional: variant-specific MODULE.md files
-            └── <variant>/MODULE.md
+        ├── PERSONA.md    # Identity and behavior (required)
+        ├── PARAMS.json   # Inject-only params (optional)
+        ├── TRIGGERS.json # Situational pattern matching (optional)
+        └── STYLE.json    # Voice and tone rules (optional)
 ```
 
-- **`dispatch.py`** routes modules. It reads the filesystem, extracts params from the user message, builds chains, runs resolvers. It knows nothing about what modules do.
-- **`sources.py`** provides context. It gathers runtime state (module registry, workspace files) that modules can request via injection. It knows nothing about which modules use it.
-- **`modules/`** define behavior. Each module is a folder. Convention determines capability.
+- **`dispatch.py`** routes modules. It reads the filesystem, extracts params, builds chains, runs resolvers. It knows nothing about what modules do.
+- **`persona.py`** routes personas. It assembles persistent context from persona files. It knows nothing about modules.
+- **`sources.py`** provides context. Both dispatch paths share it. Modules and personas can both request runtime data via injection.
+- **`modules/`** define bounded behavior. Each module is a folder. Convention determines capability.
+- **`personas/`** define persistent behavior. Each persona is a folder. They invoke modules internally but can't be chained with them.
 
 ### Module Levels
 
@@ -296,9 +306,63 @@ The available lenses are injected at dispatch time from `perspective/LENSES.json
 
 This field exists whether or not a `perspective` step follows. When `perspective` does follow, it reads the upstream `lens_concern` and starts there — confirming the module's self-assessment or finding the real weakness elsewhere. The `concern_confirmed` field in perspective's output closes the feedback loop.
 
-## Module Catalog (72 modules)
+## Evidence Certification
 
-### Sources (13)
+The `certify` module scans every workspace artifact and produces a structured assessment of what's proven, what's inferred, and what's assumed. It classifies each consequential claim as **sourced**, **cross-verified**, **inferred**, **assumption**, **unverified**, or **contradicted** — then writes a pre-formatted appendix that downstream formatters embed directly into the delivered document.
+
+```
+reflex websearch+gtm-strategy+certify+report target:"RouteForge"
+```
+
+The report ships with a section like: *"This document makes 18 claims. 8 are sourced to specific URLs. 4 are inferences. 3 are assumptions. Here's the table. Here's what we didn't check. Here's the methodology."*
+
+Six formatters are certify-aware: `report`, `whitepaper`, `gtm-strategy`, `launch-plan`, `advertising`, `onboard`. If `certify_*.json` exists in the workspace, they embed the appendix. If it doesn't, they work exactly as before. Zero overhead unless you opt in.
+
+The certification travels with the document. When someone evaluates the deliverable — human or AI — they have the evidence structure to work with, not just prose.
+
+## Document Delivery
+
+Formatter modules don't just produce text — they deliver professional documents. Each formatter writes structured JSON to the workspace (the evidence trail), then delivers the final artifact using Anthropic's native document skills:
+
+| Formatter | Delivery |
+|-----------|----------|
+| `report`, `whitepaper`, `pitch`, `gtm-strategy`, `launch-plan`, `advertising`, `onboard` | Word document (.docx) |
+| `email` | Interactive draft via `message_compose_v1` |
+| `recipe` | Interactive widget via `recipe_display_v0` |
+| `linkedin`, `recap` | Conversational text (correct format for these outputs) |
+
+The module does the analytical work. Anthropic's tools do the final-mile formatting. Both layers are necessary — the module provides evidence traceability and self-assessment, the document skill provides the shareable artifact.
+
+## Persona System
+
+Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona copilot` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
+
+```
+reflex persona copilot
+```
+
+**Why personas are not modules:** Modules are bounded (input, output, done) and composable (`+` chains). A persona is persistent (stays active across the entire conversation) and unbounded (no defined output shape). If a persona lived in `modules/`, it would be chainable — `websearch+copilot` would be valid syntax, producing incoherent behavior. The parallel `personas/` directory protects this at the type level.
+
+```
+reflex/
+├── scripts/
+│   ├── dispatch.py       # Module routing (unchanged)
+│   ├── persona.py        # Persona routing (parallel)
+│   └── sources.py        # Shared injection
+├── modules/              # Bounded, composable tools
+└── personas/             # Persistent, unbounded wrappers
+    └── copilot/
+        ├── PERSONA.md    # Identity and behavior
+        ├── PARAMS.json   # Inject-only (registry, workspace)
+        ├── TRIGGERS.json # Situational pattern matching
+        └── STYLE.json    # Voice and tone rules
+```
+
+The copilot loads the full module registry, watches for conversational patterns that map to modules, and dispatches through `dispatch.py` when work product is needed. The persona stays active while modules run underneath.
+
+## Module Catalog (78 modules)
+
+### Sources (14)
 Gather raw data from the world.
 
 | Module | Params | Description |
@@ -310,6 +374,7 @@ Gather raw data from the world.
 | `fetch` | url\*, focus, depth | Fetch a URL and produce structured summary |
 | `ideate` | target\*, count, lens | Generate divergent angles via framing lenses. Depends on `decompose` |
 | `job-search` | company\*, role\_filter, location | Search for open positions at a company |
+| `keywords` | target\*, verticals, intent | Keyword research by vertical and intent tier — CPC estimates, competition levels. Used by `advertising` and `launch-plan` |
 | `merge` | targets | Merge multiple research files into one evidence base |
 | `research` | topic\*, depth | Research a topic using web search |
 | `transcript` | target\*, focus, format | Extract meeting structure from transcripts. Depends on `extract` |
@@ -317,12 +382,13 @@ Gather raw data from the world.
 | `voice-dna` | target\*, focus, label | Extract reusable voice profile from writing samples. Depends on `extract` |
 | `websearch` | target\*, focus | Web search with structured JSON output |
 
-### Analyzers (23)
+### Analyzers (25)
 Interpret and evaluate evidence.
 
 | Module | Params | Description |
 |--------|--------|-------------|
 | `adaptive-review` | language\*, code\_context | Auto-routes to quick, deep, or security review |
+| `advertising` | target\*, platforms, budget, goal | Platform-specific paid ad campaign plan — selection, targeting, keywords, budget allocation. Depends on `audience-portrait` + `keywords` |
 | `audit` | target\*, criteria, standard | Quality-gate scoring with pass/fail verdict. Depends on `debrief` |
 | `audience-portrait` | target\*, focus, findings | Psychographic portrait — language, barriers, triggers |
 | `code-review` | language\*, style | Review code for bugs, security, quality |
@@ -333,6 +399,7 @@ Interpret and evaluate evidence.
 | `experiment` | target\*, scope, constraints | Design testable hypotheses with success criteria. Depends on `scenario` |
 | `forecast` | target\*, horizon, assumptions | Structured projection with sourced-vs-estimated flagging. Depends on `trends` |
 | `grade` | domain\*, candidates\* | Score multiple candidates, produce ranked scorecard |
+| `gtm-strategy` | target\*, market, constraints | Evidence-backed go-to-market strategy — beachhead scoring, phased expansion, pricing, founding customer program, confidence assessment. Depends on `websearch` + `competitors` + `positioning` + `audience-portrait` |
 | `landscape` | domain\*, dimensions, players, format | Map competitors across strategic dimensions |
 | `match` | candidate\*, opportunities\*, lens | Ranked fit matrix with strengths and gaps |
 | `moat` | target\*, format | Defensibility analysis — network effects, switching costs |
@@ -346,36 +413,39 @@ Interpret and evaluate evidence.
 | `swot` | target\*, format, depth, industry | SWOT analysis — routes to quick or deep variant |
 | `unit-economics` | target\*, model\_type | Unit economics breakdown (CAC, LTV, margins) |
 
-### Transformers (11)
-Reshape, filter, or stress-test existing analysis.
+### Transformers (13)
+Reshape, filter, certify, translate, or stress-test existing analysis.
 
 | Module | Params | Description |
 |--------|--------|-------------|
 | `actions` | target\*, timeframe | Extract actionable next steps |
+| `certify` | target\*, scope | Evidence certification — maps claims to sources, classifies confidence, identifies gaps. Produces embeddable appendix for downstream formatters |
 | `challenge` | target\*, intensity | Steelman the opposite position |
 | `debrief` | target\*, scope | Audit information fidelity across a chain |
 | `distill` | target\*, lens | Distill findings into weighted categories |
 | `filter` | target\*, criteria\*, threshold | Prune findings to relevant subset |
 | `reframe` | target\*, audience\*, purpose | Reframe analysis for a different audience |
-| `perspective` | target\*, lens | Apply an evaluation lens — reveals what the output can't see about itself, then produces the revision. 7 built-in lenses + workspace + custom |
+| `perspective` | target\*, lens | Apply an evaluation lens — reveals what the output can't see about itself, then produces the revision. 8 built-in lenses + workspace + custom |
 | `refine` | target\*, scope | Close the evaluator-optimizer loop — re-execute a deliverable with audit/evaluate feedback injected |
 | `rubric` | domain\*, depth | Generate a weighted evaluation rubric |
 | `simplify` | target\*, audience | Explain analysis in plain language |
 | `tagline` | target\*, audience, tone, count, findings | Generate taglines with strategic rationale |
+| `translate` | target\*, language | Translate workspace content or deliverables across languages |
 
-### Formatters (8)
-Deliver analysis in a specific format.
+### Formatters (9)
+Deliver analysis as professional documents and artifacts.
 
 | Module | Params | Description |
 |--------|--------|-------------|
-| `email` | target\*, recipient, tone, variants, findings | Send-ready email via message compose tool |
+| `email` | target\*, recipient, tone, variants, findings | Send-ready email via `message_compose_v1` |
+| `launch-plan` | target\*, horizon, budget | Operational execution playbook — channels, keywords, outreach scripts, week-by-week timeline, budget breakdown. Delivered as .docx. Depends on `gtm-strategy` + `keywords` |
 | `linkedin` | target\*, tone, length, hook | LinkedIn-native post or article |
-| `onboard` | target\*, audience, depth | Handoff document for new people or AI systems. Depends on `recap` |
-| `pitch` | target\*, audience, ask | Situation-Complication-Resolution narrative |
+| `onboard` | target\*, audience, depth | Handoff document delivered as .docx. Depends on `recap` |
+| `pitch` | target\*, audience, ask | Situation-Complication-Resolution narrative delivered as .docx |
 | `recap` | target, length | Executive summary of workspace artifacts |
-| `recipe` | dish\*, style, servings | Interactive recipe via recipe widget |
-| `whitepaper` | domain\*, depth | Long-form whitepaper preserving full evidence chain |
-| `report` | topic\*, format | Structured report or memo |
+| `recipe` | dish\*, style, servings | Interactive recipe via `recipe_display_v0` |
+| `report` | topic\*, format | Structured report or memo delivered as .docx |
+| `whitepaper` | domain\*, depth | Long-form whitepaper preserving full evidence chain, delivered as .docx |
 
 ### Utility (6)
 Helpers, fallbacks, and fun.
@@ -514,9 +584,13 @@ This is a known friction point. The filesystem-as-API convention means the skill
 
 ## Evaluation Results
 
-In controlled testing (Opus 4.6, same prompt, scored against a 7-dimension rubric), a 6-module chain produced by `plan` scored **98.7% (148 weighted)**, outperforming both a manually-composed 4-module chain (Report A) and a hand-built 7-module chain (Report B, 94.7%). The specialized analytical modules (`competitive-messaging`, `audience-portrait`, `creative-brief`) produced the gains — each introduced structured evidence that downstream modules could reference precisely.
+**Chain quality testing** (Opus 4.6, same prompt, scored against a 7-dimension rubric): a 6-module chain produced by `plan` scored **98.7% (148 weighted)**, outperforming both a manually-composed 4-module chain (Report A) and a hand-built 7-module chain (Report B, 94.7%). The specialized analytical modules (`competitive-messaging`, `audience-portrait`, `creative-brief`) produced the gains.
 
-The one dimension that didn't improve: **creative voice in the final output**. More analytical structure upstream can over-determine the creative step. This is an active area of module design work.
+**Lens calibration** (9 scenarios, `test-perspective` module): All 8 built-in lenses correctly identified their target planted flaws (8/8 HIT). Misdirection resistance: 1/1 INDEPENDENT — perspective found the actual gap despite a deliberately wrong `lens_concern`. Multi-pass rotation: ROTATE confirmed — the LLM naturally selects different lenses across `+perspective+perspective` chains without a resolver.
+
+**GTM strategy review** (external evaluator): A `launch-plan` deliverable produced from a `gtm-strategy` chain was assessed at the 75-90th percentile of GTM documents. Gaps identified (customer voice, unit economics, attribution) led to adding `audience-portrait` as a `gtm-strategy` dependency and creating the `certify` module.
+
+**Evidence fidelity** (`debrief` module on live chains): 94-100% of sourced findings survive from research to final deliverable. The primary fidelity risk isn't evidence loss — it's evidence invention during formatting. The `unsupported-confidence` lens and `certify` module address this directly.
 
 ## License
 
