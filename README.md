@@ -4,6 +4,8 @@ Reflex is a skill for Claude that discovers and loads behavioral modules at runt
 
 A system with 1,000 modules has the same context overhead as a system with 3.
 
+**[View the interactive architecture visualizations](docs/architecture-visualizations.html)** — progressive disclosure, chain composition, evidence traceability, persona system, and the bounded vs. unbounded distinction explained visually.
+
 ## Why This Exists
 
 LLM skills typically face a tradeoff: more capabilities means more tokens burned on instructions the model never uses. Reflex eliminates this by deferring everything:

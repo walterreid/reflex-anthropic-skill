@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflex Architecture — Why It Works</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; }
+
+  .hero {
+    text-align: center;
+    padding: 60px 40px 40px;
+    background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0a 100%);
+  }
+  .hero h1 { font-size: 3rem; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+  .hero .subtitle { font-size: 1.25rem; color: #888; max-width: 700px; margin: 0 auto; }
+  .hero .stat-row { display: flex; justify-content: center; gap: 48px; margin-top: 36px; }
+  .hero .stat { text-align: center; }
+  .hero .stat .num { font-size: 2.5rem; font-weight: 700; color: #c084fc; }
+  .hero .stat .label { font-size: 0.85rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+  section { max-width: 1100px; margin: 0 auto; padding: 32px 40px; }
+  section h2 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  section .section-sub { color: #888; margin-bottom: 24px; font-size: 1rem; }
+
+  /* Progressive Disclosure Diagram */
+  .disclosure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .disclosure-card {
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .disclosure-card:hover { border-color: #c084fc; transform: translateY(-2px); }
+  .disclosure-card .level-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .disclosure-card.l0 .level-badge { background: #1a3a1a; color: #4ade80; }
+  .disclosure-card.l1 .level-badge { background: #1a2a3a; color: #60a5fa; }
+  .disclosure-card.l2 .level-badge { background: #2a1a3a; color: #c084fc; }
+  .disclosure-card.l3 .level-badge { background: #3a1a2a; color: #f472b6; }
+  .disclosure-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: #fff; }
+  .disclosure-card p { font-size: 0.85rem; color: #888; }
+  .disclosure-card .token-cost {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #666;
+    border-top: 1px solid #222;
+    padding-top: 8px;
+  }
+  .disclosure-card .token-cost span { color: #4ade80; font-weight: 600; }
+
+  /* Comparison: Standard vs Reflex */
+  .compare-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .compare-box {
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .compare-box.standard { border-top: 3px solid #666; }
+  .compare-box.reflex { border-top: 3px solid #c084fc; }
+  .compare-box h3 { font-size: 1.2rem; margin-bottom: 16px; }
+  .compare-box.standard h3 { color: #888; }
+  .compare-box.reflex h3 { color: #c084fc; }
+  .compare-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+  .compare-bar .bar-label { width: 120px; color: #888; flex-shrink: 0; }
+  .compare-bar .bar-track { flex: 1; height: 24px; background: #1a1a1a; border-radius: 4px; overflow: hidden; position: relative; }
+  .compare-bar .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.75rem; font-weight: 600; }
+  .compare-bar .bar-fill.gray { background: #333; color: #888; }
+  .compare-bar .bar-fill.purple { background: linear-gradient(90deg, #7c3aed, #c084fc); color: #fff; }
+  .compare-bar .bar-fill.green { background: linear-gradient(90deg, #166534, #4ade80); color: #fff; }
+  .compare-bar .bar-fill.red { background: linear-gradient(90deg, #7f1d1d, #ef4444); color: #fff; }
+
+  /* Chain Visualization */
+  .chain-demo {
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .chain-demo .chain-label { font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .chain-demo .chain-code { font-family: 'SF Mono', Monaco, monospace; font-size: 1rem; color: #c084fc; margin-bottom: 24px; }
+  .chain-steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chain-step {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4e;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    color: #e0e0e0;
+    position: relative;
+  }
+  .chain-step .step-group {
+    font-size: 0.65rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .chain-step.source { border-color: #166534; }
+  .chain-step.source .step-group { color: #4ade80; }
+  .chain-step.analyzer { border-color: #1e3a5f; }
+  .chain-step.analyzer .step-group { color: #60a5fa; }
+  .chain-step.transformer { border-color: #4a1a6a; }
+  .chain-step.transformer .step-group { color: #c084fc; }
+  .chain-step.formatter { border-color: #5a1a2a; }
+  .chain-step.formatter .step-group { color: #f472b6; }
+  .chain-arrow { color: #333; font-size: 1.2rem; }
+  .chain-output {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a2a1a;
+    border: 1px solid #2a4a2a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    color: #4ade80;
+  }
+
+  /* Persona Diagram */
+  .persona-diagram {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .persona-left {
+    background: #1a1a2e;
+    border: 2px solid #4a2a6a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .persona-left h3 { color: #c084fc; font-size: 1.1rem; margin-bottom: 16px; }
+  .persona-file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #0a0a1a;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+  }
+  .persona-file .pf-icon { font-size: 0.7rem; color: #666; font-family: monospace; }
+  .persona-file .pf-name { color: #e0e0e0; }
+  .persona-file .pf-role { color: #666; font-style: italic; margin-left: auto; font-size: 0.75rem; }
+
+  .persona-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .persona-flow-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .persona-bubble {
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 0.85rem;
+    flex: 1;
+  }
+  .persona-bubble.user { border-color: #2a4a2a; }
+  .persona-bubble.user .pb-label { color: #4ade80; }
+  .persona-bubble.copilot { border-color: #4a2a6a; }
+  .persona-bubble.copilot .pb-label { color: #c084fc; }
+  .persona-bubble.dispatch { border-color: #1e3a5f; background: #0a0a1a; }
+  .persona-bubble.dispatch .pb-label { color: #60a5fa; }
+  .persona-bubble .pb-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: block; }
+  .flow-arrow { color: #333; font-size: 1rem; flex-shrink: 0; }
+
+  /* Why Not a Module diagram */
+  .boundary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .boundary-box {
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .boundary-box h3 { margin-bottom: 12px; font-size: 1.1rem; }
+  .boundary-box .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-bottom: 8px;
+  }
+  .boundary-box .tag.yes { background: #1a3a1a; color: #4ade80; }
+  .boundary-box .tag.no { background: #3a1a1a; color: #ef4444; }
+  .boundary-box ul { list-style: none; margin-top: 12px; }
+  .boundary-box ul li { padding: 4px 0; font-size: 0.85rem; color: #888; }
+  .boundary-box ul li::before { content: "→ "; color: #444; }
+
+  /* Evidence Trail */
+  .evidence-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    margin-bottom: 40px;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .evidence-stage {
+    flex: 1;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    border-right: 1px solid #222;
+  }
+  .evidence-stage:last-child { border-right: none; }
+  .evidence-stage .es-icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .evidence-stage .es-label { font-size: 0.8rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .evidence-stage .es-detail { font-size: 0.75rem; color: #666; }
+  .evidence-stage.research { background: linear-gradient(180deg, #0a1a0a, transparent); }
+  .evidence-stage.analyze { background: linear-gradient(180deg, #0a0a1a, transparent); }
+  .evidence-stage.certify { background: linear-gradient(180deg, #1a0a2a, transparent); }
+  .evidence-stage.deliver { background: linear-gradient(180deg, #2a0a1a, transparent); }
+
+  .footer {
+    text-align: center;
+    padding: 60px 40px;
+    color: #444;
+    font-size: 0.85rem;
+    border-top: 1px solid #1a1a1a;
+  }
+  .footer a { color: #c084fc; text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .disclosure-grid { grid-template-columns: 1fr 1fr; }
+    .compare-container { grid-template-columns: 1fr; }
+    .persona-diagram { grid-template-columns: 1fr; }
+    .boundary-grid { grid-template-columns: 1fr; }
+    .chain-steps { flex-direction: column; align-items: flex-start; }
+    .chain-arrow { transform: rotate(90deg); }
+    .hero .stat-row { flex-wrap: wrap; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Reflex</h1>
+  <p class="subtitle">Convention-based meta-skill dispatcher for Claude. 78 modules, zero context overhead for the ones you don't use.</p>
+  <div class="stat-row">
+    <div class="stat"><div class="num">78</div><div class="label">Modules</div></div>
+    <div class="stat"><div class="num">~50</div><div class="label">Startup Tokens</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">Evaluation Lenses</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">Entry Points</div></div>
+    <div class="stat"><div class="num">0</div><div class="label">Registry Files</div></div>
+  </div>
+</div>
+
+<!-- Section 1: Progressive Disclosure -->
+<section>
+  <h2>Progressive Disclosure — Four Levels Deep</h2>
+  <p class="section-sub">Anthropic's skill system loads in 3 tiers. Reflex adds a 4th: convention-based module dispatch that routes in Python before the LLM sees anything.</p>
+
+  <div class="disclosure-grid">
+    <div class="disclosure-card l0">
+      <span class="level-badge">Level 0 — Always</span>
+      <h3>SKILL.md Frontmatter</h3>
+      <p>Only the trigger word "reflex" and a one-line description. Loaded into every conversation at startup.</p>
+      <div class="token-cost">Cost: <span>~50 tokens</span> regardless of module count</div>
+    </div>
+    <div class="disclosure-card l1">
+      <span class="level-badge">Level 1 — On Trigger</span>
+      <h3>SKILL.md Body</h3>
+      <p>Routing instructions. Tells Claude to run dispatch.py and follow the protocol output. No module content yet.</p>
+      <div class="token-cost">Cost: <span>~800 tokens</span> for the router instructions</div>
+    </div>
+    <div class="disclosure-card l2">
+      <span class="level-badge">Level 2 — Dispatch</span>
+      <h3>Python Routing</h3>
+      <p>dispatch.py resolves the module, extracts params, builds chains, runs resolvers — all in Python. <strong>Zero LLM tokens.</strong></p>
+      <div class="token-cost">Cost: <span>0 tokens</span> — Python, not inference</div>
+    </div>
+    <div class="disclosure-card l3">
+      <span class="level-badge">Level 3 — Load</span>
+      <h3>MODULE.md</h3>
+      <p>Only the matched module's instructions enter context. 77 other modules remain on disk, unread, costing nothing.</p>
+      <div class="token-cost">Cost: <span>1 MODULE.md</span> — the one you asked for</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: Standard Skill vs Reflex -->
+<section>
+  <h2>Standard Skill vs. Reflex</h2>
+  <p class="section-sub">A standard Claude skill puts all instructions in one SKILL.md. Reflex splits them across 78 modules and loads only what's needed.</p>
+
+  <div class="compare-container">
+    <div class="compare-box standard">
+      <h3>Standard Skill (1 SKILL.md)</h3>
+      <div class="compare-bar">
+        <span class="bar-label">Startup cost</span>
+        <div class="bar-track"><div class="bar-fill red" style="width: 80%">All instructions loaded</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">10 capabilities</span>
+        <div class="bar-track"><div class="bar-fill red" style="width: 60%">~5K tokens always</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">100 capabilities</span>
+        <div class="bar-track"><div class="bar-fill red" style="width: 95%">~50K tokens always</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">Composability</span>
+        <div class="bar-track"><div class="bar-fill gray" style="width: 20%">Manual</div></div>
+      </div>
+    </div>
+    <div class="compare-box reflex">
+      <h3>Reflex (78 Modules)</h3>
+      <div class="compare-bar">
+        <span class="bar-label">Startup cost</span>
+        <div class="bar-track"><div class="bar-fill green" style="width: 8%">~50 tokens</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">10 capabilities</span>
+        <div class="bar-track"><div class="bar-fill green" style="width: 8%">~50 tokens</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">100 capabilities</span>
+        <div class="bar-track"><div class="bar-fill green" style="width: 8%">~50 tokens</div></div>
+      </div>
+      <div class="compare-bar">
+        <span class="bar-label">Composability</span>
+        <div class="bar-track"><div class="bar-fill purple" style="width: 90%">+ chains, DEPENDS, resolvers</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Chain Examples -->
+<section>
+  <h2>Composable Chains</h2>
+  <p class="section-sub">Modules connect with + syntax. Each step writes structured JSON to disk. Downstream steps read it. The workspace is the data bus.</p>
+
+  <div class="chain-demo">
+    <div class="chain-label">Evidence-Certified GTM Strategy</div>
+    <div class="chain-code">reflex websearch+gtm-strategy+certify+report target:"RouteForge"</div>
+    <div class="chain-steps">
+      <div class="chain-step source"><span class="step-group">Source</span>websearch</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step analyzer"><span class="step-group">Analyzer</span>gtm-strategy</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step transformer"><span class="step-group">Transformer</span>certify</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step formatter"><span class="step-group">Formatter</span>report</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-output">📄 .docx with evidence appendix</div>
+    </div>
+  </div>
+
+  <div class="chain-demo">
+    <div class="chain-label">Self-Improving Email</div>
+    <div class="chain-code">reflex websearch+email+perspective target:"launch" recipient:"investors"</div>
+    <div class="chain-steps">
+      <div class="chain-step source"><span class="step-group">Source</span>websearch</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step formatter"><span class="step-group">Formatter</span>email</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step transformer"><span class="step-group">Transformer</span>perspective</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-output">✉️ Revised email via compose tool</div>
+    </div>
+  </div>
+
+  <div class="chain-demo">
+    <div class="chain-label">Auto-Resolving Dependency Chain (Level 2)</div>
+    <div class="chain-code">reflex launch-plan target:"RouteForge"</div>
+    <div class="chain-steps">
+      <div class="chain-step source"><span class="step-group">Auto</span>websearch</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step analyzer"><span class="step-group">Auto</span>competitors</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step analyzer"><span class="step-group">Auto</span>positioning</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step analyzer"><span class="step-group">Auto</span>audience</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step analyzer"><span class="step-group">Auto</span>gtm-strategy</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step source"><span class="step-group">Auto</span>keywords</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-step formatter"><span class="step-group">Invoked</span>launch-plan</div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-output">📄 90-day execution playbook</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Evidence Trail -->
+<section>
+  <h2>Evidence Traceability</h2>
+  <p class="section-sub">Every claim in the final document traces back through the chain to its source. The certify module maps this explicitly.</p>
+
+  <div class="evidence-flow">
+    <div class="evidence-stage research">
+      <div class="es-icon">🔍</div>
+      <div class="es-label">Research</div>
+      <div class="es-detail">Web search writes JSON with source URLs for every finding</div>
+    </div>
+    <div class="evidence-stage analyze">
+      <div class="es-icon">📊</div>
+      <div class="es-label">Analyze</div>
+      <div class="es-detail">Modules read findings, add interpretation, flag confidence levels</div>
+    </div>
+    <div class="evidence-stage certify">
+      <div class="es-icon">✓</div>
+      <div class="es-label">Certify</div>
+      <div class="es-detail">Maps every claim to its source: sourced, inferred, assumed, or unverified</div>
+    </div>
+    <div class="evidence-stage deliver">
+      <div class="es-icon">📄</div>
+      <div class="es-label">Deliver</div>
+      <div class="es-detail">Document ships with embedded evidence appendix and methodology</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 5: Persona System -->
+<section>
+  <h2>Persona System — Conversational Access</h2>
+  <p class="section-sub">Personas make the module system accessible without knowing the grammar. The user talks. The copilot decides when to invoke modules.</p>
+
+  <div class="persona-diagram">
+    <div class="persona-left">
+      <h3>personas/copilot/</h3>
+      <div class="persona-file"><span class="pf-icon">MD</span><span class="pf-name">PERSONA.md</span><span class="pf-role">identity</span></div>
+      <div class="persona-file"><span class="pf-icon">JS</span><span class="pf-name">PARAMS.json</span><span class="pf-role">inject</span></div>
+      <div class="persona-file"><span class="pf-icon">JS</span><span class="pf-name">TRIGGERS.json</span><span class="pf-role">patterns</span></div>
+      <div class="persona-file"><span class="pf-icon">JS</span><span class="pf-name">STYLE.json</span><span class="pf-role">voice</span></div>
+    </div>
+    <div class="persona-right">
+      <div class="persona-flow-row">
+        <div class="persona-bubble user"><span class="pb-label">User</span>"I need to understand our competitive landscape and write a report"</div>
+      </div>
+      <div class="persona-flow-row">
+        <div class="persona-bubble copilot"><span class="pb-label">Copilot</span>"Let me dig into that..." <em>(recognizes needs_research trigger)</em></div>
+      </div>
+      <div class="persona-flow-row">
+        <div class="persona-bubble dispatch"><span class="pb-label">dispatch.py</span>reflex websearch+competitors+report target:"competitive landscape"</div>
+      </div>
+      <div class="persona-flow-row">
+        <div class="persona-bubble copilot"><span class="pb-label">Copilot</span>Weaves module output into conversation. Ends with a question, not a summary.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bounded vs Unbounded -->
+  <h2 style="margin-top: 32px;">Why Personas Are Not Modules</h2>
+  <p class="section-sub">The parallel architecture isn't cosmetic. It protects a type-level invariant.</p>
+
+  <div class="boundary-grid">
+    <div class="boundary-box">
+      <h3 style="color: #60a5fa;">Modules (modules/)</h3>
+      <span class="tag yes">Bounded</span>
+      <span class="tag yes">Composable</span>
+      <span class="tag yes">Chainable</span>
+      <ul>
+        <li>Input → process → output → done</li>
+        <li>Composable with + syntax</li>
+        <li>Referenceable in DEPENDS.json</li>
+        <li>Visible in plan's module registry</li>
+        <li>Defined output shape (JSON to disk)</li>
+      </ul>
+    </div>
+    <div class="boundary-box">
+      <h3 style="color: #c084fc;">Personas (personas/)</h3>
+      <span class="tag yes">Persistent</span>
+      <span class="tag yes">Conversational</span>
+      <span class="tag no">Not chainable</span>
+      <ul>
+        <li>Stays active across entire conversation</li>
+        <li>Cannot appear in + chains</li>
+        <li>Cannot be a DEPENDS.json target</li>
+        <li>Invisible to plan and module registry</li>
+        <li>No output shape — conversation IS the output</li>
+      </ul>
+    </div>
+  </div>
+  <div style="background: #1a1a1a; border-radius: 8px; padding: 16px 24px; font-size: 0.9rem; color: #888; border-left: 3px solid #c084fc;">
+    If copilot lived in <code>modules/</code>, then <code>websearch+copilot</code> would be valid syntax — jamming a persistent behavioral overlay into a bounded chain step. The parallel directory means the composition engine never sees it. No flags. No exclusion lists. The filesystem is the type system.
+  </div>
+</section>
+
+<!-- Section 6: Adding a Module -->
+<section>
+  <h2>Convention Is the Interface</h2>
+  <p class="section-sub">dispatch.py has never been modified to support a new module. Adding capability means adding a folder.</p>
+
+  <div class="compare-container">
+    <div class="compare-box" style="border-top: 3px solid #4ade80;">
+      <h3 style="color: #4ade80;">Add a Module</h3>
+      <pre style="background: #0a0a0a; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 0.8rem; color: #e0e0e0; overflow-x: auto;">mkdir modules/my-module
+echo "# My Module\n\nDo the thing." > modules/my-module/MODULE.md</pre>
+      <p style="margin-top: 12px; font-size: 0.85rem; color: #888;">That's it. dispatch.py discovers it. <code>reflex my-module</code> works. No registry, no config, no engine changes.</p>
+    </div>
+    <div class="compare-box" style="border-top: 3px solid #c084fc;">
+      <h3 style="color: #c084fc;">Add a Persona</h3>
+      <pre style="background: #0a0a0a; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 0.8rem; color: #e0e0e0; overflow-x: auto;">mkdir personas/strategist
+echo "# Strategist\n\nYou think in frameworks." > personas/strategist/PERSONA.md</pre>
+      <p style="margin-top: 12px; font-size: 0.85rem; color: #888;">Same convention. persona.py discovers it. <code>reflex persona strategist</code> works. dispatch.py never knows it exists.</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <p>Built by <a href="#">Walter Reid</a>. 78 modules. Convention is the interface.</p>
+</div>
+
+</body>
+</html>
