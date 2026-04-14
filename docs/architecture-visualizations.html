@@ -199,8 +199,8 @@
   }
   .persona-bubble.user { border-color: #2a4a2a; }
   .persona-bubble.user .pb-label { color: #4ade80; }
-  .persona-bubble.copilot { border-color: #4a2a6a; }
-  .persona-bubble.copilot .pb-label { color: #c084fc; }
+  .persona-bubble.walt { border-color: #4a2a6a; }
+  .persona-bubble.walt .pb-label { color: #c084fc; }
   .persona-bubble.dispatch { border-color: #1e3a5f; background: #0a0a1a; }
   .persona-bubble.dispatch .pb-label { color: #60a5fa; }
   .persona-bubble .pb-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: block; }
@@ -465,11 +465,11 @@
 <!-- Section 5: Persona System -->
 <section>
   <h2>Persona System — Conversational Access</h2>
-  <p class="section-sub">Personas make the module system accessible without knowing the grammar. The user talks. The copilot decides when to invoke modules.</p>
+  <p class="section-sub">Personas make the module system accessible without knowing the grammar. The user talks. Walt decides when to invoke modules.</p>
 
   <div class="persona-diagram">
     <div class="persona-left">
-      <h3>personas/copilot/</h3>
+      <h3>personas/walt/</h3>
       <div class="persona-file"><span class="pf-icon">MD</span><span class="pf-name">PERSONA.md</span><span class="pf-role">identity</span></div>
       <div class="persona-file"><span class="pf-icon">JS</span><span class="pf-name">PARAMS.json</span><span class="pf-role">inject</span></div>
       <div class="persona-file"><span class="pf-icon">JS</span><span class="pf-name">TRIGGERS.json</span><span class="pf-role">patterns</span></div>
@@ -480,13 +480,13 @@
         <div class="persona-bubble user"><span class="pb-label">User</span>"I need to understand our competitive landscape and write a report"</div>
       </div>
       <div class="persona-flow-row">
-        <div class="persona-bubble copilot"><span class="pb-label">Copilot</span>"Let me dig into that..." <em>(recognizes needs_research trigger)</em></div>
+        <div class="persona-bubble walt"><span class="pb-label">Walt</span>"Let me dig into that..." <em>(recognizes needs_research trigger)</em></div>
       </div>
       <div class="persona-flow-row">
         <div class="persona-bubble dispatch"><span class="pb-label">dispatch.py</span>reflex websearch+competitors+report target:"competitive landscape"</div>
       </div>
       <div class="persona-flow-row">
-        <div class="persona-bubble copilot"><span class="pb-label">Copilot</span>Weaves module output into conversation. Ends with a question, not a summary.</div>
+        <div class="persona-bubble walt"><span class="pb-label">Walt</span>Weaves module output into conversation. Ends with a question, not a summary.</div>
       </div>
     </div>
   </div>
@@ -524,7 +524,7 @@
     </div>
   </div>
   <div style="background: #1a1a1a; border-radius: 8px; padding: 16px 24px; font-size: 0.9rem; color: #888; border-left: 3px solid #c084fc;">
-    If copilot lived in <code>modules/</code>, then <code>websearch+copilot</code> would be valid syntax — jamming a persistent behavioral overlay into a bounded chain step. The parallel directory means the composition engine never sees it. No flags. No exclusion lists. The filesystem is the type system.
+    If walt lived in <code>modules/</code>, then <code>websearch+walt</code> would be valid syntax — jamming a persistent behavioral overlay into a bounded chain step. The parallel directory means the composition engine never sees it. No flags. No exclusion lists. The filesystem is the type system.
   </div>
 </section>
 

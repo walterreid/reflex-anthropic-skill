@@ -25,7 +25,7 @@ Reflex shines when you need **structured, multi-step analytical pipelines** — 
 - **Evidence-certified deliverables**: `reflex websearch+gtm-strategy+certify+report target:"RouteForge"` — the report ships with an embedded appendix mapping every claim to its source, confidence level, and methodology
 - **Competitive intelligence**: `reflex websearch+competitors+landscape+opportunities target:anthropic`
 - **Code review with adaptive routing**: `reflex adaptive-review language:python` (auto-routes to quick, deep, or security review based on code context)
-- **Conversational access**: `reflex persona copilot` — loads a persistent thinking partner that silently orchestrates modules. The user just talks; the copilot decides when to invoke modules, which ones, with what params
+- **Conversational access**: `reflex persona walt` — loads a persistent thinking partner that silently orchestrates modules. The user just talks; walt decides when to invoke modules, which ones, with what params
 - **Natural language planning**: `reflex plan intent:"analyze my competitor's pricing strategy and write a memo for my CEO"` — the system decomposes this into a runnable module chain
 
 It also handles simple things — `reflex pirate` will greet you as a pirate captain, `reflex coin-flip` picks heads or tails via a time-based resolver — but the architecture is designed for composable analytical work.
@@ -337,13 +337,13 @@ The module does the analytical work. Anthropic's tools do the final-mile formatt
 
 ## Persona System
 
-Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona copilot` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
+Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona walt` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
 
 ```
-reflex persona copilot
+reflex persona walt
 ```
 
-**Why personas are not modules:** Modules are bounded (input, output, done) and composable (`+` chains). A persona is persistent (stays active across the entire conversation) and unbounded (no defined output shape). If a persona lived in `modules/`, it would be chainable — `websearch+copilot` would be valid syntax, producing incoherent behavior. The parallel `personas/` directory protects this at the type level.
+**Why personas are not modules:** Modules are bounded (input, output, done) and composable (`+` chains). A persona is persistent (stays active across the entire conversation) and unbounded (no defined output shape). If a persona lived in `modules/`, it would be chainable — `websearch+walt` would be valid syntax, producing incoherent behavior. The parallel `personas/` directory protects this at the type level.
 
 ```
 reflex/
@@ -353,14 +353,14 @@ reflex/
 │   └── sources.py        # Shared injection
 ├── modules/              # Bounded, composable tools
 └── personas/             # Persistent, unbounded wrappers
-    └── copilot/
+    └── walt/
         ├── PERSONA.md    # Identity and behavior
         ├── PARAMS.json   # Inject-only (registry, workspace)
         ├── TRIGGERS.json # Situational pattern matching
         └── STYLE.json    # Voice and tone rules
 ```
 
-The copilot loads the full module registry, watches for conversational patterns that map to modules, and dispatches through `dispatch.py` when work product is needed. The persona stays active while modules run underneath.
+Walt loads the full module registry, watches for conversational patterns that map to modules, and dispatches through `dispatch.py` when work product is needed. The persona stays active while modules run underneath.
 
 ## Module Catalog (78 modules)
 
@@ -606,7 +606,7 @@ Reflex is built on a few convictions about how LLM skill systems should work:
 
 **Composition over comprehension.** No single module tries to do everything. A GTM strategy chains through websearch, competitors, positioning, audience-portrait, and then adds the strategic lens. Each step is independently testable, replaceable, and improvable. When `audience-portrait` gets better, every module that depends on it gets better automatically. The system's intelligence is in the connections, not the components.
 
-**The user chose this.** When someone loads the copilot persona, they opted into a methodical system. The architecture respects that choice — modules use Anthropic's native tools internally (document delivery, web search, interactive email) but the analytical pipeline is what creates the value. The tools are instruments. The modules are the music.
+**The user chose this.** When someone loads walt persona, they opted into a methodical system. The architecture respects that choice — modules use Anthropic's native tools internally (document delivery, web search, interactive email) but the analytical pipeline is what creates the value. The tools are instruments. The modules are the music.
 
 ## Author
 

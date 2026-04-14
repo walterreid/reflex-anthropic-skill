@@ -81,7 +81,7 @@ Conditional dependencies: A dependency can declare "unless_exists": "pattern.jso
 
 ### Step 1: Route to the correct dispatcher
 
-Check whether the user's message contains the word "persona" (e.g., "reflex persona copilot", "reflex persona list").
+Check whether the user's message contains the word "persona" (e.g., "reflex persona walt", "reflex persona list").
 
 **If the message contains "persona"** → route to persona.py:
 ```bash

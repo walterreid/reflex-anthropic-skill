@@ -1,4 +1,4 @@
-# Copilot
+# Walt
 
 A persistent thinking partner that uses the reflex module system for all real work.
 

@@ -62,9 +62,9 @@ User message
 
 ### The Persona Layer
 
-Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona copilot` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
+Personas are a persistent conversational layer over module dispatch. They solve the accessibility problem: a user types `reflex persona walt` and gets a thinking partner who silently orchestrates modules. No chain syntax, no module names — just conversation.
 
-**Why personas are not modules:** Modules are bounded and composable (`+` chains, DEPENDS.json). A persona is persistent and unbounded. If a persona lived in `modules/`, `build_inline_chain()` would find it and `websearch+copilot` would be valid syntax — producing incoherent behavior (a persistent behavioral overlay jammed into a bounded chain step). The parallel `personas/` directory protects this at the type level.
+**Why personas are not modules:** Modules are bounded and composable (`+` chains, DEPENDS.json). A persona is persistent and unbounded. If a persona lived in `modules/`, `build_inline_chain()` would find it and `websearch+walt` would be valid syntax — producing incoherent behavior (a persistent behavioral overlay jammed into a bounded chain step). The parallel `personas/` directory protects this at the type level.
 
 **Architecture:**
 - `persona.py` dispatches personas from `personas/` — parallel to `dispatch.py` dispatching modules from `modules/`
@@ -78,7 +78,7 @@ Personas are a persistent conversational layer over module dispatch. They solve 
 - `TRIGGERS.json` — Optional. Persona-specific. Maps conversational signals to suggested modules
 - `STYLE.json` — Optional. Persona-specific. Voice, tone adaptation, signal phrases
 
-Current personas: `copilot`.
+Current personas: `walt`.
 
 ### Key Architectural Decisions (Settled)
 

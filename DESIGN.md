@@ -24,7 +24,7 @@ Reflex doesn't have a voice — Claude does. The modules should not impose a per
 
 **Normal user:** Types `reflex run "help me figure out my brand positioning and write a launch email"`. Doesn't know modules exist. `plan` composes the chain, `run` executes it. Sees only the output.
 
-**Conversational user:** Types `reflex persona copilot` and just talks. Doesn't know modules or chains exist. The persona decides when to invoke modules, which ones, with what params — all invisibly. The conversation IS the interface.
+**Conversational user:** Types `reflex persona walt` and just talks. Doesn't know modules or chains exist. The persona decides when to invoke modules, which ones, with what params — all invisibly. The conversation IS the interface.
 
 All three are first-class citizens. Each is a different depth of engagement with the same underlying system: direct module access, plan-mediated access, and persona-mediated access.
 
@@ -34,7 +34,7 @@ Modules are bounded: they receive input, produce output, and end. This is what m
 
 Personas are unbounded: they persist across an entire conversation, deciding when to act and when to just talk. They have no defined output shape — the conversation itself is the output.
 
-This distinction is architectural, not cosmetic. If a persona were a module, it would be composable. `websearch+copilot` would be valid syntax. But a persistent behavioral overlay has no meaningful output to pass downstream in a chain. The result would be incoherent — not an error, just nonsense.
+This distinction is architectural, not cosmetic. If a persona were a module, it would be composable. `websearch+walt` would be valid syntax. But a persistent behavioral overlay has no meaningful output to pass downstream in a chain. The result would be incoherent — not an error, just nonsense.
 
 The parallel `personas/` directory protects this boundary at the filesystem level. Personas can't be chained because they don't exist where the chain builder looks. No flags, no exclusion lists, no special cases in dispatch.py.
 

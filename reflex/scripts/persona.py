@@ -22,7 +22,7 @@ Output protocol:
 
 Directory convention:
   personas/
-  └── copilot/
+  └── walt/
       ├── PERSONA.md       ← identity, purpose, behavioral instructions
       ├── PARAMS.json      ← inject-only params (registry, workspace)
       ├── TRIGGERS.json    ← situational patterns and responses
@@ -136,7 +136,7 @@ def assemble_persona(persona_name: str) -> str:
 def dispatch_persona(message: str) -> str:
     """
     Parse persona commands:
-      reflex persona copilot     → load copilot persona
+      reflex persona walt     → load walt persona
       reflex persona list        → list available personas
       reflex persona             → list available personas
     """
