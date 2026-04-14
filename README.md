@@ -4,7 +4,7 @@ Reflex is a skill for Claude that discovers and loads behavioral modules at runt
 
 A system with 1,000 modules has the same context overhead as a system with 3.
 
-**[View the interactive architecture visualizations](docs/architecture-visualizations.html)** — progressive disclosure, chain composition, evidence traceability, persona system, and the bounded vs. unbounded distinction explained visually.
+**[View the interactive architecture visualizations](https://walterreid.github.io/reflex-anthropic-skill/architecture-visualizations.html)** — progressive disclosure, chain composition, evidence traceability, persona system, and the bounded vs. unbounded distinction explained visually.
 
 ## Why This Exists
 
