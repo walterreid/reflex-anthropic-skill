@@ -614,4 +614,4 @@ Built by Walter Reid. The modules reflect one person's analytical patterns — b
 
 ## License
 
-Add a `LICENSE` file if publishing. Skill content is plain Markdown and Python.
+MIT License. See [LICENSE](LICENSE).

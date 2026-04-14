@@ -38,3 +38,6 @@ build/
 
 # Local skill packaging (do not commit)
 reflex.zip
+
+# Drafts (not part of the skill)
+blog-post-draft.md
